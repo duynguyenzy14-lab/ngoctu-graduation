@@ -1,0 +1,446 @@
+window.SITE = {
+ "siteUrl": "https://invite.khanhnguyenquang.id.vn",
+ "fullName": "Nguyễn Quang Khánh",
+ "shortName": "Khánh",
+ "school": "Trường Đại học Mở TP.HCM",
+ "major": "Khoa học máy tính",
+ "date": "2026-11-14T07:00:00+07:00",
+ "dateLong": "Sáng thứ Bảy, 14.11.2026",
+ "dateNumeric": "14.11.2026",
+ "intro": {
+  "style": "stage",
+  "ringText": "NGUYỄN QUANG KHÁNH · KHOA HỌC MÁY TÍNH · TỐT NGHIỆP 14.11.2026 · ĐẠI HỌC MỞ TP.HCM · ",
+  "title": "Khánh tốt nghiệp.",
+  "sub": "Sáng 14.11.2026, mình nhận bằng Khoa học máy tính tại Trường Đại học Mở TP.HCM.",
+  "hold": "Nhấn giữ để mở thiệp",
+  "portrait": {
+   "file": "LR-018.jpg",
+   "crop": [
+    0.12,
+    0.0,
+    0.88,
+    0.6
+   ],
+   "img": {
+    "src": "/img/portrait.png",
+    "ratio": 0.8664
+   }
+  }
+ },
+ "letter": {
+  "place": "TP. Hồ Chí Minh, 04/11/2026",
+  "greeting": "Gửi {name},",
+  "general": "Có những người không cần đứng trên sân khấu cùng mình, nhưng lại là lý do mình đi được tới đó.\nBạn là một trong những người ấy.\nCảm ơn bạn vì bốn năm vừa qua.",
+  "closing": "Best Regards,",
+  "sign": "Quang Khánh"
+ },
+ "invite": {
+  "title": "{name} ơi,",
+  "lead": [
+   "Rất mong hôm đó có {name} đến để lưu lại kỷ niệm, cùng nhau đếm ngược nào!!!"
+  ]
+ },
+ "schedule": [
+  {
+   "time": "07:30",
+   "text": "Nếu đến sớm, tụi mình có thể gặp nhau và chụp hình ở sân trường trước lễ."
+  },
+  {
+   "time": "08:00 – 11:00",
+   "text": "Trong thời gian diễn ra lễ chính, mình sẽ ở trong hội trường. Mọi người có thể theo dõi buổi lễ qua màn hình LED bên ngoài nha."
+  },
+  {
+   "time": "11:00 – 12:30",
+   "text": "Đây là lúc tụi mình có thể thoải mái gặp gỡ và chụp thật nhiều hình kỷ niệm cùng nhau!!"
+  }
+ ],
+ "venue": {
+  "name": "Trường Đại học Mở TP. Hồ Chí Minh",
+  "address": "97 Võ Văn Tần, phường Xuân Hòa, TP.HCM (Cơ sở 1)",
+  "short": "97 Võ Văn Tần, TP.HCM",
+  "mapsUrl": "https://maps.app.goo.gl/ZjacVTJBH1mfbgay9"
+ },
+ "parking": {
+  "title": "Hướng dẫn gửi xe",
+  "school": "Có thể gửi xe tại Trường, nhưng vào ngày lễ khu vực gửi xe có thể sẽ hết chỗ sớm. Khánh gợi ý một số điểm gửi xe gần trường nha:",
+  "intro": "",
+  "places": [
+   {
+    "name": "1. Du lịch Hòa Bình (Số 60 Võ Văn Tần)",
+    "note": "Dễ tìm, nằm ngay trục đường chính",
+    "query": "Du lịch Hòa Bình, phường Xuân Hòa, TP.HCM"
+   },
+   {
+    "name": "2. Tòa nhà Báo Người Lao Động (Số 123 Võ Văn Tần)",
+    "note": "Thuận tiện nếu đi từ hướng đường CMT8",
+    "query": "Báo Người Lao Động, phường Xuân Hòa, TP.HCM"
+   },
+   {
+    "name": "3. Bãi giữ xe Công viên Tao Đàn",
+    "note": "Ngay ngã tư Trương Định và Nguyễn Thị Minh Khai",
+    "query": "Bãi gửi xe công viên Tao Đàn"
+   }
+  ]
+ },
+ "calendar": {
+  "title": "Tốt nghiệp của Khánh",
+  "start": "20261114T000000Z",
+  "end": "20261114T050000Z"
+ },
+ "contact": {
+  "phone": "0986919340",
+  "phoneDisplay": "0986 919 340",
+  "label": "Zalo, Khánh",
+  "people": [
+   {
+    "name": "Khánh",
+    "phone": "0986919340",
+    "phoneDisplay": "0986 919 340"
+   },
+   {
+    "name": "Ngọc Tú (hỗ trợ)",
+    "phone": "0376693218",
+    "phoneDisplay": "0376 693 218"
+   }
+  ]
+ },
+ "rsvp": {
+  "mode": "api",
+  "deadline": "09.11",
+  "closeAt": null,
+  "options": [
+   {
+    "value": "7:00",
+    "label": "7:30"
+   },
+   {
+    "value": "11:30",
+    "label": "11:00"
+   },
+   {
+    "value": "both",
+    "label": "Cả hai"
+   },
+   {
+    "value": "no",
+    "label": "Không đến được"
+   }
+  ],
+  "title": "Hẹn gặp {name} hôm đó nhé?",
+  "lead": "Vui lòng xác nhận tham gia để mình đón tiếp cho chu đáo nha.",
+  "msgPlaceholder": "Nhắn nhủ vài lời được khum?",
+  "publicLabel": "Cho phép hiển thị lời nhắn công khai trên Sảnh lời chúc",
+  "confirmText": "Gửi xong là không sửa được nữa nhaaa"
+ },
+ "guestbook": {
+  "title": "Sảnh lời chúc",
+  "empty": "Chưa có lời chúc nào. Bạn là người đầu tiên nhé.",
+  "demo": [
+   {
+    "name": "Minh",
+    "text": "Chúc mừng Khánh! Bốn năm deadline cuối cùng cũng đổi được một tấm bằng. Sáng 14 mình tới sớm chụp cho Khánh nha."
+   },
+   {
+    "name": "Thảo Vy",
+    "text": "Tự hào về Khánh lắm. Hẹn 11:00, nhớ chừa cho Vy một tấm chụp chung cầm bằng nha."
+   }
+  ]
+ },
+ "photos": {
+  "og": "20261031_235206000_iOS.jpg",
+  "galleryTitle": "Quang Khánh chụp trước vài tấm. Những tấm còn lại chờ {name} đó nhaa.",
+  "gallery": [
+   {
+    "file": "20261031_235206000_iOS.jpg",
+    "caption": "Bằng đã trong tay",
+    "img": {
+     "small": "/img/20261031-235206000-ios-800.webp",
+     "large": "/img/20261031-235206000-ios-1600.webp",
+     "srcset": "/img/20261031-235206000-ios-800.webp 800w, /img/20261031-235206000-ios-1600.webp 1600w",
+     "ratio": 1.5
+    }
+   },
+   {
+    "file": "LR-172.jpg",
+    "caption": "Góc tường quen ở trường",
+    "img": {
+     "small": "/img/lr-172-800.webp",
+     "large": "/img/lr-172-1600.webp",
+     "srcset": "/img/lr-172-800.webp 583w, /img/lr-172-1600.webp 1167w",
+     "ratio": 0.7291
+    }
+   },
+   {
+    "file": "20261101_000529000_iOS.jpg",
+    "caption": "Nghỉ chân giữa sân trường",
+    "img": {
+     "small": "/img/20261101-000529000-ios-800.webp",
+     "large": "/img/20261101-000529000-ios-1600.webp",
+     "srcset": "/img/20261101-000529000-ios-800.webp 800w, /img/20261101-000529000-ios-1600.webp 1600w",
+     "ratio": 1.5
+    }
+   },
+   {
+    "file": "LR-177.jpg",
+    "caption": "Dưới tán cây",
+    "img": {
+     "small": "/img/lr-177-800.webp",
+     "large": "/img/lr-177-1600.webp",
+     "srcset": "/img/lr-177-800.webp 533w, /img/lr-177-1600.webp 1067w",
+     "ratio": 0.6666
+    }
+   },
+   {
+    "file": "20261101_004111000_iOS.jpg",
+    "caption": "Giữa khuôn viên trường",
+    "img": {
+     "small": "/img/20261101-004111000-ios-800.webp",
+     "large": "/img/20261101-004111000-ios-1600.webp",
+     "srcset": "/img/20261101-004111000-ios-800.webp 800w, /img/20261101-004111000-ios-1600.webp 1600w",
+     "ratio": 1.4994
+    }
+   },
+   {
+    "file": "LR-207.jpg",
+    "caption": "Trong hội trường",
+    "img": {
+     "small": "/img/lr-207-800.webp",
+     "large": "/img/lr-207-1600.webp",
+     "srcset": "/img/lr-207-800.webp 800w, /img/lr-207-1600.webp 1600w",
+     "ratio": 1.5
+    }
+   },
+   {
+    "file": "LR-150.jpg",
+    "caption": "Nắng sớm ở trường",
+    "img": {
+     "small": "/img/lr-150-800.webp",
+     "large": "/img/lr-150-1600.webp",
+     "srcset": "/img/lr-150-800.webp 533w, /img/lr-150-1600.webp 1067w",
+     "ratio": 0.6667
+    }
+   },
+   {
+    "file": "LR-018.jpg",
+    "caption": "Chân dung tốt nghiệp",
+    "img": {
+     "small": "/img/lr-018-800.webp",
+     "large": "/img/lr-018-1600.webp",
+     "srcset": "/img/lr-018-800.webp 547w, /img/lr-018-1600.webp 1094w",
+     "ratio": 0.684
+    }
+   },
+   {
+    "file": "LR-085.jpg",
+    "caption": "Trước ô cửa vân sóng",
+    "img": {
+     "small": "/img/lr-085-800.webp",
+     "large": "/img/lr-085-1600.webp",
+     "srcset": "/img/lr-085-800.webp 533w, /img/lr-085-1600.webp 1067w",
+     "ratio": 0.6667
+    }
+   },
+   {
+    "file": "LR-143.jpg",
+    "caption": "Áo cử nhân, khăn xanh",
+    "img": {
+     "small": "/img/lr-143-800.webp",
+     "large": "/img/lr-143-1600.webp",
+     "srcset": "/img/lr-143-800.webp 533w, /img/lr-143-1600.webp 1067w",
+     "ratio": 0.6667
+    }
+   }
+  ],
+  "letterPhoto": "LR-018.jpg",
+  "ogImage": "/img/og.jpg"
+ },
+ "timelineTitle": "Timeline",
+ "words": {
+  "_note": "Câu chữ mặc định cho link riêng (bạn bè). {name} = tên khách. backText = chữ thư pháp mặt trong bìa (\n = xuống dòng). Trang chung và khách có \"voice\" dùng phần voices bên dưới để ghi đè.",
+  "you": "bạn",
+  "You": "Bạn",
+  "coverFor": "Gửi {name}",
+  "insideLead": "Thân mời",
+  "photoSlot": "Chỗ này để dành cho tấm ảnh của mình với {name}",
+  "backText": "Graduation date secured.\nSee you there"
+ },
+ "voices": {
+  "_note": "Mỗi giọng ghi đè lên câu chữ gốc: chỉ cần ghi khoá muốn đổi. schedule / parking.places ghi theo thứ tự từng dòng, chỉ cần \"text\" / \"note\" (giờ lấy từ schedule gốc). general = trang chung ({name} = words.you). Khách dùng giọng khác: thêm \"voice\": \"teacher\" trong guests.json.",
+  "general": {
+   "words": {
+    "you": "mọi người",
+    "You": "Quý anh chị, bạn bè",
+    "coverFor": "Một lời mời từ Khánh",
+    "insideLead": "Trân trọng kính mời",
+    "photoSlot": "Chỗ này để dành cho tấm ảnh chụp cùng mọi người"
+   },
+   "letter": {
+    "greeting": "Thương gửi Quý anh chị, bạn bè,",
+    "general": "Vậy là hành trình bốn năm đại học cũng đã đến ngày tốt nghiệp, nhìn lại chặng đường vừa qua, Khánh thấy mình thật may mắn khi nhận được sự quan tâm, giúp đỡ và đồng hành từ rất nhiều người. Xin gửi lời cảm ơn chân thành đến mọi người vì đã là một phần trong hành trình đáng nhớ của Khánh ❤️"
+   },
+   "invite": {
+    "title": "Ngày tốt nghiệp,",
+    "lead": [
+     "Sẽ thật vui nếu hôm ấy có thêm những gương mặt quen thuộc."
+    ]
+   },
+   "photos": {
+    "cover": "LR-177.jpg",
+    "letterPhoto2": "LR-172.jpg",
+    "galleryTitle": "Quang Khánh chụp trước vài tấm. Những tấm còn lại chờ mọi người cùng chụp nhé."
+   },
+   "rsvp": {
+    "title": "Khánh mong được gặp mọi người hôm đó",
+    "lead": "Vui lòng xác nhận tham dự để Khánh đón tiếp chu đáo.",
+    "msgPlaceholder": "Gửi đôi lời đến Khánh… (Không bắt buộc)",
+    "confirmText": "Sau khi gửi sẽ không chỉnh sửa được nữa."
+   },
+   "guestbook": {
+    "empty": "Chưa có lời chúc nào. Hãy là người đầu tiên nhé."
+   },
+   "schedule": [
+    {
+     "text": "Nếu đến sớm, mọi người có thể gặp Khánh và chụp hình ở sân trường trước lễ."
+    },
+    {
+     "text": "Trong thời gian diễn ra lễ chính, Khánh sẽ ở trong hội trường. Mọi người có thể theo dõi buổi lễ qua màn hình LED bên ngoài."
+    },
+    {
+     "text": "Đây là lúc Khánh và mọi người có thể thoải mái gặp gỡ và chụp thật nhiều hình kỷ niệm cùng nhau."
+    }
+   ],
+   "parking": {
+    "school": "Có thể gửi xe tại Trường, nhưng vào ngày lễ khu vực gửi xe có thể sẽ hết chỗ sớm. Khánh gợi ý một số điểm gửi xe gần trường:"
+   }
+  },
+  "teacher": {
+   "words": {
+    "coverFor": "Kính gửi {name}",
+    "insideLead": "Trân trọng kính mời",
+    "photoSlot": "Em dành chỗ này cho tấm hình kỷ niệm cùng {name} ạ!"
+   },
+   "letter": {
+    "greeting": "Em gửi {name},",
+    "closing": "Học trò của {name},",
+    "general": "Vậy là hành trình đại học của em cũng sắp khép lại. Nhìn lại những năm tháng vừa qua, em thật sự biết ơn vì đã có cơ hội được học hỏi, nhận sự chỉ bảo và giúp đỡ từ {name}. Những điều ấy không chỉ giúp em trong học tập mà còn là hành trang quý giá để em bước tiếp sau này."
+   },
+   "invite": {
+    "title": "Lễ tốt nghiệp của em,",
+    "lead": [
+     "Sẽ thật ý nghĩa nếu có sự hiện diện của {name} ạ."
+    ]
+   },
+   "photos": {
+    "cover": "LR-177.jpg",
+    "galleryTitle": "Em đã có vài tấm hình trước lễ, nhưng vẫn mong có thêm một tấm hình cùng {name} ạ!"
+   },
+   "rsvp": {
+    "title": "Hy vọng được gặp {name} hôm đó.",
+    "lead": "Nếu sắp xếp được thời gian, {name} cho em biết trước để em tiện đón ạ.",
+    "msgPlaceholder": "Đôi lời nhắn gửi đến em… (Không bắt buộc)",
+    "confirmText": "Lời nhắn sau khi gửi sẽ không thể chỉnh sửa được ạ."
+   },
+   "guestbook": {
+    "empty": "Chưa có lời nhắn nào ở đây."
+   },
+   "schedule": [
+    {
+     "text": "Khoảng thời gian ngắn trước lễ, em rất vui khi được gặp và chụp hình cùng Thầy/Cô ở sân trường trước."
+    },
+    {
+     "text": "Trong thời gian diễn ra lễ chính, em sẽ ở trong hội trường. Thầy/Cô có thể theo dõi buổi lễ qua màn hình LED bên ngoài ạ."
+    },
+    {
+     "text": "Sau khi buổi lễ kết thúc, Đây cũng là lúc thuận tiện nhất để gặp nhau và chụp hình kỷ niệm."
+    }
+   ],
+   "parking": {
+    "school": "Có thể gửi xe tại Trường, nhưng vào ngày lễ khu vực gửi xe có thể sẽ hết chỗ sớm. Em xin gợi ý một số điểm gửi xe gần trường ạ:"
+   }
+  },
+  "family": {
+   "words": {
+    "insideLead": "Con kính mời",
+    "photoSlot": "Chỗ này con để dành cho tấm ảnh chụp cùng {name}"
+   },
+   "letter": {
+    "closing": "Best Regards,",
+    "general": "Có những người không cần đứng trên sân khấu cùng con, nhưng lại là lý do con đi được tới đó.\n{name} là một trong những người ấy.\nCon cảm ơn {name} vì bốn năm vừa qua."
+   },
+   "invite": {
+    "lead": [
+     "Con rất mong hôm đó có {name} đến để lưu lại kỷ niệm, cùng con đếm ngược nha!!!"
+    ]
+   },
+   "photos": {
+    "cover": "LR-177.jpg",
+    "letterPhoto2": "LR-172.jpg",
+    "galleryTitle": "Con chụp trước vài tấm rồi. Những tấm còn lại chờ {name} đó nha."
+   },
+   "rsvp": {
+    "lead": "{name} xác nhận giúp con để con đón tiếp cho chu đáo nha.",
+    "msgPlaceholder": "Nhắn con vài lời nha (không bắt buộc)",
+    "confirmText": "Gửi xong là không sửa được nữa đâu nha."
+   },
+   "guestbook": {
+    "empty": "Chưa có lời chúc nào ở đây."
+   },
+   "schedule": [
+    {
+     "text": "Nếu đến sớm, gia đình mình có thể gặp con và chụp hình ở sân trường trước lễ."
+    },
+    {
+     "text": "Trong thời gian diễn ra lễ chính, con sẽ ở trong hội trường. Mọi người có thể theo dõi buổi lễ qua màn hình LED bên ngoài nha."
+    },
+    {
+     "text": "Đây là lúc gia đình mình và con có thể thoải mái gặp gỡ và chụp thật nhiều hình kỷ niệm cùng nhau!!"
+    }
+   ],
+   "parking": {
+    "school": "Có thể gửi xe tại Trường, nhưng vào ngày lễ khu vực gửi xe có thể sẽ hết chỗ sớm. Con gợi ý một số điểm gửi xe gần trường nha:"
+   }
+  },
+  "sibling": {
+   "words": {
+    "insideLead": "Em kính mời",
+    "photoSlot": "Chỗ này em để dành cho tấm ảnh chụp cùng {name}"
+   },
+   "letter": {
+    "closing": "Best Regards,",
+    "general": "Có những người không cần đứng trên sân khấu cùng em, nhưng lại là lý do em đi được tới đó.\n{name} là một trong những người ấy.\nEm cảm ơn {name} vì bốn năm vừa qua."
+   },
+   "invite": {
+    "lead": [
+     "Em rất mong hôm đó có {name} đến để lưu lại kỷ niệm, cùng em đếm ngược nha!!!"
+    ]
+   },
+   "photos": {
+    "cover": "LR-177.jpg",
+    "letterPhoto2": "LR-172.jpg",
+    "galleryTitle": "Em chụp trước vài tấm rồi. Những tấm còn lại chờ {name} đó nha."
+   },
+   "rsvp": {
+    "lead": "{name} xác nhận giúp em để em đón tiếp cho chu đáo nha.",
+    "msgPlaceholder": "Nhắn em vài lời nha (không bắt buộc)",
+    "confirmText": "Gửi xong là không sửa được nữa đâu nha."
+   },
+   "guestbook": {
+    "empty": "Chưa có lời chúc nào ở đây."
+   },
+   "schedule": [
+    {
+     "text": "Nếu đến sớm, {name} có thể gặp em và chụp hình ở sân trường trước lễ."
+    },
+    {
+     "text": "Trong thời gian diễn ra lễ chính, em sẽ ở trong hội trường. Mọi người có thể theo dõi buổi lễ qua màn hình LED bên ngoài nha."
+    },
+    {
+     "text": "Đây là lúc {name} và em có thể thoải mái gặp gỡ và chụp thật nhiều hình kỷ niệm cùng nhau!!"
+    }
+   ],
+   "parking": {
+    "school": "Có thể gửi xe tại Trường, nhưng vào ngày lễ khu vực gửi xe có thể sẽ hết chỗ sớm. Em gợi ý một số điểm gửi xe gần trường nha:"
+   }
+  }
+ }
+};

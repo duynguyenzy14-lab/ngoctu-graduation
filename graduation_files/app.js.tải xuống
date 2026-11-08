@@ -1,0 +1,1713 @@
+(() => {
+  "use strict";
+  const S = window.SITE;
+  const app = document.getElementById("app");
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
+  const ease = (t) => 1 - Math.pow(1 - t, 3);
+  const pad = (n) => String(n).padStart(2, "0");
+  const esc = (s) =>
+    String(s ?? "").replace(
+      /[&<>"']/g,
+      (c) =>
+        ({
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#39;",
+        })[c],
+    );
+  const store = {
+    get(k) {
+      try {
+        return JSON.parse(localStorage.getItem(k));
+      } catch {
+        return null;
+      }
+    },
+    set(k, v) {
+      try {
+        localStorage.setItem(k, JSON.stringify(v));
+      } catch {
+        /* bỏ qua */
+      }
+    },
+  };
+  const onView = (els, cb, opts = { threshold: 0.2 }) => {
+    if (!("IntersectionObserver" in window)) {
+      els.forEach(cb);
+      return;
+    }
+    const io = new IntersectionObserver(
+      (es) =>
+        es.forEach((e) => {
+          if (e.isIntersecting) {
+            cb(e.target);
+            io.unobserve(e.target);
+          }
+        }),
+      opts,
+    );
+    els.forEach((el) => io.observe(el));
+  };
+
+  /* =============== dựng trang =============== */
+  function render(guest) {
+    const name = guest?.name;
+    const gal = S.photos.gallery;
+    // {name} trong câu chữ: tên khách (tô xanh); trang chung thì "bạn" cũng được tô như một cái tên
+    const Wd = S.words || {};
+    const you = (cap) => name || (cap ? Wd.You || "Bạn" : Wd.you || "bạn");
+    const fill = (str, cap = false) =>
+      esc(str).replace(/\{name\}/g, () => `<span class="who">${esc(you(cap))}</span>`);
+    const plain = (str, cap = false) => String(str ?? "").replace(/\{name\}/g, () => you(cap)); // {name} không tô màu
+    let letterLines = plain(guest?.message || S.letter.general)
+      .split(/\n+/)
+      .filter(Boolean);
+    if (letterLines.length === 1)
+      letterLines = letterLines[0].split(/(?<=[.!?])\s+/); // tách câu thành từng đoạn
+    const cal = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(S.calendar.title)}&dates=${S.calendar.start}/${S.calendar.end}&location=${encodeURIComponent(S.venue.address)}`;
+    const maps = (q) =>
+      `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`;
+    // chữ trong thư tách thành từng từ để "viết" dần theo nhịp cuộn
+    const words = (str) =>
+      esc(str)
+        .split(/\s+/)
+        .filter(Boolean)
+        .map((w) => `<span class="w">${w}</span>`)
+        .join(" ");
+    const L = S.letter;
+    // ảnh polaroid mặt trong bìa khi khách không có ảnh riêng (photos.cover, mặc định ảnh đầu gallery)
+    const coverPhoto = (gal.find((g) => g.file === S.photos.cover) || gal[0]).img;
+    // polaroid dưới cạnh lá thư khi khách không có ảnh (photos.letterPhoto2); không có thì để ô trống
+    const letterPhoto2 = gal.find((g) => g.file === S.photos.letterPhoto2)?.img;
+    const letterPhoto = (
+      gal.find((g) => g.file === S.photos.letterPhoto) || gal[0]
+    ).img;
+
+    // từng dòng của hoá đơn
+    const R = [];
+    R.push(
+      `<p class="rl head center">${esc(S.timelineTitle || "Timeline")}</p>`,
+    );
+    R.push(`<p class="rl rule"></p>`);
+    S.schedule.forEach((s) =>
+      R.push(
+        `<p class="rl sched"><span class="t">${esc(s.time)}</span><span class="d">${fill(s.text)}</span></p>`,
+      ),
+    );
+    R.push(`<p class="rl rule"></p>`);
+    R.push(`<p class="rl dim">Địa điểm</p>`);
+    R.push(
+      `<p class="rl venue-name"><a href="${esc(S.venue.mapsUrl)}" target="_blank" rel="noopener">${esc(S.venue.name)}</a></p>`,
+    );
+    R.push(`<p class="rl venue-addr">${esc(S.venue.address)}</p>`);
+    R.push(`<p class="rl rule"></p>`);
+    R.push(`<p class="rl dim">Liên hệ</p>`);
+    (
+      S.contact.people || [
+        {
+          name: S.shortName,
+          phone: S.contact.phone,
+          phoneDisplay: S.contact.phoneDisplay,
+        },
+      ]
+    ).forEach((c) =>
+      R.push(
+        `<p class="rl ld"><span class="k">${esc(c.name)}</span><span class="dots"></span><a class="v tel" href="tel:${esc(c.phone)}">${esc(c.phoneDisplay)}</a></p>`,
+      ),
+    );
+    R.push(`<p class="rl rule"></p>`);
+    R.push(`<div class="rl r-actions">
+        <a href="${esc(S.venue.mapsUrl)}" target="_blank" rel="noopener">[ Chỉ đường ]</a>
+        <a href="${esc(cal)}" target="_blank" rel="noopener">[ Thêm vào lịch ]</a>
+        <a href="https://zalo.me/${esc(S.contact.phone)}" target="_blank" rel="noopener">[ Nhắn Zalo ]</a>
+      </div>`);
+
+    const mph = (g) =>
+      `<figure class="mph" style="--ar:${g.img.ratio}"><img src="${g.img.small}" alt="${esc(g.caption)}" decoding="async"></figure>`;
+    const row1 = gal.map(mph).join(""),
+      row2 = [...gal].reverse().map(mph).join("");
+
+    const options = S.rsvp.options
+      .map(
+        (o, i) =>
+          `<label><input type="radio" name="slot" id="slot-${i}" value="${esc(o.value)}"${i === 0 ? " checked" : ""}>${esc(o.label)}</label>`,
+      )
+      .join("");
+    const P = S.parking;
+    const parking = P
+      ? `
+            <div class="receipt parking" aria-label="${esc(P.title)}">
+              <p class="rl head center">${esc(P.title)}</p>
+              <p class="rl rule"></p>
+              <p class="rl txt">${fill(P.school)}</p>
+              ${P.intro ? `<p class="rl dim">${fill(P.intro)}</p>` : ""}
+              ${P.places.map((p) => `<p class="rl spot"><span class="sn">${esc(p.name)}</span><a href="${esc(maps(p.query))}" target="_blank" rel="noopener" aria-label="Chỉ đường đến ${esc(p.name)}">[ Bản đồ ]</a><span class="d">${fill(p.note)}</span></p>`).join("")}
+            </div>`
+      : "";
+
+    const introStyle =
+      new URLSearchParams(location.search).get("intro") ||
+      S.intro.style ||
+      "ascii";
+    const emblem = `<svg class="emblem" viewBox="0 0 120 84" aria-hidden="true">
+        <defs><linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8A6A2F"/><stop offset=".35" stop-color="#F3D98B"/><stop offset=".6" stop-color="#B8913F"/><stop offset=".8" stop-color="#F7E7A8"/><stop offset="1" stop-color="#9B7834"/></linearGradient></defs>
+        <g fill="none" stroke="url(#gold)" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round">
+          <path d="M60 10 L112 30 L60 50 L8 30 Z"/><path d="M30 40 V58 C30 66 90 66 90 58 V40"/><path d="M112 30 V54"/><circle cx="112" cy="58" r="3.2" fill="url(#gold)"/>
+          <path d="M22 76 H98" stroke-width="1.4"/>
+        </g></svg>`;
+    const staged = introStyle === "stage";
+    const floaters = staged
+      ? `
+        <div class="floaters" id="floaters" aria-hidden="true">${Array.from({ length: 6 }, (_, i) => gal[i % gal.length]) // đúng 6 ảnh cho 6 chỗ trong initStageScene
+          .map(
+            (g) =>
+              `<figure class="fl" style="--ar:${g.img.ratio}"><img src="${g.img.small}" alt="" decoding="async"></figure>`,
+          )
+          .join("")}</div>
+        <div class="beam" aria-hidden="true"></div>
+        <canvas class="dust" id="dust" aria-hidden="true"></canvas>
+        <div class="blackout" aria-hidden="true"></div>`
+      : "";
+    const introMarkup =
+      introStyle === "diploma" || staged
+        ? `
+      <section class="intro dip${staged ? " staged" : ""}" id="intro">${floaters}
+        <div class="stage" id="stage">
+          <div class="float">
+            <div class="book" id="book">
+              <div class="inside">
+                <p class="in-lead">${esc(Wd.insideLead || "Thân mời")}</p>
+                <p class="in-name">${esc(you(true))}</p>
+                <p class="in-text">đến tham dự Lễ tốt nghiệp của</p>
+                <p class="in-host">${esc(S.fullName)}</p>
+                <p class="in-meta">${esc(S.dateLong)}</p>
+                <a class="in-next" href="#letter">Đọc thư</a>
+              </div>
+              <button class="cover" id="cover" type="button" aria-label="Mở bìa thiệp">
+                <span class="face front">
+                  <span class="frame"></span>
+                  <span class="school">${esc(S.school)}</span>
+                  ${emblem}
+                  <span class="foil title"><span class="t-small">Thiệp mời tham dự</span>Lễ tốt nghiệp</span>
+                  <span class="foil for">${esc(plain(Wd.coverFor || "Gửi {name}"))}</span>
+                  <span class="sheen"></span>
+                </span>
+                <span class="face back"><span class="frame"></span><span class="snap" id="snap"><img src="${(guest?.photo || coverPhoto).small}" alt="" decoding="async"></span><span class="back-text"><span class="script">${esc(plain(Wd.backText || "Graduation date secured.\nSee you there")).replace(/\n/g, "<br>")}</span></span></span>
+              </button>
+            </div>
+            <!-- tua nằm ở lớp phẳng phía trên bìa (không trong khối 3D) để Safari/iOS không vẽ nhầm ra sau bìa -->
+            <div class="book-ui" id="book-ui">
+              <svg class="tassel" id="tassel" aria-hidden="true">
+                <defs><linearGradient id="tgold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9B7834"/><stop offset=".45" stop-color="#F3D98B"/><stop offset="1" stop-color="#A9843A"/></linearGradient></defs>
+                <path id="t-cord" fill="none" stroke="url(#tgold)" stroke-width="2.4" stroke-linecap="round"/>
+                <circle id="t-btn" r="5.5" fill="url(#tgold)"/>
+                <g id="t-head">
+                  <ellipse cx="0" cy="0" rx="5.5" ry="6.5" fill="url(#tgold)"/>
+                  <path d="M-4 5 L4 5 L9 40 L-9 40 Z" fill="url(#tgold)"/>
+                  <path d="M-7 18 V40 M-4 14 V40 M-1 12 V40 M2 12 V40 M5 14 V40 M8 18 V40" stroke="#7A5A22" stroke-width=".8" opacity=".55"/>
+                </g>
+              </svg>
+              <button class="tassel-hit" id="tassel-hit" type="button" aria-label="Chuyển tua sang trái để mở thiệp"></button>
+            </div>
+          </div>
+          <p class="dip-hint" id="dip-hint">Kéo tua sang trái để mở thiệp</p>
+        </div>
+      </section>`
+        : `
+      <section class="intro" id="intro">
+        <div class="portrait">
+          <canvas id="portrait" role="img" aria-label="Chân dung ${esc(S.fullName)} ghép từ ký tự"></canvas>
+          <p class="grid-size" id="grid-size" aria-hidden="true"></p>
+          <button class="hold" id="hold" type="button" aria-label="${esc(S.intro.hold)}">
+            <svg viewBox="0 0 100 100" aria-hidden="true"><circle id="hold-ring" cx="50" cy="50" r="47" pathLength="100" stroke-dasharray="100" stroke-dashoffset="100"></circle></svg>
+            <span>${esc(S.intro.hold)}</span>
+          </button>
+        </div>
+        <div class="intro-text">
+          <p class="intro-meta">${esc(S.dateNumeric)} / ${esc(S.school)}</p>
+          <h1>${name ? `<span class="to">Gửi ${esc(name)},</span>` : ""}${esc(S.intro.title)}</h1>
+          <p class="sub">${esc(S.intro.sub)}</p>
+          <div class="scroll-hint"><i></i>Chạm vào chân dung, nhấn giữ nút tròn để mở thiệp</div>
+        </div>
+      </section>`;
+
+    app.innerHTML = `
+${introMarkup}
+
+      <section class="letter" id="letter">
+        <div class="wrap letter-grid">
+          <div class="photos" id="photos" aria-hidden="true">
+            <figure class="pol pol-me"><i class="tape"></i><img src="${(guest?.letterPhotos?.[0] || letterPhoto).small}" alt="" decoding="async"></figure>
+            ${
+              guest?.letterPhotos?.[1] || guest?.photo || letterPhoto2
+                ? `<figure class="pol pol-you"><i class="tape"></i><img src="${(guest?.letterPhotos?.[1] || guest?.photo || letterPhoto2).small}" alt="" decoding="async"></figure>`
+                : `<figure class="pol pol-you empty"><i class="tape"></i><span class="slot"><span>${esc(plain(Wd.photoSlot || "Chỗ này để dành cho tấm ảnh của mình với {name}"))}</span></span></figure>`
+            }
+          </div>
+          <article class="paper" id="paper">
+            <p class="l-place">${esc(L.place)}</p>
+            <p class="l-greet">${fill(L.greeting)}</p>
+            ${letterLines.map((l) => `<p class="l-p" data-write>${words(l)}</p>`).join("")}
+            <p class="l-close" data-write>${words(plain(L.closing))}</p>
+            <p class="l-sign" data-write><span class="w">${esc(L.sign)}</span></p>
+          </article>
+        </div>
+      </section>
+
+      <section class="invite" id="invite">
+        <div class="wrap invite-grid">
+          <div class="invite-left">
+            <h2 class="rv">${fill(S.invite.title || "Thân mời {name}", true)}</h2>
+            <div class="lead rv">${S.invite.lead.map((p) => `<p>${fill(p)}</p>`).join("")}</div>
+            <div class="countdown" id="countdown" aria-live="off">
+              <div><span class="n" data-u="d">00</span><small>ngày</small></div>
+              <div><span class="n" data-u="h">00</span><small>giờ</small></div>
+              <div><span class="n" data-u="m">00</span><small>phút</small></div>
+              <div class="sec"><span class="n" data-u="s">00</span><small>giây</small></div>
+            </div>
+            <p class="until">đến <b>07:00, ${esc(S.dateNumeric)}</b></p>
+          </div>
+          <div class="invite-right">
+            <div class="receipt" id="receipt">${R.join("")}</div>${parking}
+          </div>
+        </div>
+      </section>
+
+      <section class="moments" id="moments">
+        <div class="texture" id="texture" aria-hidden="true"></div>
+        <div class="wrap"><h2 class="rv">${fill(S.photos.galleryTitle)}</h2></div>
+        <div class="marquee" aria-label="Ảnh tốt nghiệp">
+          <div class="mrow"><div class="mtrack" data-dir="-1">${row1}${row1}</div></div>
+          <div class="mrow"><div class="mtrack" data-dir="1">${row2}${row2}</div></div>
+        </div>
+
+        <div class="wrap board">
+          <div id="rsvp">
+            <h3>${fill(S.rsvp.title)}</h3>
+            ${S.rsvp.lead ? `<p class="rsvp-lead">${fill(S.rsvp.lead)}</p>` : ""}
+            <form id="form" novalidate>
+              <fieldset class="seg"><legend>Khung giờ</legend>${options}</fieldset>
+              ${
+                name && !guest.group
+                  ? ""
+                  : `<input class="field" type="text" id="name" name="name" placeholder="Họ tên" aria-label="Họ tên" autocomplete="name" maxlength="80">
+              <input class="field" type="email" id="email" name="email" placeholder="Email (không bắt buộc)" aria-label="Email" autocomplete="email" maxlength="120">`
+              }
+              <textarea class="field" id="msg" name="msg" placeholder="${esc(S.rsvp.msgPlaceholder)}" aria-label="Lời nhắn cho ${esc(S.shortName)}" maxlength="280"></textarea>
+              <label class="check"><input type="checkbox" id="public" name="public" checked> <span>${esc(S.rsvp.publicLabel)}</span></label>
+              <div class="hp" aria-hidden="true"><label>Website <input type="text" id="website" name="website" tabindex="-1" autocomplete="off"></label></div>
+              <p class="err" id="err" role="alert" hidden></p>
+              <button class="send" type="submit" id="send">Gửi xác nhận</button>
+              <div class="confirm" id="confirm" role="alertdialog" aria-labelledby="confirm-q" hidden>
+                <p id="confirm-q">${esc(S.rsvp.confirmText || "Gửi xong là không sửa được nữa nha — chắc chưa?")}</p>
+                <div><button class="send" type="button" id="confirm-yes">Chắc rồi, gửi</button><button class="ghost" type="button" id="confirm-no">Xem lại</button></div>
+              </div>
+            </form>
+            <div id="done" hidden></div>
+          </div>
+
+          <div class="gb">
+            <h3>${esc(S.guestbook.title)}</h3>
+            <div class="gb-ticker" aria-hidden="true"><div class="gb-tt" id="gb-tt"></div></div>
+            <div class="gb-card" aria-live="polite">
+              <p class="gb-quote"><span id="gb-text"></span><span class="caret" aria-hidden="true"></span></p>
+              <div class="gb-who"><span class="gb-av" id="gb-av"></span><div><b id="gb-name"></b><small id="gb-meta"></small></div></div>
+              <span class="gb-bar" id="gb-bar" aria-hidden="true"></span>
+            </div>
+            <div class="gb-nav"><button type="button" id="gb-prev" aria-label="Lời chúc trước">[&lt;]</button><span id="gb-count"></span><button type="button" id="gb-next" aria-label="Lời chúc sau">[&gt;]</button></div>
+          </div>
+        </div>
+      </section>`;
+
+    document.getElementById("footer").innerHTML =
+      `<span>Cảm ơn vì đã đến</span><span>${esc(S.dateNumeric)}</span>`;
+    // thầy cô (khách có "voice") giữ tiêu đề chung, "<tên> ơi" nghe ngang hàng
+    if (name && !guest.voice) document.title = `${name} ơi, ${S.shortName} tốt nghiệp rồi`;
+
+    if (introStyle === "diploma" || staged) initDiploma(staged);
+    else initIntro(guest);
+    initSmoothScroll();
+    initScrollFx();
+    initCountdown();
+    initMarquee();
+    const gb = initGuestbook();
+    setupForm(guest, gb);
+  }
+
+  /* =============== 1. chân dung ghép từ ký tự =============== */
+  function initIntro(guest) {
+    const cv = document.getElementById("portrait"),
+      ctx = cv.getContext("2d"); // để alpha mặc định: tránh viền màu do khử răng cưa LCD
+    const box = cv.parentElement,
+      holdBtn = document.getElementById("hold"),
+      ringEl = document.getElementById("hold-ring");
+    const sizeEl = document.getElementById("grid-size");
+    const P = S.intro.portrait.img;
+    const RAMP = " .,:;-=+*%#@";
+    const COLORS = {
+      bg: "#0B1630",
+      frost: "#E7ECF7",
+      blue: "#7FA2FF",
+      sky: "#8FB0FF",
+    };
+    // ký tự dùng khi xáo trộn: lấy từ tên khách (thiệp riêng) hoặc tên Khánh
+    const pool = [
+      ...((guest ? guest.name : S.shortName) + "14110{}<>/")
+        .toLocaleUpperCase("vi")
+        .replace(/\s+/g, ""),
+    ];
+    const pick = () => pool[(Math.random() * pool.length) | 0];
+
+    let W = 0,
+      H = 0,
+      dpr = 1,
+      cw = 7,
+      chh = 12,
+      cols = 0,
+      rows = 0,
+      cells = [];
+    let hold = 0,
+      holding = false,
+      openT = 0,
+      opening = false,
+      visible = true,
+      raf = 0,
+      last = 0,
+      t0 = 0;
+    const ptr = { x: -1e4, y: -1e4, on: false };
+    const img = new Image();
+
+    function layout() {
+      dpr = Math.min(2, window.devicePixelRatio || 1);
+      W = box.clientWidth;
+      H = box.clientHeight;
+      cv.width = Math.round(W * dpr);
+      cv.height = Math.round(H * dpr);
+      cw = W < 600 ? 5 : 6;
+      chh = Math.round(cw * 1.7);
+      cols = Math.floor(W / cw);
+      rows = Math.floor(H / chh);
+      // đặt chân dung vừa chiều cao khung, căn giữa, hơi lệch xuống
+      let pr = Math.round(rows * 0.96),
+        pc = Math.round((pr * chh * P.ratio) / cw);
+      if (pc > cols) {
+        pc = cols;
+        pr = Math.round((pc * cw) / (P.ratio * chh));
+      }
+      const ox = Math.round((cols - pc) / 2),
+        oy = Math.round((rows - pr) * 0.7);
+      const oc = document.createElement("canvas");
+      oc.width = pc;
+      oc.height = pr;
+      const o = oc.getContext("2d", { willReadFrequently: true });
+      o.drawImage(img, 0, 0, pc, pr);
+      const d = o.getImageData(0, 0, pc, pr).data;
+      const fx = (ox + pc / 2) * cw,
+        fy = (oy + pr * 0.22) * chh,
+        far = Math.hypot(W, H);
+      cells = new Array(cols * rows);
+      for (let y = 0; y < rows; y++) {
+        for (let x = 0; x < cols; x++) {
+          let lum = 0,
+            blue = false;
+          if (x >= ox && x < ox + pc && y >= oy && y < oy + pr) {
+            const i = ((y - oy) * pc + (x - ox)) * 4,
+              r = d[i],
+              g = d[i + 1],
+              b = d[i + 2];
+            lum = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+            blue = b > r + 25 && b > g + 10 && lum > 0.08;
+          }
+          const ch =
+            RAMP[Math.min(RAMP.length - 1, Math.floor(lum * RAMP.length))];
+          const dist = Math.hypot(x * cw - fx, y * chh - fy) / far;
+          cells[y * cols + x] = {
+            ch,
+            a: 0.14 + 0.86 * lum,
+            blue,
+            heat: 0,
+            cur: pick(),
+            r: Math.random(),
+            delay: 0.25 + dist * 2.4 + Math.random() * 0.45,
+          };
+        }
+      }
+      sizeEl.textContent = `chân dung ${pc} × ${pr} ký tự`;
+    }
+
+    function draw(now, dt) {
+      const t = reduce ? 99 : (now - t0) / 1000;
+      const melt = ease(hold) * 0.6 + openT * 1.4;
+      let busy = holding || hold > 0 || opening;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.globalAlpha = 1;
+      ctx.fillStyle = COLORS.bg;
+      ctx.fillRect(0, 0, W, H);
+      ctx.font = `500 ${(cw * 1.62).toFixed(1)}px "JetBrains Mono", ui-monospace, monospace`;
+      ctx.textBaseline = "top";
+      const R2 = (W < 600 ? 46 : 70) ** 2;
+      let color = "";
+      for (let k = 0; k < cells.length; k++) {
+        const c = cells[k],
+          x = k % cols,
+          y = (k / cols) | 0;
+        if (ptr.on) {
+          const dx = x * cw - ptr.x,
+            dy = y * chh - ptr.y;
+          if (dx * dx + dy * dy < R2) c.heat = 1;
+        }
+        let ch = c.ch,
+          a = c.a,
+          col = c.blue ? COLORS.blue : COLORS.frost;
+        if (t < c.delay) {
+          // chưa giải mã: nhiễu mờ
+          busy = true;
+          if (Math.random() < 0.25) c.cur = pick();
+          ch = c.cur;
+          a = 0.06 + 0.16 * c.r;
+        } else if (c.heat > 0.02) {
+          // bị chạm: xáo trộn rồi tự ghép lại
+          busy = true;
+          c.heat = Math.max(0, c.heat - dt * 1.3);
+          if (Math.random() < 0.35) c.cur = pick();
+          ch = c.cur;
+          a = Math.max(a, 0.25 + 0.6 * c.heat);
+          col = COLORS.sky;
+        }
+        let py = y * chh;
+        if (melt > 0) {
+          // nhấn giữ: chân dung tan chảy xuống
+          py += melt * melt * (0.25 + c.r) * H * 0.55;
+          if (Math.random() < melt * 0.5) ch = pick();
+          a *= 1 - openT;
+        }
+        if (ch === " " || a < 0.035) continue;
+        if (col !== color) {
+          ctx.fillStyle = col;
+          color = col;
+        }
+        ctx.globalAlpha = a;
+        ctx.fillText(ch, x * cw, py);
+      }
+      ringEl.style.strokeDashoffset = String(100 - hold * 100);
+      return busy;
+    }
+
+    function frame() {
+      raf = 0;
+      const now = performance.now();
+      const dt = last ? Math.min(0.05, (now - last) / 1000) : 0.016;
+      last = now;
+      if (!opening) hold = clamp(hold + (holding ? dt / 1.3 : -dt * 1.8));
+      if (hold >= 1 && !opening) open();
+      const busy = draw(now, dt);
+      if ((busy || ptr.on) && visible) wake();
+      else last = 0;
+    }
+    const wake = () => {
+      if (!raf && !reduce) raf = requestAnimationFrame(frame);
+    };
+
+    function open() {
+      opening = true;
+      holding = false;
+      const flash = document.createElement("div");
+      flash.className = "flash";
+      document.body.appendChild(flash);
+      const start = performance.now(),
+        dur = reduce ? 1 : 1000;
+      (function step(now) {
+        const p = clamp((now - start) / dur);
+        openT = p;
+        wake();
+        flash.style.opacity = String(clamp((p - 0.5) / 0.5));
+        if (p < 1) requestAnimationFrame(step);
+        else {
+          document
+            .getElementById("letter")
+            .scrollIntoView({ behavior: "instant", block: "start" });
+          flash.animate([{ opacity: 1 }, { opacity: 0 }], {
+            duration: reduce ? 1 : 700,
+            easing: "ease-out",
+          }).onfinish = () => flash.remove();
+          setTimeout(() => {
+            openT = 0;
+            hold = 0;
+            opening = false;
+            wake();
+          }, 300);
+        }
+      })(start);
+    }
+
+    // chạm / rê chuột vào chân dung
+    box.addEventListener("pointermove", (e) => {
+      const r = cv.getBoundingClientRect();
+      ptr.x = e.clientX - r.left;
+      ptr.y = e.clientY - r.top;
+      ptr.on = true;
+      wake();
+    });
+    box.addEventListener("pointerleave", () => {
+      ptr.on = false;
+    });
+    box.addEventListener("pointerdown", (e) => {
+      if (e.target.closest(".hold")) return;
+      const r = cv.getBoundingClientRect();
+      ptr.x = e.clientX - r.left;
+      ptr.y = e.clientY - r.top;
+      ptr.on = true;
+      wake();
+      setTimeout(() => {
+        if (e.pointerType !== "mouse") ptr.on = false;
+      }, 250);
+    });
+
+    // nhấn giữ nút tròn; bàn phím: Enter/Space mở ngay
+    holdBtn.addEventListener("pointerdown", (e) => {
+      if (e.button > 0) return;
+      e.preventDefault();
+      holding = true;
+      holdBtn.setPointerCapture?.(e.pointerId);
+      wake();
+    });
+    ["pointerup", "pointercancel", "lostpointercapture"].forEach((ev) =>
+      holdBtn.addEventListener(ev, () => {
+        holding = false;
+      }),
+    );
+    holdBtn.addEventListener("contextmenu", (e) => e.preventDefault());
+    holdBtn.addEventListener("click", (e) => {
+      if (e.detail === 0 && !opening) open();
+    });
+
+    // thỉnh thoảng vài ký tự tự lấp lánh khi đứng yên
+    if (!reduce)
+      setInterval(() => {
+        if (!visible || !cells.length) return;
+        for (let i = 0; i < 6; i++) {
+          const c = cells[(Math.random() * cells.length) | 0];
+          if (c.ch !== " ") c.heat = 0.5;
+        }
+        wake();
+      }, 400);
+
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(([e]) => {
+        visible = e.isIntersecting;
+        if (visible) wake();
+      }).observe(box);
+    }
+    addEventListener("resize", () => {
+      if (img.complete) {
+        layout();
+        draw(performance.now(), 0);
+      }
+    });
+
+    const fontReady = document.fonts?.load
+      ? document.fonts.load('500 11px "JetBrains Mono"').catch(() => {})
+      : Promise.resolve();
+    img.src = P.src;
+    Promise.all([img.decode(), fontReady])
+      .then(() => {
+        layout();
+        t0 = performance.now();
+        if (reduce) draw(t0, 0);
+        else wake();
+      })
+      .catch(() => {
+        /* ảnh lỗi: giữ nền tối */
+      });
+  }
+
+  /* =============== 1b. mở bìa bằng + chuyển tua =============== */
+  function initDiploma(staged = false) {
+    const stage = document.getElementById("stage"),
+      book = document.getElementById("book"),
+      cover = document.getElementById("cover"),
+      hint = document.getElementById("dip-hint"),
+      snap = document.getElementById("snap"),
+      svg = document.getElementById("tassel"),
+      cord = document.getElementById("t-cord"),
+      btn = document.getElementById("t-btn"),
+      head = document.getElementById("t-head"),
+      hit = document.getElementById("tassel-hit"),
+      floatEl = stage.querySelector(".float");
+    let open = 0,
+      anim = 0,
+      drag = null,
+      celebrated = false;
+
+    function setHint() {
+      hint.textContent =
+        open > 0.97
+          ? "Cuộn xuống để đọc thư"
+          : T.side < 0
+            ? "Đang mở thiệp…"
+            : "Kéo tua sang trái để mở thiệp";
+    }
+    function set(v) {
+      open = clamp(v);
+      stage.style.setProperty("--open", open.toFixed(4));
+      book.classList.toggle("is-open", open > 0.97);
+      if (open > 0.6 && snap && !snap.classList.contains("dev"))
+        snap.classList.add("dev"); // ảnh "rửa" dần
+      if (open > 0.5 && !celebrated) {
+        celebrated = true;
+        confetti();
+      }
+      setHint();
+    }
+    function animateTo(target) {
+      cancelAnimationFrame(anim);
+      const from = open,
+        t0 = performance.now(),
+        dur = reduce ? 1 : 900 * Math.abs(target - from) + 300;
+      (function step() {
+        const p = clamp((performance.now() - t0) / dur);
+        set(from + (target - from) * ease(p));
+        if (p < 1) anim = requestAnimationFrame(step);
+      })();
+    }
+
+    /* ---- tua mũ: lò xo + kéo ---- */
+    const T = {
+      x: 0,
+      y: 0,
+      vx: 0,
+      vy: 0,
+      side: 1,
+      held: false,
+      raf: 0,
+      last: 0,
+      W: 0,
+      H: 0,
+    };
+    const restOf = (side) => ({ x: side > 0 ? T.W + 13 : -13, y: T.H * 0.34 });
+    function measure() {
+      T.W = book.offsetWidth;
+      T.H = book.offsetHeight;
+      svg.setAttribute("width", T.W);
+      svg.setAttribute("height", T.H);
+      svg.setAttribute("viewBox", `0 0 ${T.W} ${T.H}`);
+      if (!T.x && !T.y) Object.assign(T, restOf(T.side));
+      paintTassel();
+    }
+    function paintTassel() {
+      const ax = T.W / 2,
+        ay = 0; // nút trên mép bìa
+      const corner = T.x > ax ? T.W : 0;
+      const draped = !T.held && (corner ? T.x > T.W - 2 : T.x < 2);
+      // lúc nằm yên: dây vắt qua mép trên rồi rủ xuống; lúc kéo: dây thẳng có độ võng
+      const d = draped
+        ? `M${ax} ${ay} L${corner} ${ay} Q${corner + (corner ? 10 : -10)} ${ay + 4} ${T.x} ${T.y - 6}`
+        : `M${ax} ${ay} Q${(ax + T.x) / 2} ${Math.max(ay, T.y) * 0.5 + 24} ${T.x} ${T.y - 6}`;
+      cord.setAttribute("d", d);
+      btn.setAttribute("cx", ax);
+      btn.setAttribute("cy", ay);
+      const tilt = clamp(-T.vx * 0.06, -28, 28);
+      head.setAttribute(
+        "transform",
+        `translate(${T.x.toFixed(1)} ${T.y.toFixed(1)}) rotate(${tilt.toFixed(1)})`,
+      );
+      hit.style.transform = `translate(${(T.x - 26).toFixed(1)}px, ${(T.y - 14).toFixed(1)}px)`;
+    }
+    function physics(now) {
+      T.raf = 0;
+      const dt = T.last ? Math.min(0.033, (now - T.last) / 1000) : 0.016;
+      T.last = now;
+      if (!T.held) {
+        const r = restOf(T.side),
+          sway = T.side > 0 && open < 0.05 ? Math.sin(now / 700) * 2.2 : 0;
+        const ax = (r.x + sway - T.x) * 70 - T.vx * 9,
+          ay = (r.y - T.y) * 70 - T.vy * 9 + 40;
+        T.vx += ax * dt;
+        T.vy += ay * dt;
+        T.x += T.vx * dt;
+        T.y += T.vy * dt;
+      }
+      paintTassel();
+      const moving =
+        T.held ||
+        Math.abs(T.vx) + Math.abs(T.vy) > 2 ||
+        (T.side > 0 && open < 0.05);
+      if (moving && !reduce) T.raf = requestAnimationFrame(physics);
+      else T.last = 0;
+    }
+    const kick = () => {
+      if (!T.raf && !reduce) T.raf = requestAnimationFrame(physics);
+    };
+    function graduate() {
+      // tua đã sang trái: mở thiệp
+      if (T.side < 0) return;
+      T.side = -1;
+      setHint();
+      kick();
+      setTimeout(() => animateTo(1), reduce ? 0 : 380);
+    }
+
+    hit.addEventListener("pointerdown", (e) => {
+      if (e.button > 0 || open > 0.05) return;
+      e.preventDefault();
+      hit.setPointerCapture?.(e.pointerId);
+      T.held = true;
+      kick();
+    });
+    hit.addEventListener("pointermove", (e) => {
+      if (!T.held) return;
+      const r = book.getBoundingClientRect();
+      const nx = e.clientX - r.left,
+        ny = e.clientY - r.top;
+      T.vx = (nx - T.x) * 30;
+      T.vy = (ny - T.y) * 30;
+      T.x = clamp(nx, -40, T.W + 40);
+      T.y = clamp(ny, 10, T.H * 0.9);
+      if (T.x < T.W * 0.42) {
+        T.held = false;
+        graduate();
+      }
+    });
+    const release = () => {
+      if (!T.held) return;
+      T.held = false;
+      if (T.x < T.W * 0.5) graduate();
+      kick();
+    };
+    hit.addEventListener("pointerup", release);
+    hit.addEventListener("pointercancel", release);
+    hit.addEventListener("click", (e) => {
+      if (e.detail === 0) graduate();
+    }); // bàn phím
+
+    /* ---- vẫn cho chạm / vuốt bìa để mở ---- */
+    cover.addEventListener("pointerdown", (e) => {
+      if (e.button > 0) return;
+      cancelAnimationFrame(anim);
+      drag = { y: e.clientY, start: open, moved: false };
+      cover.setPointerCapture?.(e.pointerId);
+    });
+    cover.addEventListener("pointermove", (e) => {
+      if (!drag) return;
+      const dy = drag.y - e.clientY;
+      if (Math.abs(dy) > 6) drag.moved = true;
+      if (drag.moved) set(drag.start + dy / (book.offsetHeight * 1.15));
+    });
+    const end = () => {
+      if (!drag) return;
+      const { moved, start } = drag;
+      drag = null;
+      const target = !moved
+        ? start > 0.5
+          ? 0
+          : 1
+        : open > (start > 0.5 ? 0.7 : 0.3)
+          ? 1
+          : 0;
+      if (target === 1 && T.side > 0) {
+        T.side = -1;
+        kick();
+      } // mở bằng cách khác thì tua cũng chuyển
+      animateTo(target);
+    };
+    cover.addEventListener("pointerup", end);
+    cover.addEventListener("pointercancel", end);
+    cover.addEventListener("click", (e) => {
+      if (e.detail === 0) {
+        if (open < 0.5) graduate();
+        else animateTo(0);
+      }
+    });
+
+    /* ---- nghiêng theo chuột + ánh nhũ ---- */
+    if (!reduce) {
+      stage.addEventListener("pointermove", (e) => {
+        if (e.pointerType !== "mouse" || drag || T.held) return;
+        const r = stage.getBoundingClientRect();
+        const nx = (e.clientX - r.left) / r.width - 0.5,
+          ny = (e.clientY - r.top) / r.height - 0.5;
+        floatEl.style.setProperty(
+          "--tx",
+          (-ny * 10 * (1 - open)).toFixed(2) + "deg",
+        );
+        floatEl.style.setProperty(
+          "--ty",
+          (nx * 14 * (1 - open)).toFixed(2) + "deg",
+        );
+        floatEl.style.setProperty("--sx", (50 + nx * 120).toFixed(1) + "%");
+      });
+      stage.addEventListener("pointerleave", () => {
+        floatEl.style.setProperty("--tx", "0deg");
+        floatEl.style.setProperty("--ty", "0deg");
+        floatEl.style.setProperty("--sx", "50%");
+      });
+    }
+
+    /* ---- giấy kim tuyến khi mở ---- */
+    function confetti() {
+      if (reduce) return;
+      const c = document.createElement("canvas");
+      c.className = "confetti";
+      document.body.appendChild(c);
+      const x = c.getContext("2d"),
+        dpr = Math.min(2, devicePixelRatio || 1);
+      const w = innerWidth,
+        h = innerHeight;
+      c.width = w * dpr;
+      c.height = h * dpr;
+      const r = book.getBoundingClientRect(),
+        ox = r.left + r.width / 2,
+        oy = r.top + r.height * 0.2;
+      const cols = ["#F3D98B", "#D9B45A", "#FFFFFF", "#8FB0FF", "#0A4CFF"];
+      const P = Array.from({ length: innerWidth < 600 ? 70 : 120 }, () => {
+        const a = -Math.PI / 2 + (Math.random() - 0.5) * 2.2,
+          v = 380 + Math.random() * 520;
+        return {
+          x: ox + (Math.random() - 0.5) * r.width * 0.6,
+          y: oy,
+          vx: Math.cos(a) * v,
+          vy: Math.sin(a) * v,
+          w: 5 + Math.random() * 6,
+          h: 3 + Math.random() * 4,
+          rot: Math.random() * 6,
+          vr: (Math.random() - 0.5) * 14,
+          c: cols[(Math.random() * cols.length) | 0],
+        };
+      });
+      if (staged)
+        for (let i = 0; i < (innerWidth < 600 ? 9 : 14); i++) {
+          // mũ cử nhân tung lên
+          const a = -Math.PI / 2 + (Math.random() - 0.5) * 1.6,
+            v = 620 + Math.random() * 420;
+          P.push({
+            cap: true,
+            x: ox + (Math.random() - 0.5) * r.width * 0.5,
+            y: oy + 20,
+            vx: Math.cos(a) * v,
+            vy: Math.sin(a) * v,
+            s: 18 + Math.random() * 14,
+            rot: (Math.random() - 0.5) * 0.8,
+            vr: (Math.random() - 0.5) * 5,
+          });
+        }
+      const drawCap = (p) => {
+        const s = p.s;
+        x.fillStyle = "#14161A";
+        x.strokeStyle = "rgba(231,236,247,.55)";
+        x.lineWidth = 1;
+        x.beginPath();
+        x.moveTo(-s * 0.32, s * 0.08);
+        x.lineTo(s * 0.32, s * 0.08);
+        x.lineTo(s * 0.28, s * 0.36);
+        x.lineTo(-s * 0.28, s * 0.36);
+        x.closePath();
+        x.fill();
+        x.stroke();
+        x.beginPath();
+        x.moveTo(0, -s * 0.28);
+        x.lineTo(s * 0.62, 0);
+        x.lineTo(0, s * 0.26);
+        x.lineTo(-s * 0.62, 0);
+        x.closePath();
+        x.fill();
+        x.stroke();
+        x.strokeStyle = "#E9C46A";
+        x.lineWidth = 1.6;
+        x.beginPath();
+        x.moveTo(0, 0);
+        x.lineTo(s * 0.45, s * 0.05);
+        x.lineTo(s * 0.47, s * 0.48);
+        x.stroke();
+        x.fillStyle = "#E9C46A";
+        x.fillRect(s * 0.43, s * 0.44, s * 0.08, s * 0.16);
+      };
+      const t0 = performance.now();
+      let prev = t0;
+      (function tick(now) {
+        const dt = Math.min(0.033, (now - prev) / 1000);
+        prev = now;
+        const life = (now - t0) / 1000;
+        x.setTransform(dpr, 0, 0, dpr, 0, 0);
+        x.clearRect(0, 0, w, h);
+        x.globalAlpha = clamp(1 - (life - 1.8) / 0.9);
+        for (const p of P) {
+          p.vy += (p.cap ? 760 : 900) * dt;
+          p.vx *= 0.985;
+          p.vy *= 0.985;
+          p.x += p.vx * dt;
+          p.y += p.vy * dt;
+          p.rot += p.vr * dt;
+          x.save();
+          x.translate(p.x, p.y);
+          x.rotate(p.rot);
+          if (p.cap) drawCap(p);
+          else {
+            x.scale(1, Math.cos(p.rot * 1.7));
+            x.fillStyle = p.c;
+            x.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+          }
+          x.restore();
+        }
+        if (life < 2.9) requestAnimationFrame(tick);
+        else c.remove();
+      })(t0);
+    }
+
+    const remeasure = () => {
+      T.W = book.offsetWidth;
+      T.H = book.offsetHeight;
+      Object.assign(T, restOf(T.side), { vx: 0, vy: 0 });
+      measure();
+    };
+    if ("ResizeObserver" in window) new ResizeObserver(remeasure).observe(book);
+    else addEventListener("resize", remeasure);
+    measure();
+    kick();
+    const o = +(new URLSearchParams(location.search).get("open") || 0); // ?open=1 dùng khi chụp màn hình kiểm tra
+    if (o > 0) {
+      T.side = -1;
+      Object.assign(T, restOf(-1));
+      celebrated = true;
+      paintTassel();
+    }
+    set(o);
+    if (staged) {
+      const sec = document.getElementById("intro");
+      if (o > 0 || reduce) sec.classList.add("instant", "tassel-in");
+      else {
+        // tua rơi xuống sau khi bìa vào vị trí
+        T.held = true;
+        kick();
+        setTimeout(() => {
+          Object.assign(T, restOf(1), {
+            y: -T.H * 0.7,
+            vx: -160,
+            vy: 0,
+            held: false,
+          });
+          sec.classList.add("tassel-in");
+          kick();
+        }, 1650);
+      }
+      setTimeout(() => sec.classList.add("done"), 3200); // an toàn: dù hiệu ứng CSS không chạy vẫn về trạng thái cuối
+      initStageScene(sec);
+    }
+  }
+
+  /* ---- dàn cảnh: ảnh trôi lơ lửng + bụi trong luồng đèn ---- */
+  function initStageScene(sec) {
+    const items = [...sec.querySelectorAll("#floaters .fl")];
+    const small = innerWidth < 600;
+    // x%, y%, độ sâu. Điện thoại: ảnh chỉ nằm ở dải trên/dưới, không chui vào vùng bìa giữa màn hình
+    const slots = small
+      ? [
+          [-8, 2, 0.6],
+          [66, 1, 0.85],
+          [34, 11, 0.3],
+          [-10, 84, 0.8],
+          [68, 82, 0.55],
+          [36, 92, 0.35],
+        ]
+      : [
+          [-4, 7, 0.55],
+          [75, 2, 0.85],
+          [88, 52, 0.4],
+          [-3, 58, 0.9],
+          [18, 84, 0.35],
+          [66, 80, 0.7],
+        ];
+    // kích thước ảnh theo cạnh ngắn của màn hình để laptop thấp không bị ảnh to lấn át tấm bìa
+    const base = Math.min(innerWidth, innerHeight * 1.5);
+    const F = items.map((el, i) => {
+      const [x, y, d] = slots[i % slots.length];
+      el.style.left = x + "%";
+      el.style.top = y + "%";
+      el.style.width =
+        (small ? 58 + d * 50 : base * (0.085 + d * 0.1)).toFixed(0) + "px";
+      el.style.opacity = (0.26 + 0.5 * d).toFixed(2);
+      el.style.filter = `blur(${((1 - d) * 3.2).toFixed(1)}px)`;
+      return {
+        el,
+        d,
+        ph: Math.random() * 6.28,
+        rot: (Math.random() - 0.5) * 12,
+      };
+    });
+    const cv = document.getElementById("dust"),
+      ctx = cv.getContext("2d");
+    let W = 0,
+      H = 0,
+      dpr = 1,
+      motes = [];
+    const size = () => {
+      dpr = Math.min(2, devicePixelRatio || 1);
+      W = sec.clientWidth;
+      H = sec.clientHeight;
+      cv.width = W * dpr;
+      cv.height = H * dpr;
+      motes = Array.from({ length: small ? 34 : 60 }, () => ({
+        y: Math.random() * H,
+        u: Math.random() - 0.5,
+        r: 0.5 + Math.random() * 1.5,
+        vy: -(5 + Math.random() * 14),
+        tw: Math.random() * 6.28,
+      }));
+    };
+    size();
+    if ("ResizeObserver" in window) new ResizeObserver(size).observe(sec);
+    if (reduce) {
+      F.forEach((f) => (f.el.style.transform = `rotate(${f.rot}deg)`));
+      return;
+    }
+
+    const ptr = { x: 0, y: 0, tx: 0, ty: 0 };
+    addEventListener(
+      "pointermove",
+      (e) => {
+        if (e.pointerType === "mouse") {
+          ptr.tx = e.clientX / innerWidth - 0.5;
+          ptr.ty = e.clientY / innerHeight - 0.5;
+        }
+      },
+      { passive: true },
+    );
+    let visible = true,
+      raf = 0,
+      last = 0;
+    function loop(t) {
+      raf = 0;
+      const dt = last ? Math.min(0.05, (t - last) / 1000) : 0.016;
+      last = t;
+      ptr.x += (ptr.tx - ptr.x) * 0.06;
+      ptr.y += (ptr.ty - ptr.y) * 0.06;
+      for (const f of F) {
+        const dx = Math.sin(t / 4200 + f.ph) * 14 * f.d - ptr.x * 60 * f.d;
+        const dy = Math.cos(t / 5200 + f.ph) * 12 * f.d - ptr.y * 40 * f.d;
+        f.el.style.transform = `translate3d(${dx.toFixed(1)}px, ${dy.toFixed(1)}px, 0) rotate(${f.rot}deg)`;
+      }
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, W, H);
+      ctx.fillStyle = "#DDE6FF";
+      for (const m of motes) {
+        m.y += m.vy * dt;
+        if (m.y < -4) m.y = H + 4;
+        const spread = 0.1 + (m.y / H) * 0.32; // luồng đèn loe rộng dần xuống dưới
+        const px = W / 2 + m.u * W * spread * 2 + Math.sin(t / 1300 + m.tw) * 6;
+        ctx.globalAlpha = (0.15 + 0.6 * Math.sin(t / 700 + m.tw) ** 2) * 0.7;
+        ctx.beginPath();
+        ctx.arc(px, m.y, m.r, 0, 6.283);
+        ctx.fill();
+      }
+      if (visible) raf = requestAnimationFrame(loop);
+      else last = 0;
+    }
+    new IntersectionObserver(([e]) => {
+      visible = e.isIntersecting;
+      if (visible && !raf) raf = requestAnimationFrame(loop);
+    }).observe(sec);
+    raf = requestAnimationFrame(loop);
+  }
+
+  /* =============== 3. đếm ngược + hoá đơn =============== */
+  function initCountdown() {
+    const target = Date.parse(S.date);
+    const els = Object.fromEntries(
+      [...document.querySelectorAll("#countdown .n")].map((e) => [
+        e.dataset.u,
+        e,
+      ]),
+    );
+    function tick() {
+      let d = Math.max(0, target - Date.now());
+      const v = {
+        d: Math.floor(d / 864e5),
+        h: Math.floor((d %= 864e5) / 36e5),
+        m: Math.floor((d %= 36e5) / 6e4),
+        s: Math.floor((d % 6e4) / 1e3),
+      };
+      for (const k in v) {
+        const txt = pad(v[k]);
+        if (els[k].textContent !== txt) {
+          els[k].textContent = txt;
+          if (!reduce) {
+            els[k].classList.remove("tick");
+            void els[k].offsetWidth;
+            els[k].classList.add("tick");
+          }
+        }
+      }
+    }
+    tick();
+    setInterval(tick, 1000);
+  }
+
+  /* =============== cuộn mượt (chuột/touchpad trên máy tính) =============== */
+  let lenis = null;
+  function initSmoothScroll() {
+    const go = (el) => {
+      if (lenis) lenis.scrollTo(el, { duration: 1.4 });
+      else el.scrollIntoView({ behavior: reduce ? "auto" : "smooth" });
+    };
+    // mọi link #… trong trang cuộn mềm
+    document.addEventListener("click", (e) => {
+      const a = e.target.closest('a[href^="#"]');
+      const el =
+        a &&
+        a.getAttribute("href").length > 1 &&
+        document.querySelector(a.getAttribute("href"));
+      if (!el) return;
+      e.preventDefault();
+      go(el);
+    });
+    // điện thoại giữ cuộn gốc của hệ điều hành (đã mượt sẵn, có quán tính); chỉ làm mềm bánh xe chuột
+    if (reduce || !matchMedia("(pointer: fine)").matches) return;
+    const start = () => {
+      if (lenis || !window.Lenis) return;
+      lenis = new window.Lenis({
+        lerp: 0.1,
+        wheelMultiplier: 0.9,
+        smoothWheel: true,
+      });
+      (function raf(t) {
+        lenis.raf(t);
+        requestAnimationFrame(raf);
+      })(performance.now());
+    };
+    if (window.Lenis) start();
+    else document.getElementById("lenis-js")?.addEventListener("load", start);
+  }
+
+  /* =============== hiệu ứng theo cuộn — luôn đảo ngược được khi cuộn lên =============== */
+  function initScrollFx() {
+    const vh = () => window.innerHeight;
+    // (1) khối hiện/ẩn: vào khung nhìn thì hiện, cuộn ngược lên (khối rơi xuống dưới mép màn hình) thì ẩn lại
+    const blocks = [...app.querySelectorAll(".rv, .receipt .rl")];
+    // (2) thư: từng chữ được "viết" theo đúng vị trí cuộn, cuộn lên thì chữ bị "xoá" ngược lại
+    const paras = [...app.querySelectorAll("[data-write]")].map((el) => ({
+      el,
+      w: [...el.querySelectorAll(".w")],
+      k: -1,
+    }));
+    const paper = document.getElementById("paper"),
+      allWords = paras.flatMap((p) => p.w);
+    const photos = document.getElementById("photos"),
+      letter = document.getElementById("letter");
+    if (reduce) {
+      blocks.forEach((b) => b.classList.add("in"));
+      paras.forEach((p) => p.w.forEach((w) => w.classList.add("on")));
+      return;
+    }
+    let pen = null,
+      ticking = false;
+    function update() {
+      ticking = false;
+      const H = vh();
+      for (const b of blocks) {
+        const top = b.getBoundingClientRect().top;
+        if (top < H * 0.9) b.classList.add("in");
+        else if (top > H * 0.98) b.classList.remove("in"); // khoảng đệm 8% để không nhấp nháy ở ranh giới
+      }
+      // chữ trong thư: tính theo cả tờ giấy. Bắt đầu viết khi mép trên tờ thư lên tới 80% màn hình,
+      // viết xong (kể cả chữ ký) đúng lúc tờ thư nằm giữa màn hình — để chụp màn hình là đủ chữ.
+      // Tờ thư cao hơn màn hình (điện thoại) thì xong khi mép dưới tờ thư vừa lộ ra.
+      let active = null;
+      if (paper && allWords.length) {
+        const r = paper.getBoundingClientRect(),
+          h = r.height;
+        const endTop = h <= H * 0.84 ? H * 0.52 - h / 2 : H * 0.94 - h;
+        const startTop = Math.max(H * 0.8, endTop + H * 0.3);
+        const prog = clamp((startTop - r.top) / (startTop - endTop));
+        const total = Math.round(prog * allWords.length);
+        if (total > 0 && total < allWords.length) active = allWords[total - 1]; // ngòi bút ở chữ vừa viết
+        let k = total;
+        for (const p of paras) {
+          // chia lượt viết lần lượt cho từng đoạn
+          const n = clamp(k, 0, p.w.length);
+          if (n !== p.k) {
+            for (let i = 0; i < p.w.length; i++)
+              p.w[i].classList.toggle("on", i < n);
+            p.k = n;
+          }
+          k -= p.w.length;
+        }
+      }
+      if (pen !== active) {
+        pen?.classList.remove("pen");
+        active?.classList.add("pen");
+        pen = active;
+      }
+      // ảnh polaroid xoay/trượt nhẹ theo tiến độ cuộn qua lá thư
+      if (photos) {
+        const r = letter.getBoundingClientRect();
+        const t = clamp((H - r.top) / (r.height + H));
+        photos.style.setProperty("--t", t.toFixed(4));
+      }
+    }
+    const req = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    };
+    addEventListener("scroll", req, { passive: true });
+    addEventListener("resize", req);
+    update();
+  }
+
+  /* =============== 4. ảnh trôi ngang =============== */
+  function initMarquee() {
+    const tracks = [...document.querySelectorAll(".mtrack")].map((el) => ({
+      el,
+      dir: +el.dataset.dir,
+      x: 0,
+      half: 0,
+    }));
+    // đo bề rộng một lần (và khi đổi cỡ) thay vì đọc scrollWidth mỗi khung hình — đọc layout liên tục gây giật khi cuộn
+    const measure = () =>
+      tracks.forEach((t) => (t.half = t.el.scrollWidth / 2));
+    measure();
+    tracks.forEach((t) => {
+      // vị trí đầu: cả 2 hàng đều phủ kín khung
+      t.el.style.transform = `translate3d(${t.dir < 0 ? 0 : -50}%,0,0)`;
+      t.el
+        .querySelectorAll("img")
+        .forEach(
+          (im) =>
+            im.complete || im.addEventListener("load", measure, { once: true }),
+        );
+    });
+    if ("ResizeObserver" in window) {
+      const ro = new ResizeObserver(measure);
+      tracks.forEach((t) => ro.observe(t.el));
+    }
+    if (reduce) {
+      tracks.forEach((t) => (t.el.parentElement.style.overflowX = "auto"));
+      return;
+    }
+    let lastY = scrollY,
+      vel = 0,
+      last = 0,
+      running = false;
+    const sec = document.getElementById("moments");
+    function loop(t) {
+      const dt = last ? Math.min(0.05, (t - last) / 1000) : 0.016;
+      last = t;
+      const dy = scrollY - lastY;
+      lastY = scrollY;
+      vel += (Math.abs(dy) / Math.max(dt, 0.001) - vel) * 0.08;
+      const speed = 38 + Math.min(vel * 0.35, 600);
+      tracks.forEach((tr) => {
+        // tiến độ p ∈ [0,1) của một vòng; vị trí theo % nên luôn nằm trong dải ảnh, không bao giờ trống
+        const half = tr.half || 2000;
+        tr.p = ((tr.p || 0) + (speed * dt) / half) % 1;
+        const pos = tr.dir < 0 ? -tr.p * 50 : (tr.p - 1) * 50;
+        tr.el.style.transform = `translate3d(${pos.toFixed(3)}%,0,0)`;
+      });
+      if (running) requestAnimationFrame(loop);
+      else last = 0;
+    }
+    new IntersectionObserver(([e]) => {
+      if (e.isIntersecting && !running) {
+        running = true;
+        lastY = scrollY;
+        requestAnimationFrame(loop);
+      } else if (!e.isIntersecting) running = false;
+    }).observe(sec);
+  }
+
+  /* =============== bảng lời chúc gõ chữ =============== */
+  function initGuestbook() {
+    const textEl = document.getElementById("gb-text"),
+      nameEl = document.getElementById("gb-name"),
+      metaEl = document.getElementById("gb-meta"),
+      avEl = document.getElementById("gb-av"),
+      countEl = document.getElementById("gb-count"),
+      card = document.querySelector(".gb-card"),
+      bar = document.getElementById("gb-bar");
+    const HOLD = 4200; // thời gian dừng đọc sau khi gõ xong, rồi tự sang lời chúc kế
+    const isDemo = S.rsvp.mode === "demo";
+    let items = isDemo
+      ? [...(store.get("gb:mine") || []), ...(S.guestbook.demo || [])]
+      : [];
+    const mineIds = () => new Set(store.get("gb:ids") || []);
+    let idx = 0,
+      typer = null,
+      next = null,
+      started = false;
+
+    function texture() {
+      const src =
+        items.map((i) => `${i.name}: ${i.text}`).join("  ") || S.intro.ringText;
+      document.getElementById("texture").textContent = (src + "  ").repeat(
+        Math.ceil(9000 / (src.length + 2)),
+      );
+      // dải chữ chạy liên tục dưới tiêu đề "Sảnh lời chúc" (2 bản nối nhau để chạy vòng không đứt)
+      const tt = document.getElementById("gb-tt");
+      if (!items.length) {
+        tt.innerHTML = "";
+        return;
+      }
+      const short = (t) => (t.length > 70 ? t.slice(0, 68).trimEnd() + "…" : t);
+      let chunk = items
+        .map((i) => `<span><b>${esc(i.name)}</b> ${esc(short(i.text))}</span>`)
+        .join("");
+      while (chunk.length < 600) chunk += chunk; // ít lời chúc thì lặp cho đủ dài
+      tt.innerHTML = chunk + chunk;
+      tt.style.setProperty(
+        "--dur",
+        Math.max(24, tt.textContent.length / 14).toFixed(0) + "s",
+      );
+    }
+
+    function show(i) {
+      clearInterval(typer);
+      clearTimeout(next);
+      runBar(false);
+      if (!items.length) {
+        textEl.textContent = S.guestbook.empty;
+        nameEl.textContent = "";
+        metaEl.textContent = "";
+        avEl.textContent = "+";
+        countEl.innerHTML = "<b>00</b> / 00";
+        return;
+      }
+      idx = (i + items.length) % items.length;
+      const it = items[idx];
+      nameEl.textContent = it.name;
+      metaEl.textContent = it.mine
+        ? "lời chúc vừa gửi"
+        : `gửi ${S.shortName}`;
+      avEl.textContent = (
+        it.name.trim().split(/\s+/).pop()[0] || "?"
+      ).toLocaleUpperCase("vi");
+      countEl.innerHTML = `<b>${pad(idx + 1)}</b> / ${pad(items.length)}`;
+      card.classList.remove("fly");
+      void card.offsetWidth;
+      card.classList.add("fly"); // lời chúc mới "bay" vào thẻ
+      const full = `“${it.text}”`;
+      if (reduce) {
+        textEl.textContent = full;
+        schedule();
+        return;
+      }
+      let n = 0;
+      textEl.textContent = "";
+      typer = setInterval(() => {
+        n += 1;
+        textEl.textContent = full.slice(0, n);
+        if (n >= full.length) {
+          clearInterval(typer);
+          schedule();
+        }
+      }, 28);
+    }
+    // vạch mảnh dưới thẻ chạy hết thì tự đổi lời chúc — không cần bấm
+    function runBar(on) {
+      bar.style.transition = "none";
+      bar.style.transform = "scaleX(0)";
+      if (!on || reduce) return;
+      void bar.offsetWidth;
+      bar.style.transition = `transform ${HOLD}ms linear`;
+      bar.style.transform = "scaleX(1)";
+    }
+    function schedule() {
+      clearTimeout(next);
+      if (items.length < 2) return;
+      runBar(true);
+      next = setTimeout(() => show(idx + 1), HOLD);
+    }
+
+    document.getElementById("gb-prev").onclick = () => show(idx - 1);
+    document.getElementById("gb-next").onclick = () => show(idx + 1);
+    texture();
+    onView(
+      [card],
+      () => {
+        started = true;
+        show(0);
+      },
+      { threshold: 0.4 },
+    );
+
+    if (!isDemo) {
+      fetch("/api/comments", { cache: "no-store" })
+        .then((r) => (r.ok ? r.json() : null))
+        .then((d) => {
+          if (!d?.items) return;
+          const mine = mineIds();
+          const known = new Set(items.map((i) => i.id)); // lời chúc vừa gửi trước khi tải xong
+          items = [
+            ...items,
+            ...d.items
+              .filter((i) => !known.has(i.id))
+              .map((i) => ({ ...i, mine: mine.has(i.id) })),
+          ];
+          texture();
+          if (started) show(0);
+        })
+        .catch(() => {
+          /* lỗi mạng: bảng trống, không ảnh hưởng phần còn lại */
+        });
+    }
+
+    return {
+      add(item) {
+        if (item.id && items.some((i) => i.id === item.id)) return;
+        items.unshift(item);
+        texture();
+        if (isDemo)
+          store.set(
+            "gb:mine",
+            items.filter((i) => i.mine),
+          );
+        else if (item.id) store.set("gb:ids", [...mineIds(), item.id]);
+        if (started) show(0);
+      },
+    };
+  }
+
+  /* =============== xác nhận tham dự =============== */
+  // Link riêng: gửi MỘT lần, server khoá theo slug → mở lại trên máy nào cũng thấy vé đã đóng dấu.
+  // Trang chung: ai cũng gửi được, gửi xong có nút xác nhận thêm cho người khác.
+  function setupForm(guest, gb) {
+    const form = document.getElementById("form"),
+      err = document.getElementById("err"),
+      done = document.getElementById("done"),
+      send = document.getElementById("send"),
+      confirmBox = document.getElementById("confirm"),
+      yes = document.getElementById("confirm-yes"),
+      no = document.getElementById("confirm-no");
+    const api = S.rsvp.mode !== "demo";
+    const locked = !!guest && !guest.group; // link nhóm: như trang chung, không khoá
+    const key = "rsvp:" + (guest?.slug || "general");
+    let startedAt = Date.now(),
+      pending = null;
+
+    const fail = (msg, id) => {
+      err.textContent = msg;
+      err.hidden = false;
+      if (id) document.getElementById(id)?.focus();
+    };
+    const arm = (on) => {
+      confirmBox.hidden = !on;
+      send.hidden = on;
+      if (on) yes.focus();
+    };
+
+    // đã xác nhận trước đó?
+    if (locked && api) {
+      fetch(`/api/rsvp?slug=${encodeURIComponent(guest.slug)}`, {
+        cache: "no-store",
+      })
+        .then((r) => (r.ok ? r.json() : null))
+        .then((d) => {
+          if (d?.record) {
+            store.set(key, d.record);
+            showTicket(d.record, true);
+          }
+        })
+        .catch(() => {
+          const s = store.get(key);
+          if (s) showTicket(s, true);
+        });
+    } else {
+      const s = store.get(key);
+      if (s) showTicket(s, true);
+    }
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      err.hidden = true;
+      const fd = new FormData(form);
+      if (fd.get("website")) return; // bẫy bot
+      if (Date.now() - startedAt < 2500)
+        return fail("Gửi nhanh quá, đợi một chút rồi thử lại nhé.");
+      const name = locked ? guest.name : String(fd.get("name") || "").trim();
+      if (!name) return fail("Vui lòng nhập họ tên.", "name");
+      const email = String(fd.get("email") || "").trim();
+      if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
+        return fail(
+          "Email chưa đúng định dạng, vui lòng kiểm tra lại.",
+          "email",
+        );
+      pending = {
+        guest: guest?.slug || null,
+        name,
+        email,
+        slot: fd.get("slot"),
+        message: String(fd.get("msg") || "").trim(),
+        public: fd.get("public") === "on",
+      };
+      arm(true); // hỏi lại trước khi khoá
+    });
+    no.onclick = () => {
+      pending = null;
+      arm(false);
+      send.focus();
+    };
+    yes.onclick = async () => {
+      if (!pending) return;
+      yes.disabled = no.disabled = true;
+      yes.textContent = "Đang gửi…";
+      try {
+        let record,
+          returning = false;
+        if (api) {
+          const res = await fetch("/api/rsvp", {
+            method: "POST",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify(pending),
+          });
+          const d = await res.json().catch(() => ({}));
+          if (res.status === 409 && d.record) {
+            record = d.record;
+            returning = true;
+          } // đã gửi từ máy khác
+          else if (res.status === 403)
+            throw new Error(
+              "Đã hết hạn xác nhận. Vui lòng nhắn Zalo cho " +
+                S.shortName +
+                " nhé.",
+            );
+          else if (res.status === 404)
+            throw new Error(
+              "Link mời này không còn hợp lệ. Vui lòng nhắn Zalo cho " +
+                S.shortName +
+                " nhé.",
+            );
+          else if (!res.ok) throw new Error("");
+          else record = d.record;
+        } else {
+          record = {
+            ...pending,
+            public: pending.public && !!pending.message,
+            id: "local-" + Date.now(),
+          };
+        }
+        store.set(key, record);
+        if (!returning && record.public && record.message)
+          gb.add({
+            id: record.id,
+            name: record.name,
+            text: record.message,
+            mine: true,
+          });
+        pending = null;
+        arm(false);
+        showTicket(record, returning, !returning);
+      } catch (ex) {
+        arm(false);
+        fail(
+          ex.message ||
+            "Chưa gửi được. Vui lòng kiểm tra kết nối mạng rồi bấm gửi lại.",
+        );
+      } finally {
+        yes.disabled = no.disabled = false;
+        yes.textContent = "Chắc rồi, gửi";
+      }
+    };
+
+    function showTicket(d, returning, fresh = false) {
+      const isNo = d.slot === "no";
+      // "value" (7:00 / 11:30) là mã lưu trong Table, giờ hiển thị lấy từ "label" trong site.json
+      const lab = (v) =>
+        (S.rsvp.options.find((o) => o.value === v) || {}).label || v;
+      const label = lab(d.slot);
+      const time =
+        d.slot === "both" ? `${lab("7:00")} + ${lab("11:30")}` : isNo ? "Hẹn dịp khác" : label;
+      const stamp = isNo
+        ? `<span>Đã</span><b>nhận</b>`
+        : `<span>Đã hẹn</span><b>${esc(d.slot === "both" ? `${lab("7:00")}·${lab("11:30")}` : label)}</b>`;
+      done.innerHTML = `
+        <div class="ticket${fresh ? " fresh" : ""}" role="status">
+          <div class="top"><span>${isNo ? `Cảm ơn đã báo cho ${esc(S.shortName)}` : "Hẹn gặp"}</span><b>${esc(d.name)}</b></div>
+          <div class="cut"></div>
+          <div class="bot">
+            <div><div class="time">${esc(time)}</div><div class="meta">${esc(S.dateNumeric)}</div></div>
+            <div class="meta">${isNo ? "Đã ghi nhận" : esc(S.venue.short)}</div>
+          </div>
+          ${d.message ? `<p class="tmsg">“${esc(d.message)}”</p>` : ""}
+          <div class="stamp${isNo ? " no" : ""}" aria-hidden="true">${stamp}</div>
+        </div>
+        <div class="after">
+          ${
+            locked
+              ? `<small>${returning ? "Đã xác nhận trước đó rồi." : "Đã ghi lại xác nhận."}</small>`
+              : `<button type="button" id="again">Xác nhận thêm cho người khác</button>`
+          }
+          ${api ? "" : "<small>Bản demo: chỉ lưu trên máy này.</small>"}
+        </div>`;
+      form.hidden = true;
+      done.hidden = false;
+      const again = document.getElementById("again");
+      if (again)
+        again.onclick = () => {
+          form.reset();
+          err.hidden = true;
+          startedAt = Date.now();
+          done.hidden = true;
+          form.hidden = false;
+          document.getElementById("name")?.focus();
+        };
+    }
+  }
+
+  // ghép đè cấu hình: object ghép từng khoá; mảng object (schedule, parking.places) ghép theo thứ tự; còn lại thay hẳn
+  function merge(a, b) {
+    for (const [k, v] of Object.entries(b)) {
+      if (Array.isArray(v) && Array.isArray(a[k]) && v.every((x) => x && typeof x === "object"))
+        v.forEach((x, i) => (a[k][i] && typeof a[k][i] === "object" ? merge(a[k][i], x) : (a[k][i] = x)));
+      else if (v && typeof v === "object" && !Array.isArray(v) && a[k] && typeof a[k] === "object") merge(a[k], v);
+      else a[k] = v;
+    }
+    return a;
+  }
+
+  /* =============== đếm lượt mở (không IP, không cookie) =============== */
+  // mỗi trình duyệt một mã ngẫu nhiên (localStorage) để đếm số người; mỗi tab chỉ đếm 1 lần (sessionStorage)
+  function countVisit(guest) {
+    if (S.rsvp.mode === "demo" || new URLSearchParams(location.search).has("y")) return;
+    try {
+      if (sessionStorage.getItem("seen")) return;
+      sessionStorage.setItem("seen", "1");
+    } catch { /* trình duyệt chặn bộ nhớ: vẫn đếm */ }
+    let vid = "";
+    try {
+      vid = localStorage.getItem("vid") || "";
+      if (!vid) localStorage.setItem("vid", (vid = Math.random().toString(36).slice(2, 12)));
+    } catch {
+      vid = Math.random().toString(36).slice(2, 12);
+    }
+    fetch("/api/visit", {
+      method: "POST",
+      keepalive: true,
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ guest: guest?.slug || "", vid, ref: document.referrer }),
+    }).catch(() => {});
+  }
+
+  /* =============== định tuyến: / hoặc /moi/<slug> =============== */
+  async function boot() {
+    const m = location.pathname.match(/^\/moi\/([a-z0-9-]+)\/?$/);
+    let guest = null;
+    if (m) {
+      try {
+        const res = await fetch(`/data/g/${m[1]}.json`);
+        if (res.ok) guest = { ...(await res.json()), slug: m[1] };
+      } catch {
+        /* không tìm thấy khách: hiện trang chung */
+      }
+    }
+    // giọng xưng hô: trang chung dùng voices.general, khách có "voice" dùng voices[<tên>]
+    const voice = S.voices?.[guest ? guest.voice : "general"];
+    if (voice) merge(S, voice);
+    render(guest);
+    countVisit(guest);
+    const y = new URLSearchParams(location.search).get("y"); // dùng khi chụp màn hình kiểm tra
+    if (y) setTimeout(() => scrollTo({ top: +y, behavior: "instant" }), 300);
+  }
+  boot();
+})();
