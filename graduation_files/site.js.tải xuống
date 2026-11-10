@@ -32,7 +32,7 @@ window.SITE = {
   "greeting": "Gửi {name},",
   "general": "Có những người không cần đứng trên sân khấu cùng mình, nhưng lại là lý do mình đi được tới đó.\nBạn là một trong những người ấy.\nCảm ơn bạn vì bốn năm vừa qua.",
   "closing": "Best Regards,",
-  "sign": "Quang Tú"
+  "sign": "Tú"
  },
  "invite": {
   "title": "{name} ơi,",
