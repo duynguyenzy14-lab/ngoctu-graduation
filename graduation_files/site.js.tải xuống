@@ -22,7 +22,7 @@ window.SITE = {
     0.6
    ],
    "img": {
-    "src": "/img/portrait.png",
+    "src": "/img/guest-ngoctu-800.webp"
     "ratio": 0.8664
    }
   }
@@ -287,7 +287,7 @@ window.SITE = {
    "photos": {
     "cover": "LR-177.jpg",
     "letterPhoto2": "LR-172.jpg",
-    "galleryTitle": "Quang Tú chụp trước vài tấm. Những tấm còn lại chờ mọi người cùng chụp nhé."
+    "galleryTitle": "Tú chụp trước vài tấm. Những tấm còn lại chờ mọi người cùng chụp nhé."
    },
    "rsvp": {
     "title": "Tú mong được gặp mọi người hôm đó",
