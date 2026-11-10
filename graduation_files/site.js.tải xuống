@@ -22,7 +22,7 @@ window.SITE = {
     0.6
    ],
    "img": {
-    "src": "/img/guest-ngoctu-800.webp",
+    "src": "guest-ngoctu-800.webp",
     "ratio": 0.8664
    }
   }
