@@ -28,7 +28,7 @@ window.SITE = {
   }
  },
  "letter": {
-  "place": "TP. Hồ Chí Minh, 04/11/2026",
+  "place": "TP. Hồ Chí Minh, 14/11/2026",
   "greeting": "Gửi {name},",
   "general": "Có những người không cần đứng trên sân khấu cùng mình, nhưng lại là lý do mình đi được tới đó.\nBạn là một trong những người ấy.\nCảm ơn bạn vì bốn năm vừa qua.",
   "closing": "Best Regards,",
