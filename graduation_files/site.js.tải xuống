@@ -4,14 +4,14 @@ window.SITE = {
  "shortName": "Tú",
  "school": "Trường Đại học Mở TP.HCM",
  "major": "Quản lí công",
- "date": "2026-11-29T08:00:00+07:00",
- "dateLong": "Sáng Chủ nhật, 29.11.2026",
- "dateNumeric": "29.11.2026",
+ "date": "2026-11-28T08:00:00+07:00",
+ "dateLong": "Sáng Thứ 7, 28.11.2026",
+ "dateNumeric": "28.11.2026",
  "intro": {
   "style": "stage",
-  "ringText": "NGUYỄN NGỌC TÚ · QUẢN LÝ Công · TỐT NGHIỆP 29.11.2026 · ĐẠI HỌC MỞ TP.HCM · ",
+  "ringText": "NGUYỄN NGỌC TÚ · QUẢN LÝ Công · TỐT NGHIỆP 28.11.2026 · ĐẠI HỌC MỞ TP.HCM · ",
   "title": "Tú tốt nghiệp.",
-  "sub": "Sáng 29.11.2026, mình nhận bằng Quản lý Đại học Mở TP.HCM.",
+  "sub": "Sáng 28.11.2026, mình nhận bằng Quản lý Đại học Mở TP.HCM.",
   "hold": "Nhấn giữ để mở thiệp",
   "portrait": {
    "file": "LR-018.jpg",
@@ -72,7 +72,7 @@ window.SITE = {
    },
    {
     "name": "2. Tòa nhà Báo Người Lao Động (Số 123 Võ Văn Tần)",
-    "note": "Thuận tiện nếu đi từ hướng đường CMT8",
+    "note": "Thuận tiện nếu đi từ hướng đường CMT7",
     "query": "Báo Người Lao Động, phường Xuân Hòa, TP.HCM"
    },
    {
@@ -84,8 +84,8 @@ window.SITE = {
  },
  "calendar": {
   "title": "Tốt nghiệp của Tú",
-  "start": "20261129T000000Z",
-  "end": "20261129T050000Z"
+  "start": "20261128T000000Z",
+  "end": "20261128T050000Z"
  },
  "contact": {
   "phone": "037669218",
@@ -95,7 +95,7 @@ window.SITE = {
    {
     "name": "Tú",
     "phone": "037669218",
-    "phoneDisplay": "0986 919 340"
+    "phoneDisplay": "037 669 218",
    },
    {
     "name": "Ngọc Tú (hỗ trợ)",
