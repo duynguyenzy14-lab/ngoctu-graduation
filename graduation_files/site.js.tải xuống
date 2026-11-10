@@ -1,17 +1,17 @@
 window.SITE = {
- "siteUrl": "https://invite.khanhnguyenquang.id.vn",
- "fullName": "Nguyễn Quang Khánh",
- "shortName": "Khánh",
+ "siteUrl": "http://ngoctu-graduation2026.id.vn",
+ "fullName": "Nguyễn Ngọc Tú",
+ "shortName": "Tú",
  "school": "Trường Đại học Mở TP.HCM",
- "major": "Khoa học máy tính",
- "date": "2026-11-14T07:00:00+07:00",
- "dateLong": "Sáng thứ Bảy, 14.11.2026",
- "dateNumeric": "14.11.2026",
+ "major": "Quản lí công",
+ "date": "2026-11-29T08:00:00+07:00",
+ "dateLong": "Sáng Chủ nhật, 29.11.2026",
+ "dateNumeric": "29.11.2026",
  "intro": {
   "style": "stage",
-  "ringText": "NGUYỄN QUANG KHÁNH · KHOA HỌC MÁY TÍNH · TỐT NGHIỆP 14.11.2026 · ĐẠI HỌC MỞ TP.HCM · ",
-  "title": "Khánh tốt nghiệp.",
-  "sub": "Sáng 14.11.2026, mình nhận bằng Khoa học máy tính tại Trường Đại học Mở TP.HCM.",
+  "ringText": "NGUYỄN NGỌC TÚ · QUẢN LÝ Công · TỐT NGHIỆP 29.11.2026 · ĐẠI HỌC MỞ TP.HCM · ",
+  "title": "Tú tốt nghiệp.",
+  "sub": "Sáng 29.11.2026, mình nhận bằng Quản lý Đại học Mở TP.HCM.",
   "hold": "Nhấn giữ để mở thiệp",
   "portrait": {
    "file": "LR-018.jpg",
@@ -32,7 +32,7 @@ window.SITE = {
   "greeting": "Gửi {name},",
   "general": "Có những người không cần đứng trên sân khấu cùng mình, nhưng lại là lý do mình đi được tới đó.\nBạn là một trong những người ấy.\nCảm ơn bạn vì bốn năm vừa qua.",
   "closing": "Best Regards,",
-  "sign": "Quang Khánh"
+  "sign": "Quang Tú"
  },
  "invite": {
   "title": "{name} ơi,",
@@ -62,7 +62,7 @@ window.SITE = {
  },
  "parking": {
   "title": "Hướng dẫn gửi xe",
-  "school": "Có thể gửi xe tại Trường, nhưng vào ngày lễ khu vực gửi xe có thể sẽ hết chỗ sớm. Khánh gợi ý một số điểm gửi xe gần trường nha:",
+  "school": "Có thể gửi xe tại Trường, nhưng vào ngày lễ khu vực gửi xe có thể sẽ hết chỗ sớm. Tú gợi ý một số điểm gửi xe gần trường nha:",
   "intro": "",
   "places": [
    {
@@ -83,18 +83,18 @@ window.SITE = {
   ]
  },
  "calendar": {
-  "title": "Tốt nghiệp của Khánh",
-  "start": "20261114T000000Z",
-  "end": "20261114T050000Z"
+  "title": "Tốt nghiệp của Tú",
+  "start": "20261129T000000Z",
+  "end": "20261129T050000Z"
  },
  "contact": {
-  "phone": "0986919340",
-  "phoneDisplay": "0986 919 340",
-  "label": "Zalo, Khánh",
+  "phone": "037669218",
+  "phoneDisplay": "037 669 218",
+  "label": "Zalo, Tú",
   "people": [
    {
-    "name": "Khánh",
-    "phone": "0986919340",
+    "name": "Tú",
+    "phone": "037669218",
     "phoneDisplay": "0986 919 340"
    },
    {
@@ -138,17 +138,17 @@ window.SITE = {
   "demo": [
    {
     "name": "Minh",
-    "text": "Chúc mừng Khánh! Bốn năm deadline cuối cùng cũng đổi được một tấm bằng. Sáng 14 mình tới sớm chụp cho Khánh nha."
+    "text": "Chúc mừng Tú! Bốn năm deadline cuối cùng cũng đổi được một tấm bằng. Sáng 14 mình tới sớm chụp cho Tú nha."
    },
    {
     "name": "Thảo Vy",
-    "text": "Tự hào về Khánh lắm. Hẹn 11:00, nhớ chừa cho Vy một tấm chụp chung cầm bằng nha."
+    "text": "Tự hào về Tú lắm. Hẹn 11:00, nhớ chừa cho Vy một tấm chụp chung cầm bằng nha."
    }
   ]
  },
  "photos": {
   "og": "20261031_235206000_iOS.jpg",
-  "galleryTitle": "Quang Khánh chụp trước vài tấm. Những tấm còn lại chờ {name} đó nhaa.",
+  "galleryTitle": "Tú chụp trước vài tấm. Những tấm còn lại chờ {name} đó nhaa.",
   "gallery": [
    {
     "file": "20261031_235206000_iOS.jpg",
@@ -270,13 +270,13 @@ window.SITE = {
    "words": {
     "you": "mọi người",
     "You": "Quý anh chị, bạn bè",
-    "coverFor": "Một lời mời từ Khánh",
+    "coverFor": "Một lời mời từ Tú",
     "insideLead": "Trân trọng kính mời",
     "photoSlot": "Chỗ này để dành cho tấm ảnh chụp cùng mọi người"
    },
    "letter": {
     "greeting": "Thương gửi Quý anh chị, bạn bè,",
-    "general": "Vậy là hành trình bốn năm đại học cũng đã đến ngày tốt nghiệp, nhìn lại chặng đường vừa qua, Khánh thấy mình thật may mắn khi nhận được sự quan tâm, giúp đỡ và đồng hành từ rất nhiều người. Xin gửi lời cảm ơn chân thành đến mọi người vì đã là một phần trong hành trình đáng nhớ của Khánh ❤️"
+    "general": "Vậy là hành trình bốn năm đại học cũng đã đến ngày tốt nghiệp, nhìn lại chặng đường vừa qua, Tú thấy mình thật may mắn khi nhận được sự quan tâm, giúp đỡ và đồng hành từ rất nhiều người. Xin gửi lời cảm ơn chân thành đến mọi người vì đã là một phần trong hành trình đáng nhớ của Tú ❤️"
    },
    "invite": {
     "title": "Ngày tốt nghiệp,",
@@ -287,12 +287,12 @@ window.SITE = {
    "photos": {
     "cover": "LR-177.jpg",
     "letterPhoto2": "LR-172.jpg",
-    "galleryTitle": "Quang Khánh chụp trước vài tấm. Những tấm còn lại chờ mọi người cùng chụp nhé."
+    "galleryTitle": "Quang Tú chụp trước vài tấm. Những tấm còn lại chờ mọi người cùng chụp nhé."
    },
    "rsvp": {
-    "title": "Khánh mong được gặp mọi người hôm đó",
-    "lead": "Vui lòng xác nhận tham dự để Khánh đón tiếp chu đáo.",
-    "msgPlaceholder": "Gửi đôi lời đến Khánh… (Không bắt buộc)",
+    "title": "Tú mong được gặp mọi người hôm đó",
+    "lead": "Vui lòng xác nhận tham dự để Tú đón tiếp chu đáo.",
+    "msgPlaceholder": "Gửi đôi lời đến Tú… (Không bắt buộc)",
     "confirmText": "Sau khi gửi sẽ không chỉnh sửa được nữa."
    },
    "guestbook": {
@@ -300,17 +300,17 @@ window.SITE = {
    },
    "schedule": [
     {
-     "text": "Nếu đến sớm, mọi người có thể gặp Khánh và chụp hình ở sân trường trước lễ."
+     "text": "Nếu đến sớm, mọi người có thể gặp Tú và chụp hình ở sân trường trước lễ."
     },
     {
-     "text": "Trong thời gian diễn ra lễ chính, Khánh sẽ ở trong hội trường. Mọi người có thể theo dõi buổi lễ qua màn hình LED bên ngoài."
+     "text": "Trong thời gian diễn ra lễ chính, Tú sẽ ở trong hội trường. Mọi người có thể theo dõi buổi lễ qua màn hình LED bên ngoài."
     },
     {
-     "text": "Đây là lúc Khánh và mọi người có thể thoải mái gặp gỡ và chụp thật nhiều hình kỷ niệm cùng nhau."
+     "text": "Đây là lúc Tú và mọi người có thể thoải mái gặp gỡ và chụp thật nhiều hình kỷ niệm cùng nhau."
     }
    ],
    "parking": {
-    "school": "Có thể gửi xe tại Trường, nhưng vào ngày lễ khu vực gửi xe có thể sẽ hết chỗ sớm. Khánh gợi ý một số điểm gửi xe gần trường:"
+    "school": "Có thể gửi xe tại Trường, nhưng vào ngày lễ khu vực gửi xe có thể sẽ hết chỗ sớm. Tú gợi ý một số điểm gửi xe gần trường:"
    }
   },
   "teacher": {
