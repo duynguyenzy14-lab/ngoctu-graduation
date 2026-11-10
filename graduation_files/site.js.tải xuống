@@ -251,8 +251,8 @@ window.SITE = {
     }
    }
   ],
-  "letterPhoto": "LR-018.jpg",
-  "ogImage": "/img/og.jpg"
+  "letterPhoto": "guest-ngoctu-800.webp",
+  "ogImage": "/img/guest-ngoctu-800.webp",
  },
  "timelineTitle": "Timeline",
  "words": {
