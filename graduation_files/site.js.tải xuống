@@ -14,7 +14,7 @@ window.SITE = {
   "sub": "Sáng 28.11.2026, mình nhận bằng Quản lý Đại học Mở TP.HCM.",
   "hold": "Nhấn giữ để mở thiệp",
   "portrait": {
-   "file": "/img/guest-ngoctu-800.webp",
+   "file": "img/guest-ngoctu-800.webp",
    "crop": [
     0.12,
     0.0,
@@ -22,7 +22,7 @@ window.SITE = {
     0.6
    ],
    "img": {
-    "src": "/img/guest-ngoctu-800.webp",
+    "src": "img/guest-ngoctu-800.webp",
     "ratio": 0.8664
    }
   }
