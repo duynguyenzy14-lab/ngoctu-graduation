@@ -9,12 +9,12 @@ window.SITE = {
  "dateNumeric": "28.11.2026",
  "intro": {
   "style": "stage",
-  "ringText": "NGUYỄN NGỌC TÚ · QUẢN LÝ Công · TỐT NGHIỆP 28.11.2026 · ĐẠI HỌC MỞ TP.HCM · ",
+  "ringText": "NGUYỄN NGỌC TÚ · QUẢN LÝ CÔNG · TỐT NGHIỆP 28.11.2026 · ĐẠI HỌC MỞ TP.HCM · ",
   "title": "Tú tốt nghiệp.",
   "sub": "Sáng 28.11.2026, mình nhận bằng Quản lý Đại học Mở TP.HCM.",
   "hold": "Nhấn giữ để mở thiệp",
   "portrait": {
-   "file": "guest-ngoctu-800.webp",
+   "file": "/img/guest-ngoctu-800.webp",
    "crop": [
     0.12,
     0.0,
