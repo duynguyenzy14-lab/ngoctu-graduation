@@ -14,7 +14,7 @@ window.SITE = {
   "sub": "Sáng 28.11.2026, mình nhận bằng Quản lý Đại học Mở TP.HCM.",
   "hold": "Nhấn giữ để mở thiệp",
   "portrait": {
-   "file": "/img/guest-ngoctu-800.webp",
+   "file": "./tu.JPG",
    "crop": [
     0.12,
     0.0,
@@ -22,7 +22,7 @@ window.SITE = {
     0.6
    ],
    "img": {
-    "src": "guest-ngoctu-800.webp",
+    "src": "./tu.JPG",
     "ratio": 0.8664
    }
   }
@@ -154,9 +154,9 @@ window.SITE = {
     "file": "20261031_235206000_iOS.jpg",
     "caption": "Bằng đã trong tay",
     "img": {
-     "small": "/img/20261031-235206000-ios-800.webp",
-     "large": "/img/20261031-235206000-ios-1600.webp",
-     "srcset": "/img/20261031-235206000-ios-800.webp 800w, /img/20261031-235206000-ios-1600.webp 1600w",
+     "small": "./graduation_files/20261031-235206000-ios-800.webp",
+     "large": "./graduation_files/20261031-235206000-ios-1600.webp",
+     "srcset": "./graduation_files/20261031-235206000-ios-800.webp 800w, ./graduation_files/20261031-235206000-ios-1600.webp 1600w",
      "ratio": 1.5
     }
    },
@@ -164,9 +164,9 @@ window.SITE = {
     "file": "LR-172.jpg",
     "caption": "Góc tường quen ở trường",
     "img": {
-     "small": "/img/lr-172-800.webp",
-     "large": "/img/lr-172-1600.webp",
-     "srcset": "/img/lr-172-800.webp 583w, /img/lr-172-1600.webp 1167w",
+     "small": "./graduation_files/lr-172-800.webp",
+     "large": "./graduation_files/lr-172-1600.webp",
+     "srcset": "./graduation_files/lr-172-800.webp 583w, ./graduation_files/lr-172-1600.webp 1167w",
      "ratio": 0.7291
     }
    },
@@ -174,9 +174,9 @@ window.SITE = {
     "file": "20261101_000529000_iOS.jpg",
     "caption": "Nghỉ chân giữa sân trường",
     "img": {
-     "small": "/img/20261101-000529000-ios-800.webp",
-     "large": "/img/20261101-000529000-ios-1600.webp",
-     "srcset": "/img/20261101-000529000-ios-800.webp 800w, /img/20261101-000529000-ios-1600.webp 1600w",
+     "small": "./graduation_files/20261101-000529000-ios-800.webp",
+     "large": "./graduation_files/20261101-000529000-ios-1600.webp",
+     "srcset": "./graduation_files/20261101-000529000-ios-800.webp 800w, ./graduation_files/20261101-000529000-ios-1600.webp 1600w",
      "ratio": 1.5
     }
    },
@@ -184,9 +184,9 @@ window.SITE = {
     "file": "LR-177.jpg",
     "caption": "Dưới tán cây",
     "img": {
-     "small": "/img/lr-177-800.webp",
-     "large": "/img/lr-177-1600.webp",
-     "srcset": "/img/lr-177-800.webp 533w, /img/lr-177-1600.webp 1067w",
+     "small": "./graduation_files/lr-177-800.webp",
+     "large": "./graduation_files/lr-177-1600.webp",
+     "srcset": "./graduation_files/lr-177-800.webp 533w, ./graduation_files/lr-177-1600.webp 1067w",
      "ratio": 0.6666
     }
    },
@@ -194,9 +194,9 @@ window.SITE = {
     "file": "20261101_004111000_iOS.jpg",
     "caption": "Giữa khuôn viên trường",
     "img": {
-     "small": "/img/20261101-004111000-ios-800.webp",
-     "large": "/img/20261101-004111000-ios-1600.webp",
-     "srcset": "/img/20261101-004111000-ios-800.webp 800w, /img/20261101-004111000-ios-1600.webp 1600w",
+     "small": "./graduation_files/20261101-004111000-ios-800.webp",
+     "large": "./graduation_files/20261101-004111000-ios-1600.webp",
+     "srcset": "./graduation_files/20261101-004111000-ios-800.webp 800w, ./graduation_files/20261101-004111000-ios-1600.webp 1600w",
      "ratio": 1.4994
     }
    },
@@ -204,9 +204,9 @@ window.SITE = {
     "file": "LR-207.jpg",
     "caption": "Trong hội trường",
     "img": {
-     "small": "/img/lr-207-800.webp",
-     "large": "/img/lr-207-1600.webp",
-     "srcset": "/img/lr-207-800.webp 800w, /img/lr-207-1600.webp 1600w",
+     "small": "./graduation_files/lr-207-800.webp",
+     "large": "./graduation_files/lr-207-1600.webp",
+     "srcset": "./graduation_files/lr-207-800.webp 800w, ./graduation_files/lr-207-1600.webp 1600w",
      "ratio": 1.5
     }
    },
@@ -214,9 +214,9 @@ window.SITE = {
     "file": "LR-150.jpg",
     "caption": "Nắng sớm ở trường",
     "img": {
-     "small": "/img/lr-150-800.webp",
-     "large": "/img/lr-150-1600.webp",
-     "srcset": "/img/lr-150-800.webp 533w, /img/lr-150-1600.webp 1067w",
+     "small": "./graduation_files/lr-150-800.webp",
+     "large": "./graduation_files/lr-150-1600.webp",
+     "srcset": "./graduation_files/lr-150-800.webp 533w, ./graduation_files/lr-150-1600.webp 1067w",
      "ratio": 0.6667
     }
    },
@@ -224,9 +224,9 @@ window.SITE = {
     "file": "LR-018.jpg",
     "caption": "Chân dung tốt nghiệp",
     "img": {
-     "small": "/img/lr-018-800.webp",
-     "large": "/img/lr-018-1600.webp",
-     "srcset": "/img/lr-018-800.webp 547w, /img/lr-018-1600.webp 1094w",
+     "small": "./graduation_files/lr-018-800.webp",
+     "large": "./graduation_files/lr-018-1600.webp",
+     "srcset": "./graduation_files/lr-018-800.webp 547w, ./graduation_files/lr-018-1600.webp 1094w",
      "ratio": 0.684
     }
    },
@@ -234,9 +234,9 @@ window.SITE = {
     "file": "LR-085.jpg",
     "caption": "Trước ô cửa vân sóng",
     "img": {
-     "small": "/img/lr-085-800.webp",
-     "large": "/img/lr-085-1600.webp",
-     "srcset": "/img/lr-085-800.webp 533w, /img/lr-085-1600.webp 1067w",
+     "small": "./graduation_files/lr-085-800.webp",
+     "large": "./graduation_files/lr-085-1600.webp",
+     "srcset": "./graduation_files/lr-085-800.webp 533w, ./graduation_files/lr-085-1600.webp 1067w",
      "ratio": 0.6667
     }
    },
@@ -244,15 +244,15 @@ window.SITE = {
     "file": "LR-143.jpg",
     "caption": "Áo cử nhân, khăn xanh",
     "img": {
-     "small": "/img/lr-143-800.webp",
-     "large": "/img/lr-143-1600.webp",
-     "srcset": "/img/lr-143-800.webp 533w, /img/lr-143-1600.webp 1067w",
+     "small": "./graduation_files/lr-143-800.webp",
+     "large": "./graduation_files/lr-143-1600.webp",
+     "srcset": "./graduation_files/lr-143-800.webp 533w, ./graduation_files/lr-143-1600.webp 1067w",
      "ratio": 0.6667
     }
    }
   ],
-  "letterPhoto": "guest-ngoctu-800.webp",
-  "ogImage": "/img/guest-ngoctu-800.webp",
+  "letterPhoto": "tu.JPG",
+  "ogImage": "./tu.JPG",
  },
  "timelineTitle": "Timeline",
  "words": {

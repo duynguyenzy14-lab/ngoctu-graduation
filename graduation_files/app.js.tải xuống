@@ -234,6 +234,7 @@
         </div>
       </section>`;
 
+    if (!document.getElementById("intro") || guest) {
     app.innerHTML = `
 ${introMarkup}
 
@@ -321,6 +322,7 @@ ${introMarkup}
           </div>
         </div>
       </section>`;
+    }
 
     document.getElementById("footer").innerHTML =
       `<span>Cảm ơn vì đã đến</span><span>${esc(S.dateNumeric)}</span>`;
