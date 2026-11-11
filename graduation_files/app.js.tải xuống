@@ -1691,17 +1691,60 @@ ${introMarkup}
     }).catch(() => {});
   }
 
+  function updateGuestName(name) {
+    if (!name) return;
+    name = name.trim();
+    if (!name) return;
+    document.title = `${name} ơi, Tú tốt nghiệp rồi`;
+    const inName = document.querySelector(".in-name");
+    if (inName) inName.textContent = name;
+    const foilFor = document.querySelector(".foil.for");
+    if (foilFor) foilFor.textContent = `Gửi ${name}`;
+    document.querySelectorAll(".who").forEach((el) => {
+      el.textContent = name;
+    });
+  }
+
   /* =============== định tuyến: / hoặc /moi/<slug> =============== */
   async function boot() {
+    const params = new URLSearchParams(location.search);
+    let guestName =
+      params.get("to") ||
+      params.get("name") ||
+      params.get("u") ||
+      params.get("guest") ||
+      params.get("khach") ||
+      params.get("moi");
+
+    if (!guestName && location.hash) {
+      const hash = decodeURIComponent(location.hash.replace(/^#\/?/, ""));
+      if (hash.startsWith("to=")) guestName = hash.slice(3);
+      else if (hash.startsWith("name=")) guestName = hash.slice(5);
+      else if (hash.startsWith("moi/")) guestName = hash.slice(4);
+      else if (!hash.includes("/") && !hash.includes("=") && hash.length > 0 && hash.length < 40 && hash !== "letter") {
+        guestName = hash;
+      }
+    }
+
     const m = location.pathname.match(/^\/moi\/([a-z0-9-]+)\/?$/);
     let guest = null;
     if (m) {
       try {
         const res = await fetch(`/data/g/${m[1]}.json`);
-        if (res.ok) guest = { ...(await res.json()), slug: m[1] };
+        if (res.ok) {
+          guest = { ...(await res.json()), slug: m[1] };
+          if (guest.name) guestName = guest.name;
+        }
       } catch {
         /* không tìm thấy khách: hiện trang chung */
       }
+      if (!guestName) guestName = m[1];
+    }
+
+    if (guestName) {
+      guest = guest || { name: guestName, slug: guestName.toLowerCase() };
+      guest.name = guestName;
+      updateGuestName(guestName);
     }
     // giọng xưng hô: trang chung dùng voices.general, khách có "voice" dùng voices[<tên>]
     const voice = S.voices?.[guest ? guest.voice : "general"];
