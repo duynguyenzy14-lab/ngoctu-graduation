@@ -1,2 +1,11 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# Force binary — không chuyển line ending cho ảnh
+*.jpg binary
+*.JPG binary
+*.jpeg binary
+*.png binary
+*.webp binary
+*.gif binary
+*.ico binary
