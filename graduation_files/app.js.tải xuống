@@ -153,7 +153,7 @@
       S.intro.style ||
       "ascii";
     const emblem = `<svg class="emblem" viewBox="0 0 120 84" aria-hidden="true">
-        <defs><linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8A6A2F"/><stop offset=".35" stop-color="#F3D98B"/><stop offset=".6" stop-color="#B8913F"/><stop offset=".8" stop-color="#F7E7A8"/><stop offset="1" stop-color="#9B7834"/></linearGradient></defs>
+        <defs><linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E06D94"/><stop offset=".35" stop-color="#FFEBF2"/><stop offset=".6" stop-color="#FFA8C5"/><stop offset=".8" stop-color="#FFFFFF"/><stop offset="1" stop-color="#D44E7B"/></linearGradient></defs>
         <g fill="none" stroke="url(#gold)" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round">
           <path d="M60 10 L112 30 L60 50 L8 30 Z"/><path d="M30 40 V58 C30 66 90 66 90 58 V40"/><path d="M112 30 V54"/><circle cx="112" cy="58" r="3.2" fill="url(#gold)"/>
           <path d="M22 76 H98" stroke-width="1.4"/>
@@ -201,13 +201,13 @@
             <!-- tua nằm ở lớp phẳng phía trên bìa (không trong khối 3D) để Safari/iOS không vẽ nhầm ra sau bìa -->
             <div class="book-ui" id="book-ui">
               <svg class="tassel" id="tassel" aria-hidden="true">
-                <defs><linearGradient id="tgold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9B7834"/><stop offset=".45" stop-color="#F3D98B"/><stop offset="1" stop-color="#A9843A"/></linearGradient></defs>
+                <defs><linearGradient id="tgold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E06D94"/><stop offset=".45" stop-color="#FFEBF2"/><stop offset="1" stop-color="#FFA8C5"/></linearGradient></defs>
                 <path id="t-cord" fill="none" stroke="url(#tgold)" stroke-width="2.4" stroke-linecap="round"/>
                 <circle id="t-btn" r="5.5" fill="url(#tgold)"/>
                 <g id="t-head">
                   <ellipse cx="0" cy="0" rx="5.5" ry="6.5" fill="url(#tgold)"/>
                   <path d="M-4 5 L4 5 L9 40 L-9 40 Z" fill="url(#tgold)"/>
-                  <path d="M-7 18 V40 M-4 14 V40 M-1 12 V40 M2 12 V40 M5 14 V40 M8 18 V40" stroke="#7A5A22" stroke-width=".8" opacity=".55"/>
+                  <path d="M-7 18 V40 M-4 14 V40 M-1 12 V40 M2 12 V40 M5 14 V40 M8 18 V40" stroke="#A32454" stroke-width=".8" opacity=".65"/>
                 </g>
               </svg>
               <button class="tassel-hit" id="tassel-hit" type="button" aria-label="Chuyển tua sang trái để mở thiệp"></button>
@@ -350,10 +350,10 @@ ${introMarkup}
     const P = S.intro.portrait.img;
     const RAMP = " .,:;-=+*%#@";
     const COLORS = {
-      bg: "#0B1630",
-      frost: "#E7ECF7",
-      blue: "#7FA2FF",
-      sky: "#8FB0FF",
+      bg: "#260A1C",
+      frost: "#FFF0F6",
+      blue: "#FF8FB8",
+      sky: "#FFA3C7",
     };
     // ký tự dùng khi xáo trộn: lấy từ tên khách (thiệp riêng) hoặc tên Khánh
     const pool = [
@@ -863,7 +863,7 @@ ${introMarkup}
       const r = book.getBoundingClientRect(),
         ox = r.left + r.width / 2,
         oy = r.top + r.height * 0.2;
-      const cols = ["#F3D98B", "#D9B45A", "#FFFFFF", "#8FB0FF", "#0A4CFF"];
+      const cols = ["#FFA8C5", "#FF69B4", "#FFFFFF", "#FF4081", "#FFE4EE", "#FF1493"];
       const P = Array.from({ length: innerWidth < 600 ? 70 : 120 }, () => {
         const a = -Math.PI / 2 + (Math.random() - 0.5) * 2.2,
           v = 380 + Math.random() * 520;
@@ -1092,7 +1092,7 @@ ${introMarkup}
       }
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx.clearRect(0, 0, W, H);
-      ctx.fillStyle = "#DDE6FF";
+      ctx.fillStyle = "#FFD6E7";
       for (const m of motes) {
         m.y += m.vy * dt;
         if (m.y < -4) m.y = H + 4;
