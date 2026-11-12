@@ -650,7 +650,7 @@ ${introMarkup}
           ? "Cuộn xuống để đọc thư"
           : T.side < 0
             ? "Đang mở thiệp…"
-            : "Kéo tua sang trái để mở thiệp";
+            : "Lật bìa hoặc kéo tua sang trái để mở thiệp";
     }
     function set(v) {
       open = clamp(v);
@@ -785,18 +785,22 @@ ${introMarkup}
       if (e.detail === 0) graduate();
     }); // bàn phím
 
-    /* ---- vẫn cho chạm / vuốt bìa để mở ---- */
+    /* ---- chạm / vuốt bìa để mở như lật sách ---- */
     cover.addEventListener("pointerdown", (e) => {
       if (e.button > 0) return;
       cancelAnimationFrame(anim);
-      drag = { y: e.clientY, start: open, moved: false };
+      drag = { x: e.clientX, y: e.clientY, start: open, moved: false };
       cover.setPointerCapture?.(e.pointerId);
     });
     cover.addEventListener("pointermove", (e) => {
       if (!drag) return;
+      const dx = drag.x - e.clientX;
       const dy = drag.y - e.clientY;
-      if (Math.abs(dy) > 6) drag.moved = true;
-      if (drag.moved) set(drag.start + dy / (book.offsetHeight * 1.15));
+      if (Math.abs(dx) > 6 || Math.abs(dy) > 6) drag.moved = true;
+      if (drag.moved) {
+        const delta = Math.abs(dx) >= Math.abs(dy) ? dx : dy;
+        set(drag.start + delta / (book.offsetWidth * 0.95));
+      }
     });
     const end = () => {
       if (!drag) return;

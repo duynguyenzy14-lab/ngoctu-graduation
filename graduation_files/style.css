@@ -79,24 +79,33 @@ a { color: var(--volt); }
 .intro.dip { padding-block: 48px; }
 /* --bw: bề rộng bìa; --u: 1% bề rộng bìa. Mọi chữ trên bìa tính theo --u nên bìa nhỏ đi (laptop thấp, điện thoại)
    thì chữ nhỏ theo, không bao giờ tràn/đè lên biểu tượng mũ */
-.stage { --open: 0; --bw: min(calc(100vw - 76px), 620px, calc((100svh - 120px) * .71)); --u: calc(var(--bw) / 100);
-  width: 100%; display: grid; justify-items: center; gap: 26px; perspective: 1600px; perspective-origin: 50% 15%;
+.stage { --open: 0; --bw: min(calc(100vw - 64px), 500px, calc((100svh - 140px) * .72)); --u: calc(var(--bw) / 100);
+  width: 100%; display: grid; justify-items: center; gap: 26px; perspective: 1800px; perspective-origin: 50% 45%;
   padding-left: var(--gutter-l); padding-right: var(--gutter-r); }
-.float { --tx: 0deg; --ty: 0deg; --sx: 50%; position: relative; animation: floaty 6s ease-in-out infinite; perspective: 1600px; perspective-origin: 50% 15%; }
+@media (min-width: 860px) {
+  .stage { --bw: min(calc((100vw - 80px) / 2), 460px, calc((100svh - 140px) * .72)); }
+}
+.float { --tx: 0deg; --ty: 0deg; --sx: 50%; position: relative; animation: floaty 6s ease-in-out infinite; perspective: 1800px; perspective-origin: 50% 45%; }
 @keyframes floaty { 50% { transform: translateY(-8px); } }
 .book {
   position: relative; width: var(--bw); aspect-ratio: 1.42; transform-style: preserve-3d;
-  transform: translateY(calc(var(--open) * 50%)) rotateX(var(--tx)) rotateY(var(--ty));
+  transform: translateX(calc(var(--open) * var(--bw) * 0.46)) scale(calc(1 - var(--open) * 0.4)) rotateX(var(--tx)) rotateY(var(--ty));
+  transform-origin: center center;
 }
-.book::after { content: ""; position: absolute; left: 8%; right: 8%; bottom: -30px; height: 30px; border-radius: 50%;
-  background: radial-gradient(ellipse, rgba(0, 0, 0, .55), transparent 70%); filter: blur(6px); transform: translateZ(-2px); }
+@media (min-width: 860px) {
+  .book {
+    transform: translateX(calc(var(--open) * var(--bw) * 0.5)) rotateX(var(--tx)) rotateY(var(--ty));
+  }
+}
+.book::after { content: ""; position: absolute; left: calc(8% - var(--open) * 96%); right: 8%; bottom: -30px; height: 32px; border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(0, 0, 0, .55), transparent 70%); filter: blur(7px); transform: translateZ(-2px); }
 
 .inside {
-  position: absolute; inset: 0; border-radius: 6px 6px 10px 10px; background: #FFF9FA; color: var(--ink);
+  position: absolute; inset: 0; border-radius: 0 10px 10px 0; background: #FFF9FA; color: var(--ink);
   display: grid; place-content: center; justify-items: center; text-align: center; gap: 0; padding: 5% 8%;
-  box-shadow: inset 0 0 0 9px #FFF9FA, inset 0 0 0 10px #F9C3D7;
+  box-shadow: inset 18px 0 24px -10px rgba(45, 10, 30, calc(var(--open) * 0.45)), inset 0 0 0 9px #FFF9FA, inset 0 0 0 10px #F9C3D7;
 }
-.inside > * { opacity: calc((var(--open) - .55) * 2.3); transform: translateY(calc((1 - var(--open)) * 18px)); }
+.inside > * { opacity: calc((var(--open) - .35) * 2.2); transform: translateY(calc((1 - var(--open)) * 14px)); }
 /* nhịp dọc: các cụm ý cách nhau rõ, trong cụm thì gần nhau */
 .in-lead { margin: 0 0 calc(var(--u) * 1); font: italic 400 max(13px, calc(var(--u) * 3.1))/1.3 var(--serif); color: var(--slate); }
 .in-name { margin: 0 0 calc(var(--u) * 2.6); font: 500 calc(var(--u) * 9)/1.15 var(--serif); letter-spacing: -.015em; color: var(--volt); overflow-wrap: anywhere; }
@@ -108,16 +117,17 @@ a { color: var(--volt); }
 
 .cover {
   position: absolute; inset: 0; padding: 0; margin: 0; border: 0; background: none; color: inherit; font: inherit;
-  cursor: grab; transform-origin: 50% 0; transform-style: preserve-3d; touch-action: none;
-  transform: rotateX(calc(var(--open) * 178deg));
+  cursor: grab; transform-origin: 0% 50%; transform-style: preserve-3d; touch-action: none;
+  transform: rotateY(calc(var(--open) * -178deg));
   -webkit-user-select: none; user-select: none; -webkit-tap-highlight-color: transparent;
 }
 .cover:active { cursor: grabbing; }
 .cover:focus-visible { outline: none; }
 .cover:focus-visible .front { box-shadow: 0 0 0 3px var(--sky); }
-.face { position: absolute; inset: 0; border-radius: 6px 6px 10px 10px; backface-visibility: hidden; -webkit-backface-visibility: hidden; overflow: hidden; }
+.face { position: absolute; inset: 0; border-radius: 0 10px 10px 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; overflow: hidden; }
 .front {
   display: grid; justify-items: center; align-content: center; gap: calc(var(--u) * 1.8); padding: 7% 9%; text-align: center;
+  border-radius: 0 10px 10px 0;
   background: radial-gradient(120% 95% at 28% 18%, #FF5E97 0%, #E0266B 52%, #9E1247 100%);
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .2), inset 0 -8px 18px rgba(90, 10, 40, .35), 0 1px 0 rgba(255, 255, 255, .15);
 }
@@ -141,8 +151,9 @@ a { color: var(--volt); }
 .sheen { position: absolute; inset: 0; pointer-events: none; mix-blend-mode: screen;
   background: linear-gradient(115deg, transparent 32%, rgba(255, 255, 255, .18) 46%, transparent 60%);
   background-size: 260% 100%; background-position: var(--sx) 0; }
-.back { transform: rotateX(180deg); display: block;
-  background: linear-gradient(#B8235A, #7D123A); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .15); }
+.back { transform: rotateY(180deg); display: block; border-radius: 10px 0 0 10px;
+  background: linear-gradient(#B8235A, #7D123A);
+  box-shadow: inset -18px 0 24px -10px rgba(35, 5, 25, calc(var(--open) * 0.5)), inset 0 0 0 1px rgba(255, 255, 255, .15); }
 /* ảnh & chữ đặt tuyệt đối theo mặt bìa: kích thước luôn xác định, iPhone không bị ảnh phình tràn xuống */
 .snap { position: absolute; left: 10%; top: 13%; height: 74%; width: auto; aspect-ratio: 4 / 5; margin: 0; transform: rotate(-3deg); background: #fff;
   padding: calc(var(--u) * 1.2) calc(var(--u) * 1.2) calc(var(--u) * 3.6);
@@ -155,7 +166,13 @@ a { color: var(--volt); }
 
 /* lớp tua: phẳng, đè lên bìa, cùng dịch chuyển/nghiêng với bìa */
 .book-ui { position: absolute; left: 0; top: 0; width: var(--bw); aspect-ratio: 1.42; pointer-events: none;
-  transform: translateY(calc(var(--open) * 50%)) rotateX(var(--tx)) rotateY(var(--ty)); }
+  transform: translateX(calc(var(--open) * var(--bw) * 0.46)) scale(calc(1 - var(--open) * 0.4)) rotateX(var(--tx)) rotateY(var(--ty));
+  transform-origin: center center; }
+@media (min-width: 860px) {
+  .book-ui {
+    transform: translateX(calc(var(--open) * var(--bw) * 0.5)) rotateX(var(--tx)) rotateY(var(--ty));
+  }
+}
 .tassel { position: absolute; left: 0; top: 0; overflow: visible; pointer-events: none;
   opacity: calc(1 - var(--open) * 2.2); filter: drop-shadow(0 3px 3px rgba(0, 0, 0, .35)); }
 .tassel-hit { position: absolute; left: 0; top: 0; width: 52px; height: 64px; padding: 0; border: 0; background: none; border-radius: 12px;
@@ -164,7 +181,8 @@ a { color: var(--volt); }
 .book.is-open + .book-ui .tassel-hit { pointer-events: none; }
 .confetti { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 25; }
 .dip-hint { margin: 0; font: 400 13px var(--mono); color: rgba(255, 205, 225, .7); text-align: center;
-  transform: translateY(calc(var(--open) * var(--bw) / 1.42 * .5)); }
+  transition: opacity .3s; }
+.book.is-open ~ .dip-hint { opacity: 0; }
 @media (prefers-reduced-motion: reduce) { .float { animation: none; } }
 
 /* ---------- biến thể "sân khấu": đèn bật, ảnh trôi, tua rơi ---------- */
