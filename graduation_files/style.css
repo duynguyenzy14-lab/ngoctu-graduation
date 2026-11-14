@@ -4,16 +4,16 @@
    3. Thiệp  — trái: lời mời + đếm ngược (đứng yên); phải: thông tin dạng hoá đơn in dần
    4. Cuối   — nền tối, ảnh trôi ngang, form xác nhận + bảng lời chúc gõ chữ */
 :root {
-  /* ===== Màu chủ: hồng dâu bánh bèo ===== */
-  --paper:      #FDE8EF;   /* nền trang chính */
+  /* ===== Màu chủ: nền trắng sạch, chi tiết hồng dâu bánh bèo ===== */
+  --paper:      #FFFFFF;   /* nền trang chính màu trắng */
   --ink:        #2D1420;   /* chữ chính */
   --volt:       #E8275E;   /* accent hồng dâu đậm */
   --sky:        #FFA3C7;   /* accent hồng nhạt */
-  --mist:       #FAD7E4;   /* nền phụ */
+  --mist:       #FFF2F7;   /* nền phụ hồng kem nhẹ */
   --slate:      #7A4762;   /* chữ phụ / mờ */
-  --night:      #F8C8DC;   /* nền tối nhẹ */
+  --night:      #FAF5F8;   /* nền phụ */
   --frost:      #2D1420;
-  --line-dark:  rgba(224, 70, 120, .2);
+  --line-dark:  rgba(224, 70, 120, .15);
   /* ===== Màu bìa bằng ===== */
   --cover-blue:   #162E7A;  /* xanh sash đại học */
   --cover-blue-2: #1E449E;
@@ -85,7 +85,7 @@ a { color: var(--volt); }
 .intro.dip {
   display: grid; place-items: center; grid-template: none; padding-block: 48px;
   min-height: 100svh;
-  background: radial-gradient(ellipse 70% 60% at 50% 45%, #281123 0%, #180916 55%, #0d030b 100%);
+  background: radial-gradient(ellipse 70% 60% at 50% 45%, #FFFFFF 0%, #FAF7F9 50%, #F5EFF3 100%);
   position: relative; overflow: hidden;
 }
 /* --bw: bề rộng 1 trang bìa.
@@ -116,7 +116,7 @@ a { color: var(--volt); }
   }
 }
 .book::after { content: ""; position: absolute; left: calc(8% - var(--open) * 96%); right: 8%; bottom: -30px; height: 32px; border-radius: 50%;
-  background: radial-gradient(ellipse, rgba(0, 0, 0, .75), transparent 70%); filter: blur(10px); transform: translateZ(-2px); }
+  background: radial-gradient(ellipse, rgba(16, 32, 85, .24), transparent 70%); filter: blur(8px); transform: translateZ(-2px); }
 
 /* ===== TRANG TRONG (bên phải khi mở) — Lời chúc + Đọc thư ===== */
 .inside {
