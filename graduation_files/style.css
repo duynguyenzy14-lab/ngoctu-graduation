@@ -538,11 +538,11 @@ a { color: var(--volt); }
 .rl.txt.strong { font-weight: 600; }
 .rl.spot { display: flex; align-items: baseline; justify-content: space-between; padding-block: 8px; border-bottom: 1px dotted #F0BDD3; }
 .rl.spot:has(+ .rule) { border-bottom: 0; }
-.rl.spot .sn { color: var(--volt); font-weight: 600; }
-.rl.spot .sn a { color: var(--volt); text-decoration: none; }
-.rl.spot .sn a:hover { text-decoration: underline; }
-.rl.spot a { color: var(--volt); text-decoration: none; white-space: nowrap; font-weight: 600; }
-.rl.spot a:hover { text-decoration: underline; }
+.rl.spot .sn { color: #1a1a1a; font-weight: 600; }
+.rl.spot .sn a { color: #1a1a1a; text-decoration: none; }
+.rl.spot .sn a:hover { text-decoration: underline; color: #000; }
+.rl.spot a { color: #1a1a1a; text-decoration: none; white-space: nowrap; font-weight: 600; }
+.rl.spot a:hover { text-decoration: underline; color: #000; }
 .rl.spot .d { grid-column: 1 / -1; font: 500 14.5px/1.5 var(--font); color: var(--slate); }
 .r-actions { display: flex; flex-wrap: wrap; gap: 8px 14px; }
 .r-actions a, .r-actions button { font: 600 14px var(--font); color: var(--volt); text-decoration: none; background: none; border: 0; padding: 4px 0; cursor: pointer; }
