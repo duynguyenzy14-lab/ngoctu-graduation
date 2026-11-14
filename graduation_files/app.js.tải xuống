@@ -163,69 +163,27 @@
       ? `
         <div class="bg-collage" id="bg-collage" aria-hidden="true">
           <div class="collage-grid">
-            <img src="./graduation_files/bg-pics/pic-01.jpg" alt="" loading="eager" decoding="async">
-            <img src="./graduation_files/bg-pics/pic-02.jpg" alt="" loading="eager" decoding="async">
-            <img src="./graduation_files/bg-pics/pic-03.jpg" alt="" loading="eager" decoding="async">
-            <img src="./graduation_files/bg-pics/pic-04.jpg" alt="" loading="eager" decoding="async">
-            <img src="./graduation_files/bg-pics/pic-05.jpg" alt="" loading="eager" decoding="async">
-            <img src="./graduation_files/bg-pics/pic-06.jpg" alt="" loading="eager" decoding="async">
-            <img src="./graduation_files/bg-pics/pic-07.jpg" alt="" loading="eager" decoding="async">
-            <img src="./graduation_files/bg-pics/pic-08.jpg" alt="" loading="eager" decoding="async">
-            <img src="./graduation_files/bg-pics/pic-09.jpg" alt="" loading="eager" decoding="async">
-            <img src="./graduation_files/bg-pics/pic-10.jpg" alt="" loading="eager" decoding="async">
-            <img src="./graduation_files/bg-pics/pic-11.jpg" alt="" loading="eager" decoding="async">
-            <img src="./graduation_files/bg-pics/pic-12.jpg" alt="" loading="eager" decoding="async">
-            <img src="./graduation_files/bg-pics/pic-13.jpg" alt="" loading="eager" decoding="async">
-            <img src="./graduation_files/bg-pics/pic-14.jpg" alt="" loading="eager" decoding="async">
-            <img src="./graduation_files/bg-pics/pic-15.jpg" alt="" loading="eager" decoding="async">
-            <img src="./graduation_files/bg-pics/pic-16.jpg" alt="" loading="eager" decoding="async">
-            <img src="./graduation_files/bg-pics/pic-17.jpg" alt="" loading="eager" decoding="async">
-            <img src="./graduation_files/bg-pics/pic-18.jpg" alt="" loading="eager" decoding="async">
-            <img src="./graduation_files/bg-pics/pic-19.jpg" alt="" loading="eager" decoding="async">
-            <img src="./graduation_files/bg-pics/pic-20.jpg" alt="" loading="eager" decoding="async">
-            <img src="./graduation_files/bg-pics/pic-21.jpg" alt="" loading="eager" decoding="async">
-            <img src="./graduation_files/bg-pics/pic-11.jpg" alt="" loading="eager" decoding="async">
-            <img src="./graduation_files/bg-pics/pic-12.jpg" alt="" loading="eager" decoding="async">
-            <img src="./graduation_files/bg-pics/pic-13.jpg" alt="" loading="eager" decoding="async">
-            <img src="./graduation_files/bg-pics/pic-14.jpg" alt="" loading="eager" decoding="async">
-            <img src="./graduation_files/bg-pics/pic-15.jpg" alt="" loading="eager" decoding="async">
-            <img src="./graduation_files/bg-pics/pic-16.jpg" alt="" loading="eager" decoding="async">
-            <img src="./graduation_files/bg-pics/pic-17.jpg" alt="" loading="eager" decoding="async">
-            <img src="./graduation_files/bg-pics/pic-18.jpg" alt="" loading="eager" decoding="async">
-            <img src="./graduation_files/bg-pics/pic-19.jpg" alt="" loading="eager" decoding="async">
-            <img src="./graduation_files/bg-pics/pic-20.jpg" alt="" loading="eager" decoding="async">
-            <img src="./graduation_files/bg-pics/pic-21.jpg" alt="" loading="eager" decoding="async">
-            <img src="./graduation_files/bg-pics/pic-01.jpg" alt="" loading="eager" decoding="async">
-            <img src="./graduation_files/bg-pics/pic-02.jpg" alt="" loading="eager" decoding="async">
-            <img src="./graduation_files/bg-pics/pic-03.jpg" alt="" loading="eager" decoding="async">
-            <img src="./graduation_files/bg-pics/pic-04.jpg" alt="" loading="eager" decoding="async">
-            <img src="./graduation_files/bg-pics/pic-05.jpg" alt="" loading="eager" decoding="async">
-            <img src="./graduation_files/bg-pics/pic-06.jpg" alt="" loading="eager" decoding="async">
-            <img src="./graduation_files/bg-pics/pic-07.jpg" alt="" loading="eager" decoding="async">
-            <img src="./graduation_files/bg-pics/pic-08.jpg" alt="" loading="eager" decoding="async">
-            <img src="./graduation_files/bg-pics/pic-09.jpg" alt="" loading="eager" decoding="async">
-            <img src="./graduation_files/bg-pics/pic-10.jpg" alt="" loading="eager" decoding="async">
-            <img src="./graduation_files/bg-pics/pic-06.jpg" alt="" loading="eager" decoding="async">
-            <img src="./graduation_files/bg-pics/pic-07.jpg" alt="" loading="eager" decoding="async">
-            <img src="./graduation_files/bg-pics/pic-08.jpg" alt="" loading="eager" decoding="async">
-            <img src="./graduation_files/bg-pics/pic-09.jpg" alt="" loading="eager" decoding="async">
-            <img src="./graduation_files/bg-pics/pic-10.jpg" alt="" loading="eager" decoding="async">
-            <img src="./graduation_files/bg-pics/pic-11.jpg" alt="" loading="eager" decoding="async">
-            <img src="./graduation_files/bg-pics/pic-12.jpg" alt="" loading="eager" decoding="async">
-            <img src="./graduation_files/bg-pics/pic-13.jpg" alt="" loading="eager" decoding="async">
-            <img src="./graduation_files/bg-pics/pic-14.jpg" alt="" loading="eager" decoding="async">
-            <img src="./graduation_files/bg-pics/pic-15.jpg" alt="" loading="eager" decoding="async">
-            <img src="./graduation_files/bg-pics/pic-16.jpg" alt="" loading="eager" decoding="async">
-            <img src="./graduation_files/bg-pics/pic-17.jpg" alt="" loading="eager" decoding="async">
-            <img src="./graduation_files/bg-pics/pic-18.jpg" alt="" loading="eager" decoding="async">
-            <img src="./graduation_files/bg-pics/pic-19.jpg" alt="" loading="eager" decoding="async">
-            <img src="./graduation_files/bg-pics/pic-20.jpg" alt="" loading="eager" decoding="async">
-            <img src="./graduation_files/bg-pics/pic-21.jpg" alt="" loading="eager" decoding="async">
-            <img src="./graduation_files/bg-pics/pic-01.jpg" alt="" loading="eager" decoding="async">
-            <img src="./graduation_files/bg-pics/pic-02.jpg" alt="" loading="eager" decoding="async">
-            <img src="./graduation_files/bg-pics/pic-03.jpg" alt="" loading="eager" decoding="async">
-            <img src="./graduation_files/bg-pics/pic-04.jpg" alt="" loading="eager" decoding="async">
-            <img src="./graduation_files/bg-pics/pic-05.jpg" alt="" loading="eager" decoding="async">
+            <img class="is-land" src="./graduation_files/bg-pics/pic-01.jpg" alt="" loading="eager" decoding="async">
+            <img class="is-port" src="./graduation_files/bg-pics/pic-06.jpg" alt="" loading="eager" decoding="async">
+            <img class="is-land" src="./graduation_files/bg-pics/pic-02.jpg" alt="" loading="eager" decoding="async">
+            <img class="is-sq"   src="./graduation_files/bg-pics/pic-07.jpg" alt="" loading="eager" decoding="async">
+            <img class="is-land" src="./graduation_files/bg-pics/pic-03.jpg" alt="" loading="eager" decoding="async">
+            <img class="is-land" src="./graduation_files/bg-pics/pic-04.jpg" alt="" loading="eager" decoding="async">
+            <img class="is-port" src="./graduation_files/bg-pics/pic-11.jpg" alt="" loading="eager" decoding="async">
+            <img class="is-land" src="./graduation_files/bg-pics/pic-05.jpg" alt="" loading="eager" decoding="async">
+            <img class="is-sq"   src="./graduation_files/bg-pics/pic-08.jpg" alt="" loading="eager" decoding="async">
+            <img class="is-land" src="./graduation_files/bg-pics/pic-09.jpg" alt="" loading="eager" decoding="async">
+            <img class="is-port" src="./graduation_files/bg-pics/pic-14.jpg" alt="" loading="eager" decoding="async">
+            <img class="is-land" src="./graduation_files/bg-pics/pic-10.jpg" alt="" loading="eager" decoding="async">
+            <img class="is-land" src="./graduation_files/bg-pics/pic-12.jpg" alt="" loading="eager" decoding="async">
+            <img class="is-land" src="./graduation_files/bg-pics/pic-13.jpg" alt="" loading="eager" decoding="async">
+            <img class="is-port" src="./graduation_files/bg-pics/pic-19.jpg" alt="" loading="eager" decoding="async">
+            <img class="is-land" src="./graduation_files/bg-pics/pic-15.jpg" alt="" loading="eager" decoding="async">
+            <img class="is-land" src="./graduation_files/bg-pics/pic-16.jpg" alt="" loading="eager" decoding="async">
+            <img class="is-land" src="./graduation_files/bg-pics/pic-17.jpg" alt="" loading="eager" decoding="async">
+            <img class="is-land" src="./graduation_files/bg-pics/pic-18.jpg" alt="" loading="eager" decoding="async">
+            <img class="is-land" src="./graduation_files/bg-pics/pic-20.jpg" alt="" loading="eager" decoding="async">
+            <img class="is-land" src="./graduation_files/bg-pics/pic-21.jpg" alt="" loading="eager" decoding="async">
           </div>
           <div class="collage-overlay"></div>
         </div>
