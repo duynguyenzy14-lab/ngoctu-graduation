@@ -675,8 +675,11 @@ ${introMarkup}
       open = clamp(v);
       stage.style.setProperty("--open", open.toFixed(4));
       book.classList.toggle("is-open", open > 0.97);
-      if (open > 0.6 && snap && !snap.classList.contains("dev"))
-        snap.classList.add("dev"); // ảnh "rửa" dần
+      if (open > 0.6 && snap && !snap.classList.contains("dev")) {
+        snap.classList.add("dev"); // ảnh polaroid hiện ra khi bìa gần mở hoàn toàn
+        const img = snap.querySelector("img");
+        if (img) { img.style.filter = "none"; } // ảnh diploma: không blur/desaturate
+      }
       if (open > 0.5 && !celebrated) {
         celebrated = true;
         confetti();
