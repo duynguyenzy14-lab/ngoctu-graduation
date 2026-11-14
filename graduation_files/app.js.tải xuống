@@ -94,21 +94,24 @@
 
     // từng dòng của hoá đơn
     const R = [];
-    R.push(
-      `<p class="rl head center">${esc(S.timelineTitle || "Timeline")}</p>`,
-    );
-    R.push(`<p class="rl rule"></p>`);
-    S.schedule.forEach((s) =>
-      R.push(
-        `<p class="rl sched"><span class="t">${esc(s.time)}</span><span class="d">${fill(s.text)}</span></p>`,
-      ),
-    );
-    R.push(`<p class="rl rule"></p>`);
-    R.push(`<p class="rl dim">Địa điểm</p>`);
-    R.push(
-      `<p class="rl venue-name"><a href="${esc(S.venue.mapsUrl)}" target="_blank" rel="noopener">${esc(S.venue.name)}</a></p>`,
-    );
-    R.push(`<p class="rl venue-addr">${esc(S.venue.address)}</p>`);
+    const schedList = S.schedule?.length ? S.schedule : [{
+      time: "10:30 – 12:30",
+      text: "Lên đồ xinh, chụp thật nhiều ảnh xịn để cùng Tú lưu lại những chiếc moment đáng nhớ nha!",
+    }];
+    const schedContent = schedList.map((s) => `
+      <p class="col-title dim">Thời gian <span class="t-badge">${esc(s.time)}</span></p>
+      <p class="sched-desc">${fill(s.text)}</p>
+    `).join("");
+    R.push(`
+      <div class="rl receipt-cols">
+        <div class="receipt-col">
+          <p class="col-title dim">Địa điểm</p>
+          <p class="venue-name"><a href="${esc(S.venue.mapsUrl)}" target="_blank" rel="noopener">${esc(S.venue.name)}</a></p>
+          <p class="venue-addr">${esc(S.venue.address)}</p>
+        </div>
+        <div class="receipt-col">${schedContent}</div>
+      </div>
+    `);
     R.push(`<p class="rl rule"></p>`);
     R.push(`<p class="rl dim">Liên hệ</p>`);
     (

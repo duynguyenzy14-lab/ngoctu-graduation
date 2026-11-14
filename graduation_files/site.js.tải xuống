@@ -397,13 +397,7 @@ window.SITE = {
    },
    "schedule": [
     {
-     "text": "Nếu đến sớm, gia đình mình có thể gặp con và chụp hình ở sân trường trước lễ."
-    },
-    {
-     "text": "Trong thời gian diễn ra lễ chính, con sẽ ở trong hội trường. Mọi người có thể theo dõi buổi lễ qua màn hình LED bên ngoài nha."
-    },
-    {
-     "text": "Đây là lúc gia đình mình và con có thể thoải mái gặp gỡ và chụp thật nhiều hình kỷ niệm cùng nhau!!"
+     "text": "Khoảng 10:30 – 12:30 là lúc thuận tiện nhất để gia đình mình gặp con và chụp thật nhiều hình kỷ niệm cùng nhau nha!"
     }
    ],
    "parking": {
@@ -439,13 +433,7 @@ window.SITE = {
    },
    "schedule": [
     {
-     "text": "Nếu đến sớm, {name} có thể gặp em và chụp hình ở sân trường trước lễ."
-    },
-    {
-     "text": "Trong thời gian diễn ra lễ chính, em sẽ ở trong hội trường. Mọi người có thể theo dõi buổi lễ qua màn hình LED bên ngoài nha."
-    },
-    {
-     "text": "Đây là lúc {name} và em có thể thoải mái gặp gỡ và chụp thật nhiều hình kỷ niệm cùng nhau!!"
+     "text": "Khoảng 10:30 – 12:30 là lúc tụi mình có thể thoải mái gặp gỡ và chụp thật nhiều hình kỷ niệm cùng nhau nha!!"
     }
    ],
    "parking": {
