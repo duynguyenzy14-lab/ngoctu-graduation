@@ -318,19 +318,19 @@ a { color: var(--volt); }
   display: grid;
   width: calc(100% + 30px);
   height: calc(100% + 30px);
-  gap: 6px;
+  gap: 5px;
   grid-template-columns: repeat(7, 1fr);
-  grid-template-rows: repeat(3, 1fr);
-  filter: blur(4.5px) saturate(0.95);
-  transform: scale(1.03);
-  opacity: 0.78;
+  grid-template-rows: repeat(6, 1fr);
+  filter: blur(3.5px) saturate(1.05);
+  transform: scale(1.02);
+  opacity: 0.92;
 }
-@media (max-aspect-ratio: 1/1) {
+@media (max-width: 768px), (max-aspect-ratio: 1/1) {
   .collage-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     grid-template-rows: repeat(7, 1fr);
     gap: 4px;
-    filter: blur(3.5px) saturate(0.95);
+    filter: blur(2.5px) saturate(1.05);
   }
 }
 .collage-grid img {
@@ -338,12 +338,21 @@ a { color: var(--volt); }
   height: 100%;
   object-fit: cover;
   display: block;
+  border-radius: 2px;
 }
 .collage-overlay {
   position: absolute;
   inset: 0;
-  /* Lớp phủ sáng giữ tone trắng bánh bèo, làm dịu nền ảnh giúp bìa bằng xanh nổi bật */
-  background: radial-gradient(circle at 50% 45%, rgba(255, 255, 255, 0.70) 0%, rgba(255, 255, 255, 0.48) 50%, rgba(255, 248, 252, 0.35) 100%);
+  /* Vùng trung tâm (bìa bằng + chữ): quầng trắng dịu để không làm chìm thông tin chính.
+     Vùng xung quanh (không có chi tiết): trong suốt để thấy rõ các ảnh kỷ niệm với độ mờ 50%. */
+  background: radial-gradient(ellipse 68% 58% at 50% 46%, 
+    rgba(255, 255, 255, 0.90) 0%, 
+    rgba(255, 255, 255, 0.80) 30%, 
+    rgba(255, 255, 255, 0.38) 55%, 
+    rgba(255, 255, 255, 0.10) 78%, 
+    rgba(255, 250, 253, 0.02) 100%
+  );
+  pointer-events: none;
 }
 
 /* Ánh đèn sân khấu chiếu rọi trực tiếp vào bìa bằng tốt nghiệp */
