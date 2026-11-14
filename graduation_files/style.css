@@ -22,8 +22,8 @@
   /* ===== Font ===== */
   --font:   "Quicksand", "Nunito", "Be Vietnam Pro", system-ui, -apple-system, sans-serif;
   --serif:  "Playfair Display", "Newsreader", Georgia, serif;
-  /* --script dùng cho chữ ký/tiêu đề đặc biệt, KHÔNG dùng cho body text */
-  --script: var(--font);
+  /* --script dùng cho chữ ký/tiêu đề đặc biệt, nét cong điệu */
+  --script: "Dancing Script", "Caveat", "Playfair Display", cursive, serif;
   --mono:   "Comfortaa", "Quicksand", cursive, sans-serif;
   --gutter-l: max(20px, env(safe-area-inset-left, 0px));
   --gutter-r: max(20px, env(safe-area-inset-right, 0px));
@@ -440,22 +440,20 @@ a { color: var(--volt); }
   --fs: clamp(20px, 1.1vw + 13px, 27px); --lh: calc(var(--fs) * 1.85); --m: clamp(30px, 6vw, 72px);
   --ink-blue: #A22758; /* màu mực hồng dâu ngọt ngào */
   position: relative; margin: 0; font: 500 var(--fs)/var(--lh) var(--font); color: var(--ink-blue);
-  padding: calc(var(--lh) * 1) clamp(18px, 4vw, 48px) calc(var(--lh) * 1.5) calc(var(--m) + clamp(14px, 2vw, 26px));
+  padding: clamp(36px, 5vw, 64px) clamp(22px, 4.5vw, 56px);
   background-color: #FFFDFC;
-  background-image:
-    linear-gradient(90deg, transparent calc(var(--m) - 1px), rgba(255, 64, 129, .35) calc(var(--m) - 1px) var(--m), transparent var(--m)),
-    repeating-linear-gradient(180deg, transparent 0 calc(var(--lh) - 1px), #FAD7E4 calc(var(--lh) - 1px) var(--lh));
-  background-position: 0 0, 0 calc(var(--fs) * -.56); /* đặt dòng kẻ ngay dưới chân chữ */
-  border: 1.5px solid #F8D3E2; border-radius: 6px;
+  background-image: none;
+  border: 1.5px solid #F8D3E2; border-radius: 12px;
   box-shadow: 0 30px 60px -36px rgba(120, 20, 60, .2);
 }
+.paper b, .paper strong { font-weight: 700; color: #162E7A; }
 .paper p { margin: 0; text-wrap: pretty; }
-.l-place { text-align: right; font-size: .88em; font-family: var(--font); font-weight: 500; color: var(--slate); }
-.l-greet { font-style: normal; font-weight: 700; font-size: 1.18em; color: var(--ink); margin-bottom: var(--lh) !important; }
+.l-place { text-align: right; font-size: 1.15em; font-family: var(--script); font-style: italic; font-weight: 600; color: var(--slate); letter-spacing: 0.02em; }
+.l-greet { font-style: normal; font-weight: 600; font-size: 1em; color: var(--volt); margin-bottom: var(--lh) !important; }
 .l-greet .who { color: var(--volt); }
 .l-p { text-indent: 1.6em; letter-spacing: 0.01em; }
-.l-close { margin-top: var(--lh) !important; text-align: right; padding-right: 2.2em; font-size: 1.1em; font-weight: 600; }
-.l-sign { text-align: right; font: 700 calc(var(--fs) * 2)/var(--lh) var(--serif); color: var(--volt); }
+.l-close { margin-top: var(--lh) !important; text-align: right; padding-right: 2.2em; font-size: 1em; font-weight: 500; }
+.l-sign { text-align: right; font: 400 clamp(32px, 3.2vw + 16px, 48px)/1.2 var(--script); font-style: italic; color: var(--volt); margin-top: calc(var(--fs) * 0.4); }
 /* từng chữ được "viết" ra; .pen là ngòi bút đi theo chữ cuối cùng vừa viết */
 .w { opacity: 0; transition: opacity .35s ease; }
 .w.on { opacity: 1; }

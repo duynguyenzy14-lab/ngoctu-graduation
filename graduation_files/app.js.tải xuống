@@ -72,10 +72,16 @@
       `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`;
     // chữ trong thư tách thành từng từ để "viết" dần theo nhịp cuộn
     const words = (str) =>
-      esc(str)
+      str
         .split(/\s+/)
         .filter(Boolean)
-        .map((w) => `<span class="w">${w}</span>`)
+        .map((w) => {
+          if (w === "28/11/2026" || (w.startsWith("**") && w.endsWith("**"))) {
+            const txt = w.startsWith("**") ? w.slice(2, -2) : w;
+            return `<span class="w"><b>${esc(txt)}</b></span>`;
+          }
+          return `<span class="w">${esc(w)}</span>`;
+        })
         .join(" ");
     const L = S.letter;
     // ảnh polaroid mặt trong bìa khi khách không có ảnh riêng (photos.cover, mặc định ảnh đầu gallery)
@@ -364,6 +370,7 @@ ${introMarkup}
       `<span>Cảm ơn vì đã đến</span><span>${esc(S.dateNumeric)}</span>`;
     // thầy cô (khách có "voice") giữ tiêu đề chung, "<tên> ơi" nghe ngang hàng
     if (name && !guest.voice) document.title = `${name} ơi, ${S.shortName} tốt nghiệp rồi`;
+    else document.title = "Thân mời người thương";
 
     if (introStyle === "diploma" || staged) initDiploma(staged);
     else initIntro(guest);
