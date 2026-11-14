@@ -149,7 +149,7 @@
               ${P.intro ? `<p class="rl dim">${fill(P.intro)}</p>` : ""}
               ${P.places.map((p) => {
                 const mapLink = p.url || maps(p.query);
-                return `<p class="rl spot"><span class="sn"><a href="${esc(mapLink)}" target="_blank" rel="noopener">${esc(p.name)}</a></span><a href="${esc(mapLink)}" target="_blank" rel="noopener" aria-label="Chỉ đường đến ${esc(p.name)}">[ Bản đồ ]</a>${p.note ? `<span class="d">${fill(p.note)}</span>` : ""}</p>`;
+                return `<p class="rl spot"><span class="sn"><a href="${esc(mapLink)}" target="_blank" rel="noopener">${esc(p.name)}</a></span>${p.note ? `<span class="d">${fill(p.note)}</span>` : ""}</p>`;
               }).join("")}
             </div>`
       : "";

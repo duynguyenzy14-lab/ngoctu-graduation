@@ -536,7 +536,7 @@ a { color: var(--volt); }
 .parking .rl.dim { margin-top: 10px; }
 .rl.txt { font: 500 15px/1.6 var(--font); color: var(--ink); padding-block: 2px; }
 .rl.txt.strong { font-weight: 600; }
-.rl.spot { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0 14px; padding-block: 7px; border-bottom: 1px dotted #F0BDD3; }
+.rl.spot { display: flex; align-items: baseline; justify-content: space-between; padding-block: 8px; border-bottom: 1px dotted #F0BDD3; }
 .rl.spot:has(+ .rule) { border-bottom: 0; }
 .rl.spot .sn { color: var(--volt); font-weight: 600; }
 .rl.spot .sn a { color: var(--volt); text-decoration: none; }
@@ -559,18 +559,59 @@ a { color: var(--volt); }
 }
 
 /* ================= 4. TRANG CUỐI ================= */
-.moments { background: linear-gradient(180deg, var(--paper) 0%, #FCE4EC 35%, var(--night) 100%); color: var(--ink); position: relative; overflow: hidden; padding-block: 14vh 12vh; }
+.moments { background: linear-gradient(180deg, var(--paper) 0%, #FCE4EC 35%, var(--night) 100%); color: var(--ink); position: relative; overflow: hidden; padding-block: 7vh 10vh; }
 .texture { position: absolute; inset: 0; font: 400 11px/1.6 var(--mono); color: rgba(216, 27, 96, .04); overflow: hidden; word-break: break-all; pointer-events: none; -webkit-user-select: none; user-select: none; padding: 8px; }
 .moments > :not(.texture) { position: relative; }
-.moments h2 { font: 400 clamp(30px, 4.4vw, 58px)/1.12 var(--serif); letter-spacing: -.02em; margin: 0 0 6vh; max-width: 22ch; text-wrap: balance; color: var(--ink); }
+.moments h2 { font: 500 clamp(24px, 3.6vw, 42px)/1.4 var(--serif); letter-spacing: -.01em; margin: 0 0 3.5vh; max-width: 48ch; text-wrap: balance; color: var(--ink); }
 .moments .who { color: var(--volt); }
 
-.marquee { display: grid; gap: 16px; margin-bottom: 12vh; }
-.mrow { overflow: hidden; }
-.mtrack { display: flex; gap: 16px; width: max-content; will-change: transform; }
-.mph { margin: 0; height: clamp(170px, 26vw, 300px); aspect-ratio: var(--ar); flex: 0 0 auto; border-radius: 16px; overflow: hidden; position: relative; background: #FFFFFF; padding: 4px; border: 1px solid rgba(255, 255, 255, .8); box-shadow: 0 12px 28px -10px rgba(180, 40, 90, .18); transition: transform .5s var(--ease); }
-.mph img { width: 100%; height: 100%; object-fit: cover; }
-.mph:hover { transform: scale(1.03) rotate(-1deg); }
+/* Dải ảnh định dạng cuộn phim (film strip) */
+.marquee { display: grid; gap: 24px; margin-bottom: 9vh; }
+.mrow {
+  overflow: hidden;
+  position: relative;
+  background: #181116;
+  padding-block: 22px;
+  border-block: 2px solid #2B1622;
+  box-shadow: inset 0 0 25px rgba(0, 0, 0, .6), 0 16px 36px -12px rgba(0, 0, 0, .35);
+}
+.mrow::before, .mrow::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 9px;
+  z-index: 2;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    90deg,
+    #FCE4EC 0px,
+    #FCE4EC 9px,
+    transparent 9px,
+    transparent 20px
+  );
+  opacity: .88;
+  border-radius: 2px;
+}
+.mrow::before { top: 6px; }
+.mrow::after { bottom: 6px; }
+.mtrack { display: flex; gap: 12px; width: max-content; will-change: transform; align-items: center; }
+.mph {
+  margin: 0;
+  height: clamp(170px, 25vw, 290px);
+  aspect-ratio: var(--ar);
+  flex: 0 0 auto;
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+  background: #000;
+  padding: 0;
+  border: 2px solid rgba(255, 255, 255, .15);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, .45);
+  transition: transform .4s ease, filter .3s ease;
+}
+.mph img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.mph:hover { transform: scale(1.025); filter: brightness(1.08); }
 
 .board { display: grid; gap: 48px; }
 @media (min-width: 980px) { .board { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); align-items: start; } }
