@@ -306,7 +306,7 @@ window.SITE = {
     "greeting": "Thân gửi những người thương,",
     "general": "Vậy là hành trình bốn năm đại học cũng đã đi đến một cột mốc đáng nhớ. Nhìn lại quãng thời gian đã qua, Ngọc Tú cảm thấy thật may mắn khi trên hành trình ấy luôn có sự quan tâm, giúp đỡ và đồng hành của mọi người.\nHẹn gặp người thương vào ngày 28/11/2026 tại Trường Đại học Mở TP. Hồ Chí Minh để cùng nhau lưu lại những khoảnh khắc đẹp trong ngày đặc biệt này nhé!",
     "closing": "Thân mến,",
-    "sign": "Ngọc Tú"
+    "sign": ""
    },
    "invite": {
     "title": "Ngày tốt nghiệp,",

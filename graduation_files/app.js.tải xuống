@@ -282,20 +282,12 @@ ${introMarkup}
 
       <section class="letter" id="letter">
         <div class="wrap letter-grid">
-          <div class="photos" id="photos" aria-hidden="true">
-            <figure class="pol pol-me"><i class="tape"></i><img src="${(guest?.letterPhotos?.[0] || letterPhoto).small}" alt="" decoding="async"></figure>
-            ${
-              guest?.letterPhotos?.[1] || guest?.photo || letterPhoto2
-                ? `<figure class="pol pol-you"><i class="tape"></i><img src="${(guest?.letterPhotos?.[1] || guest?.photo || letterPhoto2).small}" alt="" decoding="async"></figure>`
-                : `<figure class="pol pol-you empty"><i class="tape"></i><span class="slot"><span>${esc(plain(Wd.photoSlot || "Chỗ này để dành cho tấm ảnh của mình với {name}"))}</span></span></figure>`
-            }
-          </div>
           <article class="paper" id="paper">
             <p class="l-place">${esc(L.place)}</p>
             <p class="l-greet">${fill(L.greeting)}</p>
             ${letterLines.map((l) => `<p class="l-p" data-write>${words(l)}</p>`).join("")}
             <p class="l-close" data-write>${words(plain(L.closing))}</p>
-            <p class="l-sign" data-write><span class="w">${esc(L.sign)}</span></p>
+            ${L.sign ? `<p class="l-sign" data-write><span class="w">${esc(L.sign)}</span></p>` : ""}
           </article>
         </div>
       </section>

@@ -429,56 +429,42 @@ a { color: var(--volt); }
   background: #FFFFFF;
   padding-block: 12vh 16vh; position: relative; overflow: hidden;
 }
-.letter-grid { display: grid; gap: 44px; align-items: start; }
+.letter-grid { display: flex; justify-content: center; align-items: start; }
 @media (min-width: 900px) {
-  .letter-grid { grid-template-columns: minmax(0, 1.3fr) minmax(260px, .7fr); gap: clamp(48px, 6vw, 96px); }
-  .paper { grid-column: 1; grid-row: 1; }
-  .photos { grid-column: 2; grid-row: 1; position: sticky; top: 8vh; margin-top: -40px; }
+  .letter-grid { display: flex; justify-content: center; }
+  .paper { width: 100%; max-width: 780px; margin: 0 auto; }
 }
 
 .paper {
   --fs: clamp(20px, 1.1vw + 13px, 27px); --lh: calc(var(--fs) * 1.85); --m: clamp(30px, 6vw, 72px);
   --ink-blue: #A22758; /* màu mực hồng dâu ngọt ngào */
-  position: relative; margin: 0; font: 500 var(--fs)/var(--lh) var(--font); color: var(--ink-blue);
+  position: relative; margin: 0 auto; font: 500 var(--fs)/var(--lh) var(--font); color: var(--ink-blue);
+  width: 100%; max-width: 780px;
   padding: clamp(36px, 5vw, 64px) clamp(22px, 4.5vw, 56px);
   background-color: #FFFDFC;
   background-image: none;
   border: 1.5px solid #F8D3E2; border-radius: 12px;
   box-shadow: 0 30px 60px -36px rgba(120, 20, 60, .2);
 }
-.paper b, .paper strong { font-weight: 700; color: #162E7A; }
+.paper b, .paper strong { font-weight: 700; color: var(--volt); }
 .paper p { margin: 0; text-wrap: pretty; }
-.l-place { text-align: right; font-size: 1.15em; font-family: var(--script); font-style: italic; font-weight: 600; color: var(--slate); letter-spacing: 0.02em; }
-.l-greet { font-style: normal; font-weight: 600; font-size: 1em; color: var(--volt); margin-bottom: var(--lh) !important; }
+/* Ngày tháng: font Playfair Display serif nghiêng như câu trích dẫn */
+.l-place { text-align: right; font-size: 1.05em; font-family: var(--serif); font-style: italic; font-weight: 500; color: var(--slate); letter-spacing: 0; margin-bottom: 0.4em !important; }
+/* Lời chào: khoảng cách vừa vặn với đoạn sau */
+.l-greet { font-style: normal; font-weight: 600; font-size: 1em; color: var(--volt); margin-bottom: 0.55em !important; }
 .l-greet .who { color: var(--volt); }
-.l-p { text-indent: 1.6em; letter-spacing: 0.01em; }
-.l-close { margin-top: var(--lh) !important; text-align: right; padding-right: 2.2em; font-size: 1em; font-weight: 500; }
-.l-sign { text-align: right; font: 400 clamp(32px, 3.2vw + 16px, 48px)/1.2 var(--script); font-style: italic; color: var(--volt); margin-top: calc(var(--fs) * 0.4); }
+.l-p { text-indent: 1.6em; letter-spacing: 0.01em; margin-bottom: 0.45em !important; }
+/* Lời kết: khoảng cách vừa vặn với đoạn trước */
+.l-close { margin-top: 0.7em !important; text-align: right; padding-right: 1.5em; font-size: 1em; font-weight: 500; }
+.l-sign { display: none !important; }
 /* từng chữ được "viết" ra; .pen là ngòi bút đi theo chữ cuối cùng vừa viết */
 .w { opacity: 0; transition: opacity .35s ease; }
 .w.on { opacity: 1; }
 .w.pen::after { content: ""; display: inline-block; width: 2px; height: .95em; margin-left: 3px; vertical-align: -.12em;
   background: var(--volt); border-radius: 2px; transform: skewX(-16deg); animation: blink 1s steps(1) infinite; }
 
-/* ảnh polaroid bên phải */
-.photos { --t: .5; position: relative; display: flex; justify-content: center; align-items: flex-start; padding-top: 10px; order: 2; }
-.pol { position: relative; margin: 0; width: min(46%, 220px); background: #fff; padding: 9px 9px 30px; /* lề dưới trống như polaroid thật */
-  box-shadow: 0 1px 2px rgba(120, 20, 60, .1), 0 22px 44px -22px rgba(120, 20, 60, .35); will-change: transform; }
-.pol img, .pol .slot { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 30%; }
-.tape { position: absolute; left: 50%; top: -12px; width: 46%; height: 24px; margin-left: -23%; background: rgba(255, 168, 201, .7);
-  transform: rotate(-4deg); box-shadow: 0 1px 2px rgba(120, 20, 60, .08); }
-.pol-me { transform: translateY(calc((.5 - var(--t)) * 30px)) rotate(calc(-7deg + var(--t) * 5deg)); z-index: 1; }
-.pol-you { margin-left: 3%; margin-top: 12%; transform: translateY(calc((.5 - var(--t)) * -24px)) rotate(calc(8deg - var(--t) * 6deg)); }
-.pol-you .tape { transform: rotate(5deg); }
-.pol .slot { display: grid; place-items: end center; padding: 14% 12% 16%; text-align: center; border: 1.5px dashed #F8B3CD;
-  background: repeating-linear-gradient(135deg, #FFF6FA 0 10px, #FEE6F0 10px 20px); }
-.pol .slot span { font: italic 400 clamp(13px, 1.1vw, 15px)/1.45 var(--serif); color: var(--slate); }
-@media (min-width: 900px) {
-  .photos { display: block; padding-top: 0; }
-  .pol { width: 62%; max-width: 250px; }
-  /* chỉ chồng nhẹ phần lề trắng dưới của ảnh trên, không che ảnh khách */
-  .pol-you { margin: -6% 0 0 auto; z-index: 2; }
-}
+/* ảnh polaroid ẩn đi theo yêu cầu */
+.photos { display: none !important; }
 
 /* ================= 3. THIỆP CHÍNH ================= */
 .invite { background: var(--paper); padding-block: 12vh 16vh; border-top: 1px solid var(--mist); }
