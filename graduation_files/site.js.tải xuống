@@ -1,4 +1,4 @@
-window.SITE = {
+﻿window.SITE = {
  "siteUrl": "http://ngoctu-graduation2026.id.vn",
  "fullName": "Nguyễn Ngọc Tú",
  "shortName": "Tú",
@@ -75,7 +75,7 @@ window.SITE = {
  ],
  "venue": {
   "name": "Trường Đại học Mở TP. Hồ Chí Minh",
-  "address": "97 Võ Văn Tần, phường Xuân Hòa, TP.HCM (Cơ sở 1)",
+  "address": "97 Võ Văn Tần, phường Xuân Hòa, TP.HCM",
   "short": "97 Võ Văn Tần, TP.HCM",
   "mapsUrl": "https://maps.app.goo.gl/ZjacVTJBH1mfbgay9"
  },
@@ -106,23 +106,23 @@ window.SITE = {
   "start": "20261128T000000Z",
   "end": "20261128T050000Z"
  },
- "contact": {
-  "phone": "037669218",
-  "phoneDisplay": "037 669 218",
-  "label": "Zalo, Tú",
-  "people": [
-   {
-    "name": "Tú",
-    "phone": "037669218",
-    "phoneDisplay": "037 669 218",
-   },
-   {
-    "name": "Ngọc Tú (hỗ trợ)",
-    "phone": "0376693218",
-    "phoneDisplay": "0376 693 218"
-   }
-  ]
- },
+  "contact": {
+   "phone": "0376693219",
+   "phoneDisplay": "0376 693 219",
+   "label": "Zalo, Ngọc Tú",
+   "people": [
+    {
+     "name": "Ngọc Tú",
+     "phone": "0376693219",
+     "phoneDisplay": "0376 693 219"
+    },
+    {
+     "name": "Yến Nhi",
+     "phone": "0365865415",
+     "phoneDisplay": "0365 865 415"
+    }
+   ]
+  },
  "rsvp": {
   "mode": "api",
   "deadline": "09.11",

@@ -127,12 +127,6 @@
         `<p class="rl ld"><span class="k">${esc(c.name)}</span><span class="dots"></span><a class="v tel" href="tel:${esc(c.phone)}">${esc(c.phoneDisplay)}</a></p>`,
       ),
     );
-    R.push(`<p class="rl rule"></p>`);
-    R.push(`<div class="rl r-actions">
-        <a href="${esc(S.venue.mapsUrl)}" target="_blank" rel="noopener">[ Chỉ đường ]</a>
-        <a href="${esc(cal)}" target="_blank" rel="noopener">[ Thêm vào lịch ]</a>
-        <a href="https://zalo.me/${esc(S.contact.phone)}" target="_blank" rel="noopener">[ Nhắn Zalo ]</a>
-      </div>`);
 
     const mph = (g) =>
       `<figure class="mph" style="--ar:${g.img.ratio}"><img src="${g.img.small}" alt="${esc(g.caption)}" decoding="async"></figure>`;

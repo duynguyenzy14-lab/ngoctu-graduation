@@ -514,14 +514,14 @@ a { color: var(--volt); }
 .receipt-col .col-title { font: 600 13px/1.4 var(--font); color: var(--slate); margin: 0 0 6px; letter-spacing: .02em; text-transform: uppercase; display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px; }
 .receipt-col .t-badge { font-family: var(--mono); font-weight: 700; color: var(--volt); font-size: 14.5px; text-transform: none; white-space: nowrap; }
 .receipt-col .venue-name { font: 600 16px/1.4 var(--font); margin: 0 0 4px; }
-.receipt-col .venue-name a { color: var(--volt); text-decoration: none; background: linear-gradient(transparent 62%, rgba(255, 64, 129, .18) 62%); }
+.receipt-col .venue-name a { color: var(--volt); text-decoration: none; }
 .receipt-col .venue-name a:hover { text-decoration: underline; }
 .receipt-col .venue-addr { font: 500 14px/1.5 var(--font); color: var(--ink); margin: 0; }
 .receipt-col .sched-desc { font: 500 14px/1.55 var(--font); color: var(--ink); margin: 0; }
 
 /* địa điểm + gửi xe: tô đậm cho dễ thấy */
 .rl.venue-name { font: 600 17px/1.4 var(--font); margin-top: 4px; }
-.rl.venue-name a { color: var(--volt); text-decoration: none; background: linear-gradient(transparent 62%, rgba(255, 64, 129, .18) 62%); }
+.rl.venue-name a { color: var(--volt); text-decoration: none; }
 .rl.venue-addr { font: 500 15px/1.5 var(--font); color: var(--ink); }
 .ld a.tel { color: var(--ink); font-weight: 500; text-decoration: none; white-space: nowrap; }
 .ld a.tel:hover { color: var(--volt); }
