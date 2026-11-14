@@ -69,16 +69,8 @@ window.SITE = {
  },
  "schedule": [
   {
-   "time": "07:30",
-   "text": "Nếu đến sớm, tụi mình có thể gặp nhau và chụp hình ở sân trường trước lễ."
-  },
-  {
-   "time": "08:00 – 11:00",
-   "text": "Trong thời gian diễn ra lễ chính, mình sẽ ở trong hội trường. Mọi người có thể theo dõi buổi lễ qua màn hình LED bên ngoài nha."
-  },
-  {
-   "time": "11:00 – 12:30",
-   "text": "Đây là lúc tụi mình có thể thoải mái gặp gỡ và chụp thật nhiều hình kỷ niệm cùng nhau!!"
+   "time": "10:30 – 12:30",
+   "text": "Lên đồ xinh, chụp thật nhiều ảnh xịn để cùng Tú lưu lại những chiếc moment đáng nhớ nha!"
   }
  ],
  "venue": {
@@ -330,13 +322,7 @@ window.SITE = {
    },
    "schedule": [
     {
-     "text": "Nếu đến sớm, mọi người có thể gặp Tú và chụp hình ở sân trường trước lễ."
-    },
-    {
-     "text": "Trong thời gian diễn ra lễ chính, Tú sẽ ở trong hội trường. Mọi người có thể theo dõi buổi lễ qua màn hình LED bên ngoài."
-    },
-    {
-     "text": "Đây là lúc Tú và mọi người có thể thoải mái gặp gỡ và chụp thật nhiều hình kỷ niệm cùng nhau."
+     "text": "Lên đồ xinh, chụp thật nhiều ảnh xịn để cùng Tú lưu lại những chiếc moment đáng nhớ nha!"
     }
    ],
    "parking": {
@@ -375,13 +361,7 @@ window.SITE = {
    },
    "schedule": [
     {
-     "text": "Khoảng thời gian ngắn trước lễ, em rất vui khi được gặp và chụp hình cùng Thầy/Cô ở sân trường trước."
-    },
-    {
-     "text": "Trong thời gian diễn ra lễ chính, em sẽ ở trong hội trường. Thầy/Cô có thể theo dõi buổi lễ qua màn hình LED bên ngoài ạ."
-    },
-    {
-     "text": "Sau khi buổi lễ kết thúc, Đây cũng là lúc thuận tiện nhất để gặp nhau và chụp hình kỷ niệm."
+     "text": "Khoảng thời gian 10:30 – 12:30 là lúc thuận tiện nhất để gặp nhau và chụp thật nhiều hình kỷ niệm cùng Thầy/Cô ạ!"
     }
    ],
    "parking": {
