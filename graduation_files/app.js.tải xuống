@@ -161,12 +161,7 @@
     const staged = introStyle === "stage";
     const floaters = staged
       ? `
-        <div class="floaters" id="floaters" aria-hidden="true">${Array.from({ length: 6 }, (_, i) => gal[i % gal.length]) // đúng 6 ảnh cho 6 chỗ trong initStageScene
-          .map(
-            (g) =>
-              `<figure class="fl" style="--ar:${g.img.ratio}"><img src="${g.img.small}" alt="" decoding="async"></figure>`,
-          )
-          .join("")}</div>
+        <div class="floaters" id="floaters" aria-hidden="true" style="display:none;"></div>
         <div class="beam" aria-hidden="true"></div>
         <canvas class="dust" id="dust" aria-hidden="true"></canvas>
         <div class="blackout" aria-hidden="true"></div>`
@@ -232,7 +227,7 @@
               <button class="tassel-hit" id="tassel-hit" type="button" aria-label="Chuyển tua sang trái để mở bìa"></button>
             </div>
           </div>
-          <p class="dip-hint" id="dip-hint">Kéo tua sang trái để mở thiệp</p>
+          <p class="dip-hint" id="dip-hint">Thư gửi người thương của Tú, kéo tua sang bên phải để đọc những điều dễ thương nha</p>
         </div>
       </section>`
         : `
@@ -666,10 +661,8 @@ ${introMarkup}
     function setHint() {
       hint.textContent =
         open > 0.97
-          ? "Cuộn xuống để đọc thư"
-          : T.side < 0
-            ? "Đang mở thiệp…"
-            : "Lật bìa hoặc kéo tua sang trái để mở thiệp";
+          ? "Cuộn xuống để đọc thư 💌"
+          : "Thư gửi người thương của Tú, kéo tua sang bên phải để đọc những điều dễ thương nha";
     }
     function set(v) {
       open = clamp(v);
