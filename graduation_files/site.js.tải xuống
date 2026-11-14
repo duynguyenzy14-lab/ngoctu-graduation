@@ -55,7 +55,7 @@ window.SITE = {
   }
  },
  "letter": {
-  "place": "TP. Hồ Chí Minh, 14/11/2026",
+  "place": "TP. Hồ Chí Minh, ngày 28 tháng 11 năm 2026",
   "greeting": "Gửi {name},",
   "general": "Có những người không cần đứng trên sân khấu cùng mình, nhưng lại là lý do mình đi được tới đó.\nBạn là một trong những người ấy.\nCảm ơn bạn vì bốn năm vừa qua.",
   "closing": "Best Regards,",
@@ -302,8 +302,11 @@ window.SITE = {
     "photoSlot": "Chỗ này để dành cho tấm ảnh chụp cùng mọi người"
    },
    "letter": {
-    "greeting": "Thương gửi Quý anh chị, bạn bè,",
-    "general": "Vậy là hành trình bốn năm đại học cũng đã đến ngày tốt nghiệp, nhìn lại chặng đường vừa qua, Tú thấy mình thật may mắn khi nhận được sự quan tâm, giúp đỡ và đồng hành từ rất nhiều người. Xin gửi lời cảm ơn chân thành đến mọi người vì đã là một phần trong hành trình đáng nhớ của Tú ❤️"
+    "place": "TP. Hồ Chí Minh, ngày 28 tháng 11 năm 2026",
+    "greeting": "Thân gửi những người thương,",
+    "general": "Vậy là hành trình bốn năm đại học cũng đã đi đến một cột mốc đáng nhớ. Nhìn lại quãng thời gian đã qua, Ngọc Tú cảm thấy thật may mắn khi trên hành trình ấy luôn có sự quan tâm, giúp đỡ và đồng hành của mọi người.\nHẹn gặp người thương vào ngày 28/11/2026 tại Trường Đại học Mở TP. Hồ Chí Minh để cùng nhau lưu lại những khoảnh khắc đẹp trong ngày đặc biệt này nhé!",
+    "closing": "Thân mến,",
+    "sign": "Ngọc Tú"
    },
    "invite": {
     "title": "Ngày tốt nghiệp,",
