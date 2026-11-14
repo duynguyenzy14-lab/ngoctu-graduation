@@ -453,7 +453,7 @@ a { color: var(--volt); }
 /* Lời chào: khoảng cách vừa vặn với đoạn sau */
 .l-greet { font-style: normal; font-weight: 600; font-size: 1em; color: var(--volt); margin-bottom: 0.55em !important; }
 .l-greet .who { color: var(--volt); }
-.l-p { text-indent: 1.6em; letter-spacing: 0.01em; margin-bottom: 0.45em !important; }
+.l-p { text-indent: 0; letter-spacing: 0.01em; margin-bottom: 0.45em !important; }
 /* Lời kết: khoảng cách vừa vặn với đoạn trước */
 .l-close { margin-top: 0.7em !important; text-align: right; padding-right: 1.5em; font-size: 1em; font-weight: 500; }
 .l-sign { display: none !important; }
@@ -511,7 +511,7 @@ a { color: var(--volt); }
 .receipt-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: stretch; margin-block: 4px; }
 .receipt-col { display: flex; flex-direction: column; }
 .receipt-col:first-child { padding-right: 14px; border-right: 1px dashed #E8A8C4; }
-.receipt-col .col-title { font: 600 13px/1.4 var(--font); color: var(--slate); margin: 0 0 6px; letter-spacing: .02em; text-transform: uppercase; display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px; }
+.receipt .col-title { font: 600 13px/1.4 var(--font); color: var(--slate); margin: 0 0 6px; letter-spacing: .02em; text-transform: uppercase; display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px; }
 .receipt-col .t-badge { font-family: var(--mono); font-weight: 700; color: var(--volt); font-size: 14.5px; text-transform: none; white-space: nowrap; }
 .receipt-col .venue-name { font: 600 16px/1.4 var(--font); margin: 0 0 4px; }
 .receipt-col .venue-name a { color: var(--volt); text-decoration: none; }
@@ -539,6 +539,8 @@ a { color: var(--volt); }
 .rl.spot { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0 14px; padding-block: 7px; border-bottom: 1px dotted #F0BDD3; }
 .rl.spot:has(+ .rule) { border-bottom: 0; }
 .rl.spot .sn { color: var(--volt); font-weight: 600; }
+.rl.spot .sn a { color: var(--volt); text-decoration: none; }
+.rl.spot .sn a:hover { text-decoration: underline; }
 .rl.spot a { color: var(--volt); text-decoration: none; white-space: nowrap; font-weight: 600; }
 .rl.spot a:hover { text-decoration: underline; }
 .rl.spot .d { grid-column: 1 / -1; font: 500 14.5px/1.5 var(--font); color: var(--slate); }
@@ -550,7 +552,7 @@ a { color: var(--volt); }
   .rl.sched { grid-template-columns: 1fr; gap: 0; }
   .receipt-cols { gap: 10px; }
   .receipt-col:first-child { padding-right: 8px; }
-  .receipt-col .col-title { font-size: 11.5px; gap: 4px; }
+  .receipt .col-title { font-size: 11.5px; gap: 4px; }
   .receipt-col .t-badge { font-size: 13px; }
   .receipt-col .venue-name { font-size: 14px; }
   .receipt-col .venue-addr, .receipt-col .sched-desc { font-size: 12.5px; line-height: 1.45; }

@@ -81,12 +81,13 @@
  },
  "parking": {
   "title": "Hướng dẫn gửi xe",
-  "school": "Có thể gửi xe tại Trường, nhưng vào ngày lễ khu vực gửi xe có thể sẽ hết chỗ sớm. Tú gợi ý một số điểm gửi xe gần trường nha:",
+  "school": "Một số địa điểm gửi xe xung quanh OU nếu bãi xe hết chỗ nha",
   "intro": "",
   "places": [
    {
     "name": "1. Du lịch Hòa Bình (Số 60 Võ Văn Tần)",
-    "note": "Dễ tìm, nằm ngay trục đường chính",
+    "url": "https://www.google.com/maps/place/Du+L%E1%BB%8Bch+H%C3%B2a+B%C3%ACnh+Vi%E1%BB%87t+Nam+-+Peace+Tour/@10.7771528,106.6907248,17z/data=!3m1!4b1!4m6!3m5!1s0x31752f3aeffe8caf:0xd839021c96d7aea9!8m2!3d10.7771528!4d106.6907248!16s%2Fg%2F11f33hz6x0?entry=ttu&g_ep=EgoyMDI2MTExMC4wIKXMDSoASAFQAw%3D%3D",
+    "note": "",
     "query": "Du lịch Hòa Bình, phường Xuân Hòa, TP.HCM"
    },
    {
@@ -326,7 +327,7 @@
     }
    ],
    "parking": {
-    "school": "Có thể gửi xe tại Trường, nhưng vào ngày lễ khu vực gửi xe có thể sẽ hết chỗ sớm. Tú gợi ý một số điểm gửi xe gần trường:"
+    "school": "Một số địa điểm gửi xe xung quanh OU nếu bãi xe hết chỗ nha"
    }
   },
   "teacher": {
