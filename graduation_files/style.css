@@ -279,12 +279,12 @@ a { color: var(--volt); }
 
 .dip-hint {
   margin: 0; font: 600 max(12px, calc(var(--u) * 2.5))/1.5 var(--font);
-  color: #FFE0ED; text-align: center;
-  max-width: min(92vw, 680px); padding: 9px 22px;
-  background: rgba(38, 14, 30, 0.82);
+  color: var(--volt); text-align: center;
+  max-width: min(92vw, 680px); padding: 9px 24px;
+  background: rgba(255, 255, 255, 0.96);
   backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-  border: 1.5px solid rgba(255, 120, 170, 0.4); border-radius: 999px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 16px rgba(232, 39, 94, 0.2);
+  border: 1.5px solid #F8B3CD; border-radius: 999px;
+  box-shadow: 0 4px 20px rgba(232, 39, 94, 0.16);
   letter-spacing: 0.01em; display: inline-flex; align-items: center; justify-content: center; gap: 8px;
   transition: opacity .3s, transform .3s; position: relative; z-index: 5;
 }
@@ -301,7 +301,7 @@ a { color: var(--volt); }
 
 /* ---------- biến thể "sân khấu": đèn bật, ánh đèn rọi bìa bằng ---------- */
 .intro.dip { position: relative; overflow: hidden; }
-.staged { background: radial-gradient(ellipse 70% 60% at 50% 45%, #281123 0%, #180916 55%, #0d030b 100%); }
+.staged { background: radial-gradient(ellipse 70% 60% at 50% 45%, #FFFFFF 0%, #FAF8FA 55%, #F5EFF3 100%); }
 .staged .stage { position: relative; z-index: 3; }
 .floaters { display: none !important; }
 .fl { display: none !important; }
@@ -309,18 +309,18 @@ a { color: var(--volt); }
 /* Ánh đèn sân khấu chiếu rọi trực tiếp vào bìa bằng tốt nghiệp */
 .beam {
   position: absolute; left: 50%; top: -8%; width: min(140vw, 880px); height: 120%; transform: translateX(-50%); z-index: 2; pointer-events: none;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.72) 0%, rgba(255, 235, 245, 0.4) 38%, rgba(255, 205, 225, 0.1) 72%, transparent 100%);
-  clip-path: polygon(36% 0%, 64% 0%, 94% 100%, 6% 100%); filter: blur(14px); opacity: 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 240, 248, 0.55) 38%, rgba(255, 225, 238, 0.15) 72%, transparent 100%);
+  clip-path: polygon(36% 0%, 64% 0%, 94% 100%, 6% 100%); filter: blur(16px); opacity: 0;
   animation: beamOn 1.3s ease .35s forwards;
 }
 .beam::after {
   content: ""; position: absolute; left: 12%; right: 12%; top: 32%; height: 48%;
-  background: radial-gradient(ellipse at 50% 50%, rgba(255, 255, 255, 0.5) 0%, rgba(255, 220, 240, 0.22) 40%, transparent 72%);
-  filter: blur(22px);
+  background: radial-gradient(ellipse at 50% 50%, rgba(255, 255, 255, 0.95) 0%, rgba(255, 235, 245, 0.45) 40%, transparent 72%);
+  filter: blur(24px);
 }
 @keyframes beamOn { 0% { opacity: 0; } 8% { opacity: .75; } 13% { opacity: .1; } 22% { opacity: .9; } 28% { opacity: .35; } 42%, 100% { opacity: 1; } }
 .dust { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; animation: fade 1s ease 1.2s both; }
-.blackout { position: absolute; inset: 0; z-index: 4; background: #0d030b; pointer-events: none; animation: unblack 1s ease .15s forwards; }
+.blackout { position: absolute; inset: 0; z-index: 4; background: #FFFFFF; pointer-events: none; animation: unblack 1s ease .15s forwards; }
 @keyframes unblack { to { opacity: 0; visibility: hidden; } }
 .staged .float { animation: enter 1.35s cubic-bezier(.2, .8, .2, 1) .8s both, floaty 6s ease-in-out 2.2s infinite; }
 @keyframes enter { from { transform: translateY(80px) rotateX(30deg) scale(.9); opacity: 0; } to { transform: none; opacity: 1; } }
@@ -345,7 +345,7 @@ a { color: var(--volt); }
 
 /* ================= 2. THƯ — lá thư viết tay ================= */
 .letter {
-  background: linear-gradient(180deg, #0d030b 0%, #281123 70px, #FFF0F5 240px, #FFF0F5 100%);
+  background: #FFFFFF;
   padding-block: 12vh 16vh; position: relative; overflow: hidden;
 }
 .letter-grid { display: grid; gap: 44px; align-items: start; }
