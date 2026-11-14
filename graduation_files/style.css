@@ -325,23 +325,28 @@ a { color: var(--volt); }
   filter: blur(3px) saturate(1.05);
   opacity: 0.9;
 }
-/* Mỗi hàng: flex row, ảnh co giãn theo đúng aspect ratio, lấp đầy chiều cao hàng */
+/* Mỗi hàng: flex row, ảnh tự lấy width từ chiều cao × ratio thực — không cắt, không méo */
 .collage-row {
   display: flex;
   flex: 1;
   min-height: 0;
   gap: 5px;
+  /* Nếu tổng width ảnh < 100% thì kéo đều ra hai phía để lấp kín */
+  justify-content: space-evenly;
+  align-items: stretch;
 }
 .collage-row img {
-  /* flex-grow theo aspect ratio để ảnh ngang rộng hơn ảnh dọc */
-  flex-grow: var(--ar, 1);
-  flex-shrink: 1;
-  flex-basis: 0;
-  min-width: 0;
+  /* width: auto + height: 100% → browser tự tính width đúng theo aspect ratio thực của ảnh */
   height: 100%;
-  object-fit: cover;
+  width: auto;
+  /* flex-grow đẩy ảnh lấp vừa đủ hàng mà KHÔNG làm biến dạng (browser giữ constraint height:100%) */
+  flex: 1 1 auto;
+  /* object-fit: contain để tuyệt đối không cắt bất kỳ pixel nào */
+  object-fit: contain;
+  object-position: center;
   display: block;
   border-radius: 4px;
+  min-width: 0;
 }
 @media (max-width: 640px) {
   .collage-grid {
