@@ -81,7 +81,7 @@
  },
  "parking": {
   "title": "Hướng dẫn gửi xe",
-  "school": "Một số địa điểm gửi xe xung quanh OU nếu bãi xe hết chỗ nha",
+  "school": "Một số địa điểm gửi xe gần OU để mọi người tham khảo trong trường hợp bãi giữ xe của trường đã hết chỗ nha",
   "intro": "",
   "places": [
    {
@@ -168,7 +168,7 @@
  },
  "photos": {
   "og": "20261031_235206000_iOS.jpg",
-  "galleryTitle": "Tú chụp trước vài tấm. Những tấm còn lại chờ {name} đó nhaa.",
+  "galleryTitle": "Graduation 2026 của Tú – đã có vài khoảnh khắc mở màn, nhưng album sẽ chỉ thật sự trọn vẹn khi có {name} cùng xuất hiện trong những khung hình.",
   "gallery": [
    {
     "file": "20261031_235206000_iOS.jpg",
@@ -310,7 +310,7 @@
    "photos": {
     "cover": "LR-177.jpg",
     "letterPhoto2": "LR-172.jpg",
-    "galleryTitle": "Tú chụp trước vài tấm. Những tấm còn lại chờ mọi người cùng chụp nhé."
+    "galleryTitle": "Graduation 2026 của Tú – đã có vài khoảnh khắc mở màn, nhưng album sẽ chỉ thật sự trọn vẹn khi có mọi người cùng xuất hiện trong những khung hình."
    },
    "rsvp": {
     "title": "Tú mong được gặp mọi người hôm đó",
@@ -327,7 +327,7 @@
     }
    ],
    "parking": {
-    "school": "Một số địa điểm gửi xe xung quanh OU nếu bãi xe hết chỗ nha"
+    "school": "Một số địa điểm gửi xe gần OU để mọi người tham khảo trong trường hợp bãi giữ xe của trường đã hết chỗ nha"
    }
   },
   "teacher": {
