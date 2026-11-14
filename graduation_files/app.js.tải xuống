@@ -350,10 +350,10 @@ ${introMarkup}
     const P = S.intro.portrait.img;
     const RAMP = " .,:;-=+*%#@";
     const COLORS = {
-      bg: "#260A1C",
-      frost: "#FFF0F6",
-      blue: "#FF8FB8",
-      sky: "#FFA3C7",
+      bg: "#FDE8EF",
+      frost: "#261220",
+      blue: "#FF4081",
+      sky: "#E0266B",
     };
     // ký tự dùng khi xáo trộn: lấy từ tên khách (thiệp riêng) hoặc tên Khánh
     const pool = [
