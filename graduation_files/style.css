@@ -180,33 +180,47 @@ a { color: var(--volt); }
               inset 0 0 0 8.5px rgba(212, 175, 55, .4);
   overflow: hidden;
 }
-/* Ảnh polaroid của Tú bên trái */
+/* Layout 2 cột: ảnh bên trái, chữ bên phải */
+.back .diploma-border { z-index: 1; }
+/* Ảnh polaroid của Tú bên trái — ảnh NGANG 3:2 (800×533) */
 .snap {
-  position: absolute; left: 9%; top: 13%; height: 74%; width: auto; aspect-ratio: 4 / 5; margin: 0;
-  transform: rotate(-2deg); background: #fff;
-  padding: calc(var(--u) * 1.2) calc(var(--u) * 1.2) calc(var(--u) * 3.6);
+  position: absolute;
+  left: 7%; top: 50%; transform: translateY(-50%) rotate(-2deg);
+  /* Chiều rộng ~45% bìa, chiều cao = width / 1.5 (đúng tỉ lệ ngang) */
+  width: 44%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  background: #fff;
+  padding: calc(var(--u) * 1.1) calc(var(--u) * 1.1) calc(var(--u) * 3.2);
   box-shadow: 0 8px 22px rgba(10, 18, 50, .28); border-radius: 2px; z-index: 2;
 }
 .snap img {
-  display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 18%; border-radius: 1px;
+  display: block; width: 100%; height: 100%;
+  object-fit: cover; object-position: 50% 40%;
+  border-radius: 1px;
 }
 /* Thông tin xếp từ trên xuống bên phải */
 .back-text {
-  position: absolute; left: 54%; right: 7%; top: 50%; transform: translateY(-50%);
+  position: absolute; left: 56%; right: 6%; top: 50%; transform: translateY(-50%);
   display: flex; flex-direction: column; align-items: flex-start; text-align: left;
-  gap: calc(var(--u) * 1.6); z-index: 2;
+  gap: calc(var(--u) * 2); z-index: 2;
 }
 .b-name {
   display: block; font: 700 max(13px, calc(var(--u) * 4.6))/1.2 var(--serif);
   color: #162E7A; letter-spacing: -.01em;
 }
+/* "Cử nhân ngành Quản lý công" và "Khóa 2022": cùng font, cùng size, thẳng đứng */
 .b-degree {
-  display: block; font: 600 max(10px, calc(var(--u) * 2.7))/1.35 var(--font);
-  color: var(--ink); letter-spacing: 0.01em;
+  display: block;
+  font: 600 max(10px, calc(var(--u) * 2.6))/1.4 var(--font);
+  color: var(--ink); letter-spacing: 0;
+  font-style: normal; text-transform: none;
 }
 .b-cohort {
-  display: block; font: 500 max(9px, calc(var(--u) * 2.4)) var(--font);
-  color: var(--slate); letter-spacing: 0.05em; text-transform: uppercase;
+  display: block;
+  font: 600 max(10px, calc(var(--u) * 2.6))/1.4 var(--font);
+  color: var(--ink); letter-spacing: 0;
+  font-style: normal; text-transform: none;
 }
 
 /* ===== BÌA TRƯỚC (front) — Xanh đại học ===== */
