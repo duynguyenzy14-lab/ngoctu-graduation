@@ -306,7 +306,7 @@ a { color: var(--volt); }
 .floaters { display: none !important; }
 .fl { display: none !important; }
 
-/* Khung ảnh nền ghép (Collage) trang đầu: bố cục mosaic 21 ảnh kỷ niệm độc nhất, giữ nguyên tỉ lệ ngang dọc, không cắt ảnh */
+/* Khung ảnh nền ghép (Collage) trang đầu: 4 hàng flex, mỗi ảnh flex theo đúng aspect ratio thực */
 .bg-collage {
   position: absolute;
   inset: 0;
@@ -314,52 +314,43 @@ a { color: var(--volt); }
   overflow: hidden;
   pointer-events: none;
 }
+/* Wrapper bọc 4 hàng */
 .collage-grid {
-  display: grid;
-  grid-template-columns: repeat(9, 1fr);
-  grid-template-rows: repeat(4, 1fr);
-  grid-auto-flow: dense;
-  gap: 6px;
+  display: flex;
+  flex-direction: column;
   width: 100%;
   height: 100%;
-  padding: 6px;
+  gap: 5px;
+  padding: 5px;
   filter: blur(3px) saturate(1.05);
-  opacity: 0.92;
+  opacity: 0.9;
 }
-.collage-grid img {
-  width: 100%;
+/* Mỗi hàng: flex row, ảnh co giãn theo đúng aspect ratio, lấp đầy chiều cao hàng */
+.collage-row {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  gap: 5px;
+}
+.collage-row img {
+  /* flex-grow theo aspect ratio để ảnh ngang rộng hơn ảnh dọc */
+  flex-grow: var(--ar, 1);
+  flex-shrink: 1;
+  flex-basis: 0;
+  min-width: 0;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
   display: block;
   border-radius: 4px;
 }
-/* Desktop: 9 cột x 4 hàng = 36 ô.
-   15 ảnh ngang x 2 ô = 30 ô.
-   4 ảnh dọc x 1 ô = 4 ô.
-   2 ảnh vuông x 1 ô = 2 ô.
-   Tổng = đúng 36 ô (khít 100% màn hình, không dư thừa, không trùng lặp, không bị cắt)
-*/
-.collage-grid .is-land { grid-column: span 2; }
-.collage-grid .is-port { grid-column: span 1; }
-.collage-grid .is-sq   { grid-column: span 1; }
-
-@media (max-width: 768px), (max-aspect-ratio: 1/1) {
-  /* Mobile: 4 cột x 10 hàng = 40 ô.
-     15 ảnh ngang (span 2 cols x 1 row) = 30 ô.
-     4 ảnh dọc (span 1 col x 2 rows) = 8 ô.
-     2 ảnh vuông (span 1 col x 1 row) = 2 ô.
-     Tổng = đúng 40 ô (khít 100% màn hình điện thoại)
-  */
+@media (max-width: 640px) {
   .collage-grid {
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(10, 1fr);
-    gap: 4px;
-    padding: 4px;
-    filter: blur(2.5px) saturate(1.05);
+    gap: 3px;
+    padding: 3px;
+    filter: blur(2px) saturate(1.05);
   }
-  .collage-grid .is-land { grid-column: span 2; grid-row: span 1; }
-  .collage-grid .is-port { grid-column: span 1; grid-row: span 2; }
-  .collage-grid .is-sq   { grid-column: span 1; grid-row: span 1; }
+  .collage-row { gap: 3px; }
+  .collage-row img { border-radius: 3px; }
 }
 .collage-overlay {
   position: absolute;
