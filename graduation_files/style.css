@@ -427,7 +427,7 @@ a { color: var(--volt); }
 /* ================= 2. THƯ — lá thư viết tay ================= */
 .letter {
   background: #FFFFFF;
-  padding-block: 12vh 16vh; position: relative; overflow: hidden;
+  padding-top: 10vh; padding-bottom: 4vh; position: relative; overflow: hidden;
 }
 .letter-grid { display: flex; justify-content: center; align-items: start; }
 @media (min-width: 900px) {
@@ -467,10 +467,10 @@ a { color: var(--volt); }
 .photos { display: none !important; }
 
 /* ================= 3. THIỆP CHÍNH ================= */
-.invite { background: var(--paper); padding-block: 12vh 16vh; border-top: 1px solid var(--mist); }
+.invite { background: var(--paper); padding-top: 4vh; padding-bottom: 12vh; border-top: 1px solid var(--mist); }
 .invite-grid { display: grid; gap: 64px; }
 .invite-left { display: grid; gap: 26px; align-content: start; min-width: 0; container-type: inline-size; }
-.invite h2 { font: 600 clamp(44px, 6.5vw, 88px)/1.05 var(--serif); letter-spacing: -.02em; margin: 0; text-wrap: balance; }
+.invite h2 { font: 700 clamp(44px, 6.5vw, 88px)/1.05 var(--serif); font-weight: 700; letter-spacing: -.02em; margin: 0; text-wrap: balance; }
 .invite h2 span { color: var(--volt); }
 .invite .lead { max-width: 40ch; font-size: 19px; color: var(--slate); display: grid; gap: 10px; }
 .invite .lead p { margin: 0; }
