@@ -2,11 +2,38 @@ window.SITE = {
  "siteUrl": "http://ngoctu-graduation2026.id.vn",
  "fullName": "Nguyễn Ngọc Tú",
  "shortName": "Tú",
- "school": "Trường Đại học Mở TP.HCM",
- "major": "Quản lí công",
+ "school": "Trường Đại học Mở TP. Hồ Chí Minh",
+ "major": "Quản lý công",
+ "cohort": "Khóa 2022",
  "date": "2026-11-28T08:00:00+07:00",
  "dateLong": "Sáng Thứ 7, 28.11.2026",
  "dateNumeric": "28.11.2026",
+ "guests": {
+  "Nhi": {
+   "name": "Nhi",
+   "message": "Gửi Nhi thương mến,\nCảm ơn Nhi vì đã luôn ở bên cạnh, lắng nghe và chia sẻ cùng Tú qua từng giai đoạn của thời sinh viên. Những buổi chuyện trò, những khoảnh khắc vui buồn có Nhi đồng hành đã làm cho những năm tháng thanh xuân của Tú trở nên trọn vẹn và đáng nhớ hơn bao giờ hết.\nNgày 28.11 này, Tú rất mong có Nhi ở bên cạnh để cùng Tú ghi lại dấu mốc quan trọng này nhé! ❤️"
+  },
+  "Khánh": {
+   "name": "Khánh",
+   "message": "Gửi Khánh,\nBốn năm đại học trôi qua thật nhanh với biết bao kỷ niệm và thử thách. Cảm ơn Khánh vì đã luôn là một người bạn tuyệt vời, luôn đồng hành và tiếp thêm năng lượng tích cực cho Tú trong suốt chặng đường vừa qua.\nNgày tốt nghiệp này sẽ thật thiếu trọn vẹn nếu không có Khánh. Hẹn gặp Khánh vào sáng Thứ 7 ngày 28.11 nhé, tụi mình nhất định phải chụp thật nhiều ảnh đẹp cùng nhau nha!"
+  },
+  "Phát": {
+   "name": "Phát",
+   "message": "Gửi Phát,\nNhìn lại chặng đường 4 năm đại học đã qua, Tú thật sự biết ơn vì luôn có Phát đồng hành và ủng hộ. Cảm ơn những lần hỗ trợ nhiệt tình, những cuộc trò chuyện và sự chân thành mà Phát đã dành cho Tú.\nCột mốc tốt nghiệp này là một kỷ niệm vô cùng ý nghĩa của thanh xuân. Tú rất mong được đón Phát đến chung vui và chụp cùng Tú những tấm hình thật đẹp vào ngày 28.11 này nha!"
+  },
+  "Trang": {
+   "name": "Trang",
+   "message": "Gửi Trang yêu quý,\nCảm ơn Trang vì đã là một phần thật dịu dàng và ấm áp trong những năm tháng đại học của Tú. Cảm ơn những sẻ chia, những nụ cười và sự thấu hiểu mà Trang luôn dành cho Tú suốt thời gian qua.\nNgày 28.11 là ngày Tú chính thức khép lại một chương rực rỡ và mở ra hành trình mới. Hãy đến chung vui và lưu lại những khoảnh khắc đáng nhớ nhất cùng Tú nha Trang ơi!"
+  },
+  "Duy": {
+   "name": "Duy",
+   "message": "Gửi Duy,\nThấm thoát mà 4 năm đại học đã đến đích rồi. Cảm ơn Duy vì đã luôn ở đó, luôn là người bạn đồng hành đáng tin cậy và chia sẻ cùng Tú qua từng mùa thi, từng bài thuyết trình và những deadline căng thẳng.\nNgày 28.11 này là một dấu mốc rất đặc biệt đối với Tú. Tú rất mong Duy sẽ có mặt để cùng Tú ăn mừng và lưu lại những khoảnh khắc thanh xuân thật đáng nhớ này nhé!"
+  },
+  "Thuận": {
+   "name": "Thuận",
+   "message": "Gửi Thuận,\nCảm ơn Thuận vì đã luôn đồng hành, giúp đỡ và mang lại thật nhiều niềm vui trong suốt những năm tháng thanh xuân vừa qua của Tú. Nhờ có những người bạn như Thuận mà chặng đường đại học của Tú đã trở nên vô cùng ý nghĩa và nhiều màu sắc.\nSáng ngày 28.11 này, Tú rất vui và hạnh phúc nếu được đón Thuận đến cùng chung vui và chụp thật nhiều bức hình kỷ niệm nha!"
+  }
+ },
  "intro": {
   "style": "stage",
   "ringText": "NGUYỄN NGỌC TÚ · QUẢN LÝ CÔNG · TỐT NGHIỆP 28.11.2026 · ĐẠI HỌC MỞ TP.HCM · ",
