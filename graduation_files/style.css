@@ -185,9 +185,9 @@ a { color: var(--volt); }
 /* Ảnh polaroid của Tú bên trái — ảnh DỌC 2:3 (533×800, đã xoay) */
 .snap {
   position: absolute;
-  left: 7%; top: 50%; transform: translateY(-50%) rotate(-2deg);
-  /* Khung dọc: width nhỏ hơn, aspect-ratio 2/3 */
-  width: 30%;
+  left: 5%; top: 50%; transform: translateY(-50%) rotate(-2deg);
+  /* Phóng to: chiếm ~38% chiều rộng bìa */
+  width: 38%;
   height: auto;
   aspect-ratio: 2 / 3;
   background: #fff;
@@ -199,26 +199,26 @@ a { color: var(--volt); }
   object-fit: cover; object-position: 50% 30%;
   border-radius: 1px;
 }
-/* Thông tin xếp từ trên xuống bên phải */
+/* Thông tin xếp từ trên xuống bên phải — kéo sát ảnh */
 .back-text {
-  position: absolute; left: 56%; right: 6%; top: 50%; transform: translateY(-50%);
+  position: absolute; left: 48%; right: 4%; top: 50%; transform: translateY(-50%);
   display: flex; flex-direction: column; align-items: flex-start; text-align: left;
   gap: calc(var(--u) * 2); z-index: 2;
 }
 .b-name {
-  display: block; font: 700 max(13px, calc(var(--u) * 4.6))/1.2 var(--serif);
+  display: block; font: 700 max(14px, calc(var(--u) * 5.2))/1.2 var(--serif);
   color: #162E7A; letter-spacing: -.01em;
 }
 /* "Cử nhân ngành Quản lý công" và "Khóa 2022": cùng font, cùng size, thẳng đứng */
 .b-degree {
   display: block;
-  font: 600 max(10px, calc(var(--u) * 2.6))/1.4 var(--font);
+  font: 600 max(11px, calc(var(--u) * 3.0))/1.4 var(--font);
   color: var(--ink); letter-spacing: 0;
   font-style: normal; text-transform: none;
 }
 .b-cohort {
   display: block;
-  font: 600 max(10px, calc(var(--u) * 2.6))/1.4 var(--font);
+  font: 600 max(11px, calc(var(--u) * 3.0))/1.4 var(--font);
   color: var(--ink); letter-spacing: 0;
   font-style: normal; text-transform: none;
 }
