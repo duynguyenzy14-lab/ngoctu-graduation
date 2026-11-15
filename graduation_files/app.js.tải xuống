@@ -1796,28 +1796,21 @@ ${introMarkup}
 
     function showTicket(d, returning, fresh = false) {
       const isNo = d.attending === "no" || d.slot === "no";
-      const time = isNo ? "Hẹn dịp khác nha" : "Đến chung vui cùng Tú";
-      const stamp = isNo
-        ? `<span>Đã</span><b>nhận</b>`
-        : `<span>Đã nhận</span><b>Sẽ đến 💖</b>`;
+      const leadText = isNo ? "Cảm ơn bạn nha" : "Hẹn gặp";
       done.innerHTML = `
         <div class="ticket${fresh ? " fresh" : ""}" role="status">
-          <div class="top"><span>${isNo ? `Cảm ơn đã báo cho ${esc(S.shortName)}` : "Hẹn gặp"}</span><b>${esc(d.name)}</b></div>
-          <div class="cut"></div>
-          <div class="bot">
-            <div><div class="time">${esc(time)}</div><div class="meta">${esc(S.dateNumeric)}</div></div>
-            <div class="meta">${isNo ? "Đã ghi nhận" : esc(S.venue.short)}</div>
+          <div class="top">
+            <span class="ticket-greet">${esc(leadText)}</span>
+            <b class="ticket-name">${esc(d.name)}</b>
           </div>
-          ${d.message ? `<p class="tmsg">“${esc(d.message)}”</p>` : ""}
-          <div class="stamp${isNo ? " no" : ""}" aria-hidden="true">${stamp}</div>
+          <div class="heart-stamp" aria-hidden="true">
+            <svg viewBox="0 0 24 24" class="heart-icon" fill="currentColor">
+              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+            </svg>
+          </div>
         </div>
         <div class="after">
-          ${
-            locked
-              ? `<small>${returning ? "Đã xác nhận trước đó rồi." : "Đã ghi lại xác nhận."}</small>`
-              : `<button type="button" id="again">Xác nhận thêm cho người khác</button>`
-          }
-          ${api ? "" : "<small>Bản demo: chỉ lưu trên máy này.</small>"}
+          <button type="button" id="again">Gửi thêm phản hồi khác</button>
         </div>`;
       form.hidden = true;
       done.hidden = false;
