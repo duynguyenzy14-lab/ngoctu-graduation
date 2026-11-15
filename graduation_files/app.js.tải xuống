@@ -459,12 +459,11 @@ ${introMarkup}
               <div class="rsvp-badge">
                 <span>Your little reply</span>
               </div>
-              <h3 class="rsvp-title">${fill(S.rsvp.title || "Đến chung vui với Tú nha")}</h3>
               <p class="rsvp-subtitle">${fill(S.rsvp.lead || "Điền một chút thông tin để Ngọc Tú đón tiếp thật chu đáo nha")}</p>
             </div>
             <div id="rsvp">
               <form id="form" novalidate>
-                <fieldset class="seg"><legend>Khung giờ bạn đến chung vui</legend>${options}</fieldset>
+                <input type="hidden" name="slot" value="7:00">
                 ${
                   name && !guest.group
                     ? ""

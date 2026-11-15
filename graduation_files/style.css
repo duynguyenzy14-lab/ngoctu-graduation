@@ -755,12 +755,12 @@ a { color: var(--volt); }
   overflow: visible;
 }
 
-/* Nơ NO 2fixed nằm ngay trên đỉnh góc tròn và bao phủ che kín góc tròn của thiệp */
+/* Nơ NO 2fixed: nút thắt nằm ngay góc bo tròn, cánh nơ trồi ra khỏi thiệp */
 .rsvp-bow {
   position: absolute;
-  top: -58px;
-  right: -60px;
-  width: clamp(190px, 22vw, 240px);
+  top: -75px;
+  right: -95px;
+  width: clamp(195px, 22vw, 240px);
   height: auto;
   aspect-ratio: 385 / 314;
   pointer-events: none;
@@ -775,8 +775,8 @@ a { color: var(--volt); }
 }
 @media (max-width: 600px) {
   .rsvp-bow {
-    top: -44px;
-    right: -46px;
+    top: -55px;
+    right: -65px;
     width: clamp(140px, 33vw, 175px);
   }
 }
@@ -841,7 +841,7 @@ a { color: var(--volt); }
   }
 }
 
-/* Hiệu ứng chuyển động nhẹ nhàng ~20% (đung đưa êm ái chỉ ~1.4° và 1.5px quanh nút nơ đính trên góc tròn) */
+/* Hiệu ứng chuyển động nhẹ nhàng ~20% (đung đưa êm ái chỉ ~1.4° và 1.5px quanh nút thắt nơ đính trên góc tròn) */
 @keyframes bowGentleFloat {
   0%, 100% {
     transform: rotate(23.2deg) translateY(0);
@@ -851,19 +851,21 @@ a { color: var(--volt); }
   }
 }
 
-/* Phần đầu thiệp: khoảng đệm an toàn để nơ che góc không đè chữ */
+/* Phần đầu thiệp: khoảng cách cân đối, thoáng đãng */
 .rsvp-header {
-  padding-right: clamp(120px, 18vw, 175px);
+  margin-bottom: 22px;
+  padding-right: clamp(70px, 12vw, 110px);
 }
 @media (max-width: 600px) {
   .rsvp-header {
-    padding-right: clamp(85px, 24vw, 125px);
+    margin-bottom: 18px;
+    padding-right: clamp(50px, 14vw, 85px);
   }
 }
 
 /* Dòng 1: Badge 'Your little reply', chữ trắng, background tone hồng */
 .rsvp-badge {
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 .rsvp-badge span {
   display: inline-block;
@@ -879,25 +881,14 @@ a { color: var(--volt); }
   box-shadow: 0 4px 14px rgba(224, 38, 107, 0.28);
 }
 
-/* Dòng 2: 'Đến chung vui với Tú nha', tone hồng in đậm */
-.rsvp-title {
-  font-family: var(--font);
-  font-weight: 700;
-  font-size: clamp(23px, 2.8vw, 34px);
-  line-height: 1.25;
-  color: var(--volt);
-  margin: 0 0 10px 0;
-  letter-spacing: -0.015em;
-}
-
-/* Dòng 3: 'Điền một chút thông tin để Ngọc Tú đón tiếp thật chu đáo nha', chữ hồng, không in đậm */
+/* Dòng chữ: 'Điền một chút thông tin để Ngọc Tú đón tiếp thật chu đáo nha', tone hồng dâu, kiểu chữ mềm mại */
 .rsvp-subtitle {
   font-family: var(--font);
-  font-weight: 500;
-  font-size: clamp(14.5px, 0.9vw + 10px, 17px);
-  line-height: 1.6;
-  color: var(--ink-blue);
-  margin: 0 0 24px 0;
+  font-weight: 600;
+  font-size: clamp(15.5px, 1vw + 9px, 19px);
+  line-height: 1.55;
+  color: var(--volt);
+  margin: 0;
 }
 
 form { display: grid; gap: 14px; }
