@@ -755,36 +755,89 @@ a { color: var(--volt); }
   overflow: visible;
 }
 
-/* Nơ NO 2fixed to, gắn ôm trọn góc bo tròn bên phải trên cùng của thiệp */
+/* Nơ NO 2fixed to, đính ngay góc bo tròn bên phải trên cùng của thiệp */
 .rsvp-bow {
   position: absolute;
-  top: -24px;
-  right: -22px;
-  width: clamp(145px, 17vw, 190px);
+  top: -30px;
+  right: -28px;
+  width: clamp(185px, 22vw, 245px);
   height: auto;
+  aspect-ratio: 385 / 314;
   pointer-events: none;
   z-index: 5;
   transform-origin: 75% 25%;
-  animation: bowFloat 3.8s ease-in-out infinite;
+  animation: bowFloat 3.8s ease-in-out infinite, bowShadowCycle 4.5s ease-in-out infinite;
   transition: transform 0.4s cubic-bezier(.2, .75, .15, 1);
 }
 .rsvp-paper:hover .rsvp-bow {
-  transform: rotate(5deg) scale(1.04);
+  transform: rotate(5deg) translateY(-4px) scale(1.03);
 }
 @media (max-width: 600px) {
   .rsvp-bow {
-    top: -18px;
-    right: -16px;
-    width: clamp(115px, 28vw, 145px);
+    top: -22px;
+    right: -20px;
+    width: clamp(135px, 34vw, 180px);
   }
 }
+
+.bow-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  isolation: isolate;
+}
+
 .bow-img {
   width: 100%;
-  height: auto;
+  height: 100%;
   object-fit: contain;
   display: block;
-  /* Hiệu ứng chuyển động lấp lánh 40% của nơ */
-  animation: bowSparkle40 3.2s ease-in-out infinite;
+}
+
+/* Lớp phủ chuyển màu tone hồng dâu nhạt dần 100% => 70% => 40% (không chuyển màu trắng) */
+.bow-tint {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  -webkit-mask-image: url("./no-2fixed.webp");
+  mask-image: url("./no-2fixed.webp");
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  mix-blend-mode: multiply;
+  animation: bowBerryCycle 4.5s ease-in-out infinite;
+}
+
+/* Chuyển màu hồng dâu nhạt dần: 100% (#E8275E) => 70% (#EF688E) => 40% (#F6A9BF), không chuyển màu trắng */
+@keyframes bowBerryCycle {
+  0%, 100% {
+    background-color: #E8275E; /* 100% tone hồng dâu */
+  }
+  32% {
+    background-color: #EF688E; /* 70% tone hồng dâu */
+  }
+  50% {
+    background-color: #F6A9BF; /* 40% tone hồng dâu pastel dịu ngọt, hoàn toàn giữ sắc hồng */
+  }
+  68% {
+    background-color: #EF688E; /* 70% tone hồng dâu */
+  }
+}
+
+/* Hào quang và bóng đổ chuyển đổi đồng điệu theo sắc hồng dâu */
+@keyframes bowShadowCycle {
+  0%, 100% {
+    filter: drop-shadow(0 16px 32px rgba(232, 39, 94, 0.42)) drop-shadow(0 4px 10px rgba(180, 40, 90, 0.25));
+  }
+  32%, 68% {
+    filter: drop-shadow(0 16px 32px rgba(239, 104, 142, 0.38)) drop-shadow(0 4px 10px rgba(200, 50, 110, 0.22));
+  }
+  50% {
+    filter: drop-shadow(0 14px 28px rgba(246, 169, 191, 0.35)) drop-shadow(0 4px 10px rgba(220, 80, 130, 0.18));
+  }
 }
 
 /* Hiệu ứng chuyển động bồng bềnh êm ái */
@@ -797,61 +850,13 @@ a { color: var(--volt); }
   }
 }
 
-/* Hiệu ứng lấp lánh 40% của nơ: độ sáng & ánh kim tỏa nhẹ tinh tế */
-@keyframes bowSparkle40 {
-  0%, 100% {
-    filter: brightness(1) drop-shadow(0 14px 28px rgba(224, 70, 120, 0.28)) drop-shadow(0 3px 8px rgba(180, 40, 90, 0.16));
-  }
-  35% {
-    filter: brightness(1) drop-shadow(0 14px 28px rgba(224, 70, 120, 0.28)) drop-shadow(0 3px 8px rgba(180, 40, 90, 0.16));
-  }
-  50% {
-    /* Lấp lánh tăng sáng ~40% kèm vầng sáng kim tuyến nhẹ */
-    filter: brightness(1.38) contrast(1.1) drop-shadow(0 0 14px rgba(255, 255, 255, 0.55)) drop-shadow(0 14px 30px rgba(255, 150, 190, 0.45));
-  }
-  65% {
-    filter: brightness(1.12) drop-shadow(0 14px 28px rgba(224, 70, 120, 0.3));
-  }
-}
-
-/* Vệt sáng ánh kim lấp lánh 40% quét nhẹ qua nơ */
-.bow-shimmer {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  border-radius: 40%;
-  background: linear-gradient(
-    115deg,
-    transparent 20%,
-    rgba(255, 255, 255, 0.35) 45%,
-    rgba(255, 250, 252, 0.6) 50%,
-    rgba(255, 255, 255, 0.35) 55%,
-    transparent 80%
-  );
-  mix-blend-mode: overlay;
-  animation: bowShimmerSweep 3.2s ease-in-out infinite;
-}
-@keyframes bowShimmerSweep {
-  0%, 30% {
-    transform: translateX(-120%) rotate(25deg);
-    opacity: 0;
-  }
-  48% {
-    opacity: 0.4;
-  }
-  65%, 100% {
-    transform: translateX(120%) rotate(25deg);
-    opacity: 0;
-  }
-}
-
 /* Phần đầu thiệp: khoảng đệm an toàn để nơ to không che chữ */
 .rsvp-header {
-  padding-right: clamp(110px, 18vw, 165px);
+  padding-right: clamp(135px, 21vw, 200px);
 }
 @media (max-width: 600px) {
   .rsvp-header {
-    padding-right: clamp(90px, 24vw, 125px);
+    padding-right: clamp(95px, 27vw, 140px);
   }
 }
 
