@@ -137,6 +137,20 @@ a { color: var(--volt); }
   border-radius: 6px; pointer-events: none; z-index: 1;
   box-shadow: inset 0 0 0 4px rgba(212, 175, 55, .1);
 }
+/* Mũ cử nhân điệu đà góc phải trang trong bìa bằng */
+.inside-cap {
+  position: absolute;
+  top: 5.5%;
+  right: 5.5%;
+  width: clamp(38px, calc(var(--u) * 8.5), 58px);
+  height: auto;
+  pointer-events: none;
+  z-index: 3;
+  opacity: calc((var(--open) - .35) * 2.2);
+  transform: translateY(calc((1 - var(--open)) * 14px)) rotate(10deg);
+  filter: drop-shadow(0 4px 10px rgba(162, 39, 88, 0.2));
+  transition: transform 0.4s ease;
+}
 .inside > * {
   opacity: calc((var(--open) - .35) * 2.2);
   transform: translateY(calc((1 - var(--open)) * 14px));
@@ -448,8 +462,34 @@ a { color: var(--volt); }
 }
 .paper b, .paper strong { font-weight: 700; color: var(--volt); }
 .paper p { margin: 0; text-wrap: pretty; }
-/* Ngày tháng: font Playfair Display serif nghiêng như câu trích dẫn */
-.l-place { text-align: right; font-size: 1.05em; font-family: var(--serif); font-style: italic; font-weight: 500; color: var(--slate); letter-spacing: 0; margin-bottom: 0.4em !important; }
+/* Mũ cử nhân điệu đà trang trí góc phải của thiệp thư */
+.paper-cap {
+  position: absolute;
+  top: -24px;
+  right: 18px;
+  width: clamp(74px, 9vw, 92px);
+  height: clamp(74px, 9vw, 92px);
+  pointer-events: none;
+  z-index: 5;
+  filter: drop-shadow(0 8px 18px rgba(162, 39, 88, 0.22)) drop-shadow(0 2px 4px rgba(45, 10, 30, 0.15));
+  transform: rotate(10deg);
+  transition: transform 0.4s cubic-bezier(.2, .75, .15, 1);
+}
+.paper:hover .paper-cap {
+  transform: rotate(15deg) scale(1.05);
+}
+/* Ngày tháng: font Playfair Display serif nghiêng, lùi vào để mũ không che khuất */
+.l-place {
+  text-align: right;
+  font-size: 1.05em;
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 500;
+  color: var(--slate);
+  letter-spacing: 0;
+  margin-bottom: 0.4em !important;
+  padding-right: clamp(48px, 7vw, 84px);
+}
 /* Lời chào: khoảng cách vừa vặn với đoạn sau */
 .l-greet { font-style: normal; font-weight: 600; font-size: 1em; color: var(--volt); margin-bottom: 0.55em !important; }
 .l-greet .who { color: var(--volt); }
