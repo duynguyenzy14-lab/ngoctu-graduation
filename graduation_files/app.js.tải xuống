@@ -450,12 +450,8 @@ ${introMarkup}
         <div class="wrap board">
           <article class="paper rsvp-paper" id="rsvp-paper">
             <div class="rsvp-bow" aria-hidden="true">
-              <img src="./graduation_files/no-2.png" alt="Nơ trang trí" class="bow-img" decoding="async">
-              <span class="bow-star bstar-1">✦</span>
-              <span class="bow-star bstar-2">✦</span>
-              <span class="bow-star bstar-3">✦</span>
-              <span class="bow-star bstar-4">✦</span>
-              <span class="bow-star bstar-5">✦</span>
+              <img src="./graduation_files/no-2fixed.webp" alt="Nơ trang trí" class="bow-img" decoding="async">
+              <span class="bow-shimmer"></span>
             </div>
             <div class="rsvp-header">
               <div class="rsvp-badge">

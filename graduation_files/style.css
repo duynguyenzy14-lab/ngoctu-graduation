@@ -755,37 +755,39 @@ a { color: var(--volt); }
   overflow: visible;
 }
 
-/* Nơ NO 2 to, che phủ 1 góc phải trên cùng của thiệp */
+/* Nơ NO 2fixed to, gắn ôm trọn góc bo tròn bên phải trên cùng của thiệp */
 .rsvp-bow {
   position: absolute;
-  top: -26px;
-  right: -24px;
-  width: clamp(140px, 17vw, 185px);
+  top: -24px;
+  right: -22px;
+  width: clamp(145px, 17vw, 190px);
   height: auto;
-  aspect-ratio: 385 / 314;
   pointer-events: none;
   z-index: 5;
-  filter: drop-shadow(0 14px 28px rgba(224, 70, 120, 0.32)) drop-shadow(0 4px 10px rgba(180, 40, 90, 0.2));
   transform-origin: 75% 25%;
   animation: bowFloat 3.8s ease-in-out infinite;
   transition: transform 0.4s cubic-bezier(.2, .75, .15, 1);
 }
 .rsvp-paper:hover .rsvp-bow {
-  transform: rotate(6deg) scale(1.04);
+  transform: rotate(5deg) scale(1.04);
 }
 @media (max-width: 600px) {
   .rsvp-bow {
     top: -18px;
     right: -16px;
-    width: clamp(110px, 28vw, 140px);
+    width: clamp(115px, 28vw, 145px);
   }
 }
 .bow-img {
   width: 100%;
-  height: 100%;
+  height: auto;
   object-fit: contain;
   display: block;
+  /* Hiệu ứng chuyển động lấp lánh 40% của nơ */
+  animation: bowSparkle40 3.2s ease-in-out infinite;
 }
+
+/* Hiệu ứng chuyển động bồng bềnh êm ái */
 @keyframes bowFloat {
   0%, 100% {
     transform: rotate(-2.5deg) translateY(0);
@@ -795,22 +797,53 @@ a { color: var(--volt); }
   }
 }
 
-/* Các ngôi sao kim tuyến blink blink lấp lánh quanh nơ */
-.bow-star {
-  position: absolute;
-  font-size: 15px;
-  line-height: 1;
-  pointer-events: none;
-  user-select: none;
-  color: #FFD54F;
-  text-shadow: 0 0 6px #FFF59D, 0 0 12px #FFD54F;
-  animation: starTwinkle 2s ease-in-out infinite;
+/* Hiệu ứng lấp lánh 40% của nơ: độ sáng & ánh kim tỏa nhẹ tinh tế */
+@keyframes bowSparkle40 {
+  0%, 100% {
+    filter: brightness(1) drop-shadow(0 14px 28px rgba(224, 70, 120, 0.28)) drop-shadow(0 3px 8px rgba(180, 40, 90, 0.16));
+  }
+  35% {
+    filter: brightness(1) drop-shadow(0 14px 28px rgba(224, 70, 120, 0.28)) drop-shadow(0 3px 8px rgba(180, 40, 90, 0.16));
+  }
+  50% {
+    /* Lấp lánh tăng sáng ~40% kèm vầng sáng kim tuyến nhẹ */
+    filter: brightness(1.38) contrast(1.1) drop-shadow(0 0 14px rgba(255, 255, 255, 0.55)) drop-shadow(0 14px 30px rgba(255, 150, 190, 0.45));
+  }
+  65% {
+    filter: brightness(1.12) drop-shadow(0 14px 28px rgba(224, 70, 120, 0.3));
+  }
 }
-.bstar-1 { top: 6%; left: -6%; font-size: 20px; color: #FFE082; animation-delay: 0s; }
-.bstar-2 { top: -10%; left: 38%; font-size: 15px; color: #FF80AB; animation-delay: 0.5s; }
-.bstar-3 { top: 26%; right: -8%; font-size: 18px; color: #FFF176; animation-delay: 1.1s; }
-.bstar-4 { bottom: 12%; left: 8%; font-size: 16px; color: #FF4081; animation-delay: 0.3s; }
-.bstar-5 { bottom: -6%; right: 24%; font-size: 14px; color: #FFD54F; animation-delay: 0.8s; }
+
+/* Vệt sáng ánh kim lấp lánh 40% quét nhẹ qua nơ */
+.bow-shimmer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: 40%;
+  background: linear-gradient(
+    115deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.35) 45%,
+    rgba(255, 250, 252, 0.6) 50%,
+    rgba(255, 255, 255, 0.35) 55%,
+    transparent 80%
+  );
+  mix-blend-mode: overlay;
+  animation: bowShimmerSweep 3.2s ease-in-out infinite;
+}
+@keyframes bowShimmerSweep {
+  0%, 30% {
+    transform: translateX(-120%) rotate(25deg);
+    opacity: 0;
+  }
+  48% {
+    opacity: 0.4;
+  }
+  65%, 100% {
+    transform: translateX(120%) rotate(25deg);
+    opacity: 0;
+  }
+}
 
 /* Phần đầu thiệp: khoảng đệm an toàn để nơ to không che chữ */
 .rsvp-header {
