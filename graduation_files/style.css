@@ -576,7 +576,14 @@ a { color: var(--volt); }
 .invite { background: var(--paper); padding-top: 4vh; padding-bottom: 2.5vh; border-top: 1px solid var(--mist); }
 .invite-grid { display: grid; gap: 64px; }
 .invite-left { display: grid; gap: 26px; align-content: start; min-width: 0; container-type: inline-size; }
-.invite h2 { font: 700 clamp(44px, 6.5vw, 88px)/1.05 var(--serif); font-weight: 700; letter-spacing: -.02em; margin: 0; text-wrap: balance; }
+.invite h2 {
+  font: 700 clamp(44px, 6.5vw, 88px)/1.05 var(--serif);
+  font-weight: 700;
+  letter-spacing: -.02em;
+  margin: 0;
+  text-wrap: balance;
+  color: var(--volt); /* Chữ 'Ngày tốt nghiệp,' đổi thành tone hồng */
+}
 .invite h2 span { color: var(--volt); }
 .invite .lead { max-width: 40ch; font-size: 19px; color: var(--slate); display: grid; gap: 10px; }
 .invite .lead p { margin: 0; }

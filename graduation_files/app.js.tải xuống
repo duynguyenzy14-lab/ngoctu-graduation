@@ -1,5 +1,24 @@
 (() => {
   "use strict";
+  // Xoá nhanh dữ liệu test: chỉ cần mở trang với ?reset (ví dụ: yoursite.com/?reset)
+  try {
+    const params = new URLSearchParams(location.search);
+    if (params.has("reset") || params.has("clear")) {
+      localStorage.removeItem("ngoctu_guestbook_wishes");
+      localStorage.removeItem("gb:mine");
+      localStorage.removeItem("gb:ids");
+      Object.keys(localStorage).forEach((k) => {
+        if (k.startsWith("rsvp:") || k.startsWith("gb:")) localStorage.removeItem(k);
+      });
+      sessionStorage.clear();
+      params.delete("reset");
+      params.delete("clear");
+      const cleanUrl = location.pathname + (params.toString() ? "?" + params.toString() : "");
+      location.replace(cleanUrl);
+      return;
+    }
+  } catch (e) {}
+
   const S = window.SITE;
   const app = document.getElementById("app");
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
