@@ -152,9 +152,10 @@
   "publicLabel": "Cho phép hiển thị lời nhắn công khai trên mục Lời yêu thương",
   "confirmText": "Gửi xong là không sửa được nữa nhaaa"
  },
+ "googleSheetUrl": "",
  "guestbook": {
   "title": "Lời yêu thương tại đây nè",
-  "empty": "Chưa có lời chúc nào. Hãy gửi lời chúc đầu tiên đến Ngọc Tú ở ô bên trái nha! ✨",
+  "empty": "",
   "demo": []
  },
  "photos": {
@@ -354,7 +355,7 @@
     "confirmText": "Sau khi gửi sẽ không chỉnh sửa được nữa."
    },
    "guestbook": {
-    "empty": "Chưa có lời chúc nào. Hãy là người đầu tiên nhé."
+    "empty": ""
    },
    "schedule": [
     {
@@ -393,7 +394,7 @@
     "confirmText": "Lời nhắn sau khi gửi sẽ không thể chỉnh sửa được ạ."
    },
    "guestbook": {
-    "empty": "Chưa có lời nhắn nào ở đây."
+    "empty": ""
    },
    "schedule": [
     {
@@ -429,7 +430,7 @@
     "confirmText": "Gửi xong là không sửa được nữa đâu nha."
    },
    "guestbook": {
-    "empty": "Chưa có lời chúc nào ở đây."
+    "empty": ""
    },
    "schedule": [
     {
@@ -465,7 +466,7 @@
     "confirmText": "Gửi xong là không sửa được nữa đâu nha."
    },
    "guestbook": {
-    "empty": "Chưa có lời chúc nào ở đây."
+    "empty": ""
    },
    "schedule": [
     {

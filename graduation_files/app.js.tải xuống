@@ -1,9 +1,10 @@
 (() => {
   "use strict";
-  // Xoá nhanh dữ liệu test: chỉ cần mở trang với ?reset (ví dụ: yoursite.com/?reset)
+  // Reset dữ liệu: chỉ xoá khi chủ động mở link có ?reset (không tự động xoá khi F5 thông thường)
   try {
     const params = new URLSearchParams(location.search);
     if (params.has("reset") || params.has("clear")) {
+      localStorage.removeItem("ngoctu_wishes_prod");
       localStorage.removeItem("ngoctu_guestbook_wishes");
       localStorage.removeItem("gb:mine");
       localStorage.removeItem("gb:ids");
@@ -1550,18 +1551,12 @@ ${introMarkup}
       bar = document.getElementById("gb-bar");
     const HOLD = 4200; // thời gian dừng đọc sau khi gõ xong, rồi tự sang lời chúc kế
     
-    // Tải danh sách lời chúc thực tế từ localStorage (bỏ toàn bộ lời chúc mẫu)
+    // Tải danh sách lời chúc thực tế từ localStorage (bắt đầu hoàn toàn mới, không lấy dữ liệu test cũ)
     let items = [];
     try {
-      items = JSON.parse(localStorage.getItem("ngoctu_guestbook_wishes") || "[]");
+      items = JSON.parse(localStorage.getItem("ngoctu_wishes_prod") || "[]");
     } catch (e) {
       items = [];
-    }
-    const legacyMine = store.get("gb:mine") || [];
-    for (const m of legacyMine) {
-      if (m && m.text && !items.some((i) => i.text === m.text && i.name === m.name)) {
-        items.push(m);
-      }
     }
 
     let idx = 0,
@@ -1578,12 +1573,11 @@ ${introMarkup}
           Math.ceil(9000 / (src.length + 2)),
         );
       }
-      // dải chữ chạy liên tục dưới tiêu đề "Sảnh lời chúc" (2 bản nối nhau để chạy vòng không đứt)
+      // dải chữ chạy liên tục dưới tiêu đề "Lời yêu thương tại đây nè"
       const tt = document.getElementById("gb-tt");
       if (!tt) return;
       if (!items.length) {
-        tt.innerHTML = "<span>✨ Chưa có lời chúc nào. Hãy gửi lời chúc đầu tiên đến Ngọc Tú ở ô bên trái nha! ✨</span>";
-        tt.style.setProperty("--dur", "25s");
+        tt.innerHTML = "";
         return;
       }
       const short = (t) => (t.length > 70 ? t.slice(0, 68).trimEnd() + "…" : t);
@@ -1603,7 +1597,7 @@ ${introMarkup}
       clearTimeout(next);
       runBar(false);
       if (!items.length) {
-        textEl.textContent = S.guestbook.empty || "Chưa có lời chúc nào. Hãy gửi lời chúc đầu tiên đến Ngọc Tú ở ô bên trái nha! ✨";
+        textEl.textContent = "";
         nameEl.textContent = "";
         metaEl.textContent = "";
         avEl.textContent = "🌸";
@@ -1668,18 +1662,36 @@ ${introMarkup}
       { threshold: 0.2 },
     );
 
+    // Đồng bộ lời chúc từ Google Sheet (nếu có cấu hình googleSheetUrl)
+    const sheetApi = S.googleSheetUrl || "";
+    if (sheetApi) {
+      fetch(sheetApi)
+        .then((r) => r.json())
+        .then((rows) => {
+          if (Array.isArray(rows) && rows.length) {
+            items = rows
+              .map((r, i) => ({
+                id: "sheet-" + i,
+                name: r.name || r["Tên"] || "Bạn thân",
+                text: r.message || r["Lời nhắn"] || r.text || "",
+                mine: false,
+              }))
+              .filter((r) => !!r.text);
+            texture();
+            show(0);
+          }
+        })
+        .catch(() => {});
+    }
+
     return {
       add(item) {
         if (!item || !item.text) return;
         if (item.id && items.some((i) => i.id === item.id)) return;
         items.unshift(item);
         try {
-          localStorage.setItem("ngoctu_guestbook_wishes", JSON.stringify(items));
+          localStorage.setItem("ngoctu_wishes_prod", JSON.stringify(items));
         } catch (e) {}
-        store.set(
-          "gb:mine",
-          items.filter((i) => i.mine),
-        );
         texture();
         show(0);
       },
@@ -1730,7 +1742,7 @@ ${introMarkup}
           const s = store.get(key);
           if (s) showTicket(s, true);
         });
-    } else {
+    } else if (locked) {
       const s = store.get(key);
       if (s) showTicket(s, true);
     }
@@ -1788,6 +1800,23 @@ ${introMarkup}
           },
           body: JSON.stringify(emailPayload)
         }).catch(() => {});
+
+        // Đồng bộ lên Google Sheet (nếu có cấu hình googleSheetUrl)
+        const sheetApi = S.googleSheetUrl || "";
+        if (sheetApi && pending.message) {
+          fetch(sheetApi, {
+            method: "POST",
+            mode: "no-cors",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              name: pending.name,
+              attending: pending.attending === "yes" ? "Sẽ đến 💖" : "Bận rồi",
+              message: pending.message,
+              public: pending.public ? "YES" : "NO",
+              time: new Date().toLocaleString("vi-VN", { timeZone: "Asia/Ho_Chi_Minh" }),
+            }),
+          }).catch(() => {});
+        }
 
         store.set(key, record);
         if (record.public && record.message) {
