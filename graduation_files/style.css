@@ -755,29 +755,29 @@ a { color: var(--volt); }
   overflow: visible;
 }
 
-/* Nơ NO 2fixed đính xéo ngay đỉnh góc bo tròn bên phải trên cùng của thiệp */
+/* Nơ NO 2fixed nằm ngay trên đỉnh góc tròn và bao phủ che kín góc tròn của thiệp */
 .rsvp-bow {
   position: absolute;
-  top: -18px;
-  right: -16px;
-  width: clamp(180px, 21vw, 235px);
+  top: -58px;
+  right: -60px;
+  width: clamp(190px, 22vw, 240px);
   height: auto;
   aspect-ratio: 385 / 314;
   pointer-events: none;
   z-index: 5;
-  transform-origin: 68% 30%;
-  transform: rotate(22deg);
+  transform-origin: 50% 50%;
+  transform: rotate(24deg);
   animation: bowGentleFloat 4.8s ease-in-out infinite, bowShadowCycle 4.8s ease-in-out infinite;
   transition: transform 0.4s cubic-bezier(.2, .75, .15, 1);
 }
 .rsvp-paper:hover .rsvp-bow {
-  transform: rotate(23.5deg) translateY(-2px) scale(1.015);
+  transform: rotate(25.5deg) translateY(-2px) scale(1.02);
 }
 @media (max-width: 600px) {
   .rsvp-bow {
-    top: -14px;
-    right: -12px;
-    width: clamp(130px, 32vw, 170px);
+    top: -44px;
+    right: -46px;
+    width: clamp(140px, 33vw, 175px);
   }
 }
 
@@ -841,23 +841,23 @@ a { color: var(--volt); }
   }
 }
 
-/* Hiệu ứng chuyển động nhẹ nhàng ~20% (đung đưa êm ái chỉ ~1.2° và 1.5px) */
+/* Hiệu ứng chuyển động nhẹ nhàng ~20% (đung đưa êm ái chỉ ~1.4° và 1.5px quanh nút nơ đính trên góc tròn) */
 @keyframes bowGentleFloat {
   0%, 100% {
-    transform: rotate(21.4deg) translateY(0);
+    transform: rotate(23.2deg) translateY(0);
   }
   50% {
-    transform: rotate(22.8deg) translateY(-1.5px);
+    transform: rotate(24.6deg) translateY(-1.5px);
   }
 }
 
-/* Phần đầu thiệp: khoảng đệm an toàn để nơ đính xéo không che chữ */
+/* Phần đầu thiệp: khoảng đệm an toàn để nơ che góc không đè chữ */
 .rsvp-header {
-  padding-right: clamp(130px, 20vw, 195px);
+  padding-right: clamp(120px, 18vw, 175px);
 }
 @media (max-width: 600px) {
   .rsvp-header {
-    padding-right: clamp(90px, 26vw, 135px);
+    padding-right: clamp(85px, 24vw, 125px);
   }
 }
 
