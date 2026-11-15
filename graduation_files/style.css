@@ -723,16 +723,16 @@ a { color: var(--volt); }
 .board {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 36px;
+  gap: 32px;
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
 }
 @media (min-width: 980px) {
   .board {
-    grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
-    align-items: start;
-    gap: clamp(32px, 3.2vw, 48px);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+    gap: clamp(28px, 3vw, 44px);
   }
 }
 .board > * {
@@ -740,19 +740,23 @@ a { color: var(--volt); }
   min-width: 0;
 }
 
-/* Thiệp phản hồi bên trái: kích thước bo tròn điệu đà, ôm trọn cột trái */
+/* Thiệp phản hồi bên trái: cân bằng hoàn hảo, khoảng cách gọn gàng */
 .rsvp-paper {
   position: relative;
   margin: 0;
   width: 100%;
   max-width: 100%;
+  box-sizing: border-box;
   font-family: var(--font);
-  padding: clamp(32px, 3.8vw, 52px) clamp(20px, 3vw, 42px);
+  padding: clamp(22px, 2.6vw, 34px) clamp(20px, 2.4vw, 32px);
   background-color: #FFFDFC;
   border: 1.5px solid #F8D3E2;
   border-radius: clamp(20px, 2.8vw, 28px) !important;
   box-shadow: 0 30px 60px -30px rgba(120, 20, 60, .22), inset 0 0 0 1px rgba(255, 182, 193, 0.4) !important;
   overflow: visible;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 /* Nơ NO 2fixed: nút thắt nằm ngay góc bo tròn, cánh nơ trồi ra khỏi thiệp */
@@ -1065,14 +1069,67 @@ html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-stopped { overflow: clip; }
 .lenis.lenis-smooth iframe { pointer-events: none; }
 
-/* Sảnh lời chúc: tờ giấy trắng nổi trên nền tối (cột "Hẹn gặp…" giữ nền tối) */
-.gb { background: #FFFFFF; color: var(--ink); border-radius: 22px; padding: clamp(22px, 3.4vw, 40px); box-shadow: 0 24px 60px -25px rgba(180, 40, 90, .16); border: 1px solid #FCE4EC; }
-.gb .gb-card { background: #FFF5F8; border-color: #F8CADB; }
+/* Sảnh lời chúc: cân bằng hoàn hảo và đồng bộ với thiệp phản hồi bên trái */
+.gb {
+  background-color: #FFFDFC;
+  color: var(--ink);
+  border-radius: clamp(20px, 2.8vw, 28px) !important;
+  padding: clamp(22px, 2.6vw, 34px) clamp(20px, 2.4vw, 32px);
+  box-shadow: 0 30px 60px -30px rgba(120, 20, 60, .22), inset 0 0 0 1px rgba(255, 182, 193, 0.4) !important;
+  border: 1.5px solid #F8D3E2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+}
+.gb h3 {
+  margin: 0 0 10px 0;
+  font-family: var(--font);
+  font-weight: 700;
+  font-size: clamp(20px, 2.2vw, 26px);
+  color: var(--volt);
+  letter-spacing: -0.015em;
+}
+.gb .gb-ticker {
+  margin: 0 0 12px;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+.gb .gb-card {
+  position: relative;
+  overflow: hidden;
+  border: 1.5px dashed #F8CADB;
+  border-radius: 18px;
+  padding: clamp(18px, 2.4vw, 28px);
+  flex: 1;
+  min-height: 200px;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  gap: 18px;
+  background: #FFF5F8;
+}
 .gb .gb-tt { color: var(--slate); }
 .gb .gb-tt b { color: var(--volt); }
-.gb .gb-quote { color: var(--ink); }
+.gb .gb-quote {
+  margin: 0;
+  font: 600 clamp(18px, 2.2vw, 26px)/1.4 var(--serif);
+  letter-spacing: .01em;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
 .gb .gb-who small { color: var(--slate); }
 .gb .gb-bar { background: var(--volt); opacity: .65; }
+.gb .gb-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 12px;
+  font: 600 13.5px var(--font);
+}
 .gb .gb-nav button { color: var(--slate); }
 .gb .gb-nav button:hover { color: var(--volt); }
 .gb .gb-nav span { color: var(--slate); }
