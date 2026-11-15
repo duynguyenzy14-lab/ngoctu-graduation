@@ -140,15 +140,15 @@ a { color: var(--volt); }
 /* Mũ cử nhân trang trí góc phải trang trong bìa bằng */
 .inside-cap {
   position: absolute;
-  top: 4px;
-  right: 6px;
-  width: clamp(65px, calc(var(--u) * 13), 95px);
-  height: clamp(65px, calc(var(--u) * 13), 95px);
+  top: 2px;
+  right: 4px;
+  width: clamp(75px, calc(var(--u) * 14), 105px);
+  height: clamp(75px, calc(var(--u) * 14), 105px);
   pointer-events: none;
   z-index: 4;
   opacity: calc((var(--open) - .35) * 2.2);
-  transform: translateY(calc((1 - var(--open)) * 14px)) rotate(2deg);
-  filter: drop-shadow(0 6px 14px rgba(74, 18, 44, 0.22));
+  transform: translateY(calc((1 - var(--open)) * 14px)) rotate(4deg);
+  filter: drop-shadow(0 8px 18px rgba(74, 18, 44, 0.25));
   transition: transform 0.4s ease;
 }
 .inside > * {
@@ -462,28 +462,29 @@ a { color: var(--volt); }
 }
 .paper b, .paper strong { font-weight: 700; color: var(--volt); }
 .paper p { margin: 0; text-wrap: pretty; }
-/* Mũ cử nhân trang trí trọn vẹn ở góc phải của thiệp thư */
+/* Mũ cử nhân trang trí trọn vẹn thành góc của thiệp thư, bao phủ che góc tròn */
 .paper-cap {
   position: absolute;
-  top: 4px;
-  right: 8px;
-  width: clamp(125px, 16vw, 160px);
-  height: clamp(125px, 16vw, 160px);
+  top: -46px;
+  right: -40px;
+  width: clamp(165px, 20vw, 195px);
+  height: clamp(165px, 20vw, 195px);
   pointer-events: none;
   z-index: 5;
-  filter: drop-shadow(0 10px 22px rgba(74, 18, 44, 0.22)) drop-shadow(0 2px 5px rgba(45, 10, 30, 0.12));
-  transform: rotate(2deg);
+  filter: drop-shadow(0 16px 32px rgba(74, 18, 44, 0.32)) drop-shadow(0 4px 10px rgba(45, 10, 30, 0.22));
+  transform: rotate(4deg);
+  transform-origin: 75% 35%;
   transition: transform 0.4s cubic-bezier(.2, .75, .15, 1);
 }
 .paper:hover .paper-cap {
-  transform: rotate(5deg) scale(1.03);
+  transform: rotate(7deg) scale(1.03);
 }
 @media (max-width: 600px) {
   .paper-cap {
-    top: 2px;
-    right: 4px;
-    width: clamp(96px, 26vw, 120px);
-    height: clamp(96px, 26vw, 120px);
+    top: -35px;
+    right: -31px;
+    width: clamp(130px, 34vw, 148px);
+    height: clamp(130px, 34vw, 148px);
   }
 }
 /* Ngày tháng: font Playfair Display serif nghiêng, lùi vào để mũ trọn vẹn ở góc mà không che khuất */
@@ -496,13 +497,13 @@ a { color: var(--volt); }
   color: var(--slate);
   letter-spacing: 0;
   margin-bottom: 0.5em !important;
-  padding-right: clamp(125px, 16vw, 160px);
+  padding-right: clamp(145px, 19vw, 180px);
   position: relative;
   z-index: 2;
 }
 @media (max-width: 600px) {
   .l-place {
-    padding-right: 95px;
+    padding-right: clamp(105px, 28vw, 130px);
   }
 }
 /* Lời chào: khoảng cách vừa vặn với đoạn sau */
