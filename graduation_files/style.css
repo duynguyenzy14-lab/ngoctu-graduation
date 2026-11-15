@@ -797,7 +797,7 @@ a { color: var(--volt); }
   display: block;
 }
 
-/* Lớp phủ chuyển màu tone hồng dâu nhạt dần 100% => 70% => 40% (không chuyển màu trắng) */
+/* Lớp phủ chuyển màu tone hồng dâu pastel 50% => 30% dịu ngọt */
 .bow-tint {
   position: absolute;
   inset: 0;
@@ -814,32 +814,23 @@ a { color: var(--volt); }
   animation: bowBerryCycle 4.8s ease-in-out infinite;
 }
 
-/* Chuyển màu hồng dâu nhạt dần: 100% (#E8275E) => 70% (#EF688E) => 40% (#F6A9BF), không chuyển màu trắng */
+/* Chuyển màu nhịp nhàng giữa tone hồng dâu pastel 50% (#F392AE) và hồng dâu pastel 30% (#F8BFD0) */
 @keyframes bowBerryCycle {
   0%, 100% {
-    background-color: #E8275E; /* 100% tone hồng dâu */
-  }
-  32% {
-    background-color: #EF688E; /* 70% tone hồng dâu */
+    background-color: #F392AE; /* Tone hồng dâu pastel 50% */
   }
   50% {
-    background-color: #F6A9BF; /* 40% tone hồng dâu pastel dịu ngọt, hoàn toàn giữ sắc hồng */
-  }
-  68% {
-    background-color: #EF688E; /* 70% tone hồng dâu */
+    background-color: #F8BFD0; /* Tone hồng dâu pastel 30% */
   }
 }
 
-/* Hào quang và bóng đổ chuyển đổi đồng điệu theo sắc hồng dâu */
+/* Hào quang và bóng đổ chuyển đổi đồng điệu theo sắc hồng dâu pastel 50% và 30% */
 @keyframes bowShadowCycle {
   0%, 100% {
-    filter: drop-shadow(0 14px 28px rgba(232, 39, 94, 0.4)) drop-shadow(0 4px 8px rgba(180, 40, 90, 0.22));
-  }
-  32%, 68% {
-    filter: drop-shadow(0 14px 28px rgba(239, 104, 142, 0.35)) drop-shadow(0 4px 8px rgba(200, 50, 110, 0.2));
+    filter: drop-shadow(0 12px 24px rgba(243, 146, 174, 0.35)) drop-shadow(0 3px 6px rgba(210, 90, 130, 0.18));
   }
   50% {
-    filter: drop-shadow(0 12px 24px rgba(246, 169, 191, 0.32)) drop-shadow(0 4px 8px rgba(220, 80, 130, 0.16));
+    filter: drop-shadow(0 10px 20px rgba(248, 191, 208, 0.28)) drop-shadow(0 3px 6px rgba(220, 110, 150, 0.14));
   }
 }
 

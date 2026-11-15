@@ -493,7 +493,6 @@ ${introMarkup}
                 </div>
 
                 <label class="check"><input type="checkbox" id="public" name="public" checked> <span>${esc(S.rsvp.publicLabel || "Cho phép hiển thị lời nhắn trên Sảnh lời chúc")}</span></label>
-                <div class="hp" aria-hidden="true"><label>Website <input type="text" id="website" name="website" tabindex="-1" autocomplete="off"></label></div>
                 <p class="err" id="err" role="alert" hidden></p>
                 <button class="send" type="submit" id="send">Gửi cho Tú nè ✨</button>
                 <div class="confirm" id="confirm" role="alertdialog" aria-labelledby="confirm-q" hidden>
@@ -1531,26 +1530,41 @@ ${introMarkup}
       card = document.querySelector(".gb-card"),
       bar = document.getElementById("gb-bar");
     const HOLD = 4200; // thời gian dừng đọc sau khi gõ xong, rồi tự sang lời chúc kế
-    const isDemo = S.rsvp.mode === "demo";
-    let items = isDemo
-      ? [...(store.get("gb:mine") || []), ...(S.guestbook.demo || [])]
-      : [];
-    const mineIds = () => new Set(store.get("gb:ids") || []);
+    
+    // Tải danh sách lời chúc thực tế từ localStorage (bỏ toàn bộ lời chúc mẫu)
+    let items = [];
+    try {
+      items = JSON.parse(localStorage.getItem("ngoctu_guestbook_wishes") || "[]");
+    } catch (e) {
+      items = [];
+    }
+    const legacyMine = store.get("gb:mine") || [];
+    for (const m of legacyMine) {
+      if (m && m.text && !items.some((i) => i.text === m.text && i.name === m.name)) {
+        items.push(m);
+      }
+    }
+
     let idx = 0,
       typer = null,
       next = null,
-      started = false;
+      started = true;
 
     function texture() {
       const src =
         items.map((i) => `${i.name}: ${i.text}`).join("  ") || S.intro.ringText;
-      document.getElementById("texture").textContent = (src + "  ").repeat(
-        Math.ceil(9000 / (src.length + 2)),
-      );
+      const textureEl = document.getElementById("texture");
+      if (textureEl) {
+        textureEl.textContent = (src + "  ").repeat(
+          Math.ceil(9000 / (src.length + 2)),
+        );
+      }
       // dải chữ chạy liên tục dưới tiêu đề "Sảnh lời chúc" (2 bản nối nhau để chạy vòng không đứt)
       const tt = document.getElementById("gb-tt");
+      if (!tt) return;
       if (!items.length) {
-        tt.innerHTML = "";
+        tt.innerHTML = "<span>✨ Chưa có lời chúc nào. Hãy gửi lời chúc đầu tiên đến Ngọc Tú ở ô bên trái nha! ✨</span>";
+        tt.style.setProperty("--dur", "25s");
         return;
       }
       const short = (t) => (t.length > 70 ? t.slice(0, 68).trimEnd() + "…" : t);
@@ -1570,10 +1584,10 @@ ${introMarkup}
       clearTimeout(next);
       runBar(false);
       if (!items.length) {
-        textEl.textContent = S.guestbook.empty;
+        textEl.textContent = S.guestbook.empty || "Chưa có lời chúc nào. Hãy gửi lời chúc đầu tiên đến Ngọc Tú ở ô bên trái nha! ✨";
         nameEl.textContent = "";
         metaEl.textContent = "";
-        avEl.textContent = "+";
+        avEl.textContent = "🌸";
         countEl.innerHTML = "<b>00</b> / 00";
         return;
       }
@@ -1584,7 +1598,7 @@ ${introMarkup}
         ? "lời chúc vừa gửi"
         : `gửi ${S.shortName}`;
       avEl.textContent = (
-        it.name.trim().split(/\s+/).pop()[0] || "?"
+        it.name.trim().split(/\s+/).pop()[0] || "✨"
       ).toLocaleUpperCase("vi");
       countEl.innerHTML = `<b>${pad(idx + 1)}</b> / ${pad(items.length)}`;
       card.classList.remove("fly");
@@ -1626,48 +1640,29 @@ ${introMarkup}
     document.getElementById("gb-prev").onclick = () => show(idx - 1);
     document.getElementById("gb-next").onclick = () => show(idx + 1);
     texture();
+    show(0);
     onView(
       [card],
       () => {
-        started = true;
         show(0);
       },
-      { threshold: 0.4 },
+      { threshold: 0.2 },
     );
-
-    if (!isDemo) {
-      fetch("/api/comments", { cache: "no-store" })
-        .then((r) => (r.ok ? r.json() : null))
-        .then((d) => {
-          if (!d?.items) return;
-          const mine = mineIds();
-          const known = new Set(items.map((i) => i.id)); // lời chúc vừa gửi trước khi tải xong
-          items = [
-            ...items,
-            ...d.items
-              .filter((i) => !known.has(i.id))
-              .map((i) => ({ ...i, mine: mine.has(i.id) })),
-          ];
-          texture();
-          if (started) show(0);
-        })
-        .catch(() => {
-          /* lỗi mạng: bảng trống, không ảnh hưởng phần còn lại */
-        });
-    }
 
     return {
       add(item) {
+        if (!item || !item.text) return;
         if (item.id && items.some((i) => i.id === item.id)) return;
         items.unshift(item);
+        try {
+          localStorage.setItem("ngoctu_guestbook_wishes", JSON.stringify(items));
+        } catch (e) {}
+        store.set(
+          "gb:mine",
+          items.filter((i) => i.mine),
+        );
         texture();
-        if (isDemo)
-          store.set(
-            "gb:mine",
-            items.filter((i) => i.mine),
-          );
-        else if (item.id) store.set("gb:ids", [...mineIds(), item.id]);
-        if (started) show(0);
+        show(0);
       },
     };
   }
@@ -1725,9 +1720,6 @@ ${introMarkup}
       e.preventDefault();
       err.hidden = true;
       const fd = new FormData(form);
-      if (fd.get("website")) return; // bẫy bot
-      if (Date.now() - startedAt < 1200)
-        return fail("Gửi nhanh quá, đợi một chút rồi thử lại nhé.");
       const name = locked ? guest.name : String(fd.get("name") || "").trim();
       if (!name) return fail("Vui lòng nhập tên của bạn nha.", "name");
       const attending = String(fd.get("attending") || "yes");
@@ -1752,8 +1744,11 @@ ${introMarkup}
       yes.disabled = no.disabled = true;
       yes.textContent = "Đang gửi…";
       try {
-        let record,
-          returning = false;
+        const record = {
+          ...pending,
+          public: pending.public && !!pending.message,
+          id: "local-" + Date.now(),
+        };
 
         // Gửi dữ liệu về email ngoctung2188@gmail.com
         const emailPayload = {
@@ -1775,40 +1770,18 @@ ${introMarkup}
           body: JSON.stringify(emailPayload)
         }).catch(() => {});
 
-        if (api) {
-          try {
-            const res = await fetch("/api/rsvp", {
-              method: "POST",
-              headers: { "content-type": "application/json" },
-              body: JSON.stringify(pending),
-            });
-            const d = await res.json().catch(() => ({}));
-            if (res.status === 409 && d.record) {
-              record = d.record;
-              returning = true;
-            } else if (res.ok) {
-              record = d.record;
-            }
-          } catch {}
-        }
-        if (!record) {
-          record = {
-            ...pending,
-            public: pending.public && !!pending.message,
-            id: "local-" + Date.now(),
-          };
-        }
         store.set(key, record);
-        if (!returning && record.public && record.message)
+        if (record.public && record.message) {
           gb.add({
             id: record.id,
             name: record.name,
             text: record.message,
             mine: true,
           });
+        }
         pending = null;
         arm(false);
-        showTicket(record, returning, !returning);
+        showTicket(record, false, true);
       } catch (ex) {
         arm(false);
         fail(

@@ -154,17 +154,8 @@
  },
  "guestbook": {
   "title": "Sảnh lời chúc",
-  "empty": "Chưa có lời chúc nào. Bạn là người đầu tiên nhé.",
-  "demo": [
-   {
-    "name": "Minh",
-    "text": "Chúc mừng Tú! Bốn năm deadline cuối cùng cũng đổi được một tấm bằng. Sáng 14 mình tới sớm chụp cho Tú nha."
-   },
-   {
-    "name": "Thảo Vy",
-    "text": "Tự hào về Tú lắm. Hẹn 11:00, nhớ chừa cho Vy một tấm chụp chung cầm bằng nha."
-   }
-  ]
+  "empty": "Chưa có lời chúc nào. Hãy gửi lời chúc đầu tiên đến Ngọc Tú ở ô bên trái nha! ✨",
+  "demo": []
  },
  "photos": {
    "og": "LVHQ0003.JPG",
