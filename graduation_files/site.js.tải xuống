@@ -149,11 +149,11 @@
   "title": "Hẹn gặp {name} hôm đó nhé?",
   "lead": "Vui lòng xác nhận tham gia để mình đón tiếp cho chu đáo nha.",
   "msgPlaceholder": "Nhắn nhủ vài lời được khum?",
-  "publicLabel": "Cho phép hiển thị lời nhắn công khai trên Sảnh lời chúc",
+  "publicLabel": "Cho phép hiển thị lời nhắn công khai trên mục Lời yêu thương",
   "confirmText": "Gửi xong là không sửa được nữa nhaaa"
  },
  "guestbook": {
-  "title": "Sảnh lời chúc",
+  "title": "Lời yêu thương tại đây nè",
   "empty": "Chưa có lời chúc nào. Hãy gửi lời chúc đầu tiên đến Ngọc Tú ở ô bên trái nha! ✨",
   "demo": []
  },

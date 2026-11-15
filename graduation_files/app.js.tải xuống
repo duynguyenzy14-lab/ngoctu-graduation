@@ -519,7 +519,7 @@ ${introMarkup}
     }
 
     document.getElementById("footer").innerHTML =
-      `<span>Cảm ơn vì đã đến</span><span>${esc(S.dateNumeric)}</span>`;
+      `<span>Hẹn gặp người thương</span><span>${esc(S.dateNumeric)}</span>`;
     // thầy cô (khách có "voice") giữ tiêu đề chung, "<tên> ơi" nghe ngang hàng
     if (name && !guest.voice) document.title = `${name} ơi, ${S.shortName} tốt nghiệp rồi`;
     else document.title = "Thân mời người thương";
@@ -1803,9 +1803,10 @@ ${introMarkup}
             <span class="ticket-greet">${esc(leadText)}</span>
             <b class="ticket-name">${esc(d.name)}</b>
           </div>
-          <div class="heart-stamp" aria-hidden="true">
-            <svg viewBox="0 0 24 24" class="heart-icon" fill="currentColor">
-              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          <div class="stamp-circle" aria-hidden="true">
+            <svg viewBox="0 0 24 24" class="cap-icon" fill="currentColor">
+              <path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/>
+              <path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/>
             </svg>
           </div>
           <div class="ticket-cut"></div>
