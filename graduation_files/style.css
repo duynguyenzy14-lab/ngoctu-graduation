@@ -137,18 +137,18 @@ a { color: var(--volt); }
   border-radius: 6px; pointer-events: none; z-index: 1;
   box-shadow: inset 0 0 0 4px rgba(212, 175, 55, .1);
 }
-/* Mũ cử nhân điệu đà góc phải trang trong bìa bằng */
+/* Mũ cử nhân điệu đà bao phủ góc phải trang trong bìa bằng */
 .inside-cap {
   position: absolute;
-  top: 5.5%;
-  right: 5.5%;
-  width: clamp(38px, calc(var(--u) * 8.5), 58px);
-  height: auto;
+  top: -12px;
+  right: -10px;
+  width: clamp(70px, calc(var(--u) * 15), 112px);
+  height: clamp(70px, calc(var(--u) * 15), 112px);
   pointer-events: none;
-  z-index: 3;
+  z-index: 4;
   opacity: calc((var(--open) - .35) * 2.2);
-  transform: translateY(calc((1 - var(--open)) * 14px)) rotate(10deg);
-  filter: drop-shadow(0 4px 10px rgba(162, 39, 88, 0.2));
+  transform: translateY(calc((1 - var(--open)) * 14px)) rotate(12deg);
+  filter: drop-shadow(0 6px 16px rgba(162, 39, 88, 0.28)) drop-shadow(0 2px 4px rgba(45, 10, 30, 0.18));
   transition: transform 0.4s ease;
 }
 .inside > * {
@@ -462,21 +462,29 @@ a { color: var(--volt); }
 }
 .paper b, .paper strong { font-weight: 700; color: var(--volt); }
 .paper p { margin: 0; text-wrap: pretty; }
-/* Mũ cử nhân điệu đà trang trí góc phải của thiệp thư */
+/* Mũ cử nhân điệu đà bao phủ góc phải của thiệp thư */
 .paper-cap {
   position: absolute;
-  top: -24px;
-  right: 18px;
-  width: clamp(74px, 9vw, 92px);
-  height: clamp(74px, 9vw, 92px);
+  top: -38px;
+  right: -16px;
+  width: clamp(120px, 16vw, 172px);
+  height: clamp(120px, 16vw, 172px);
   pointer-events: none;
   z-index: 5;
-  filter: drop-shadow(0 8px 18px rgba(162, 39, 88, 0.22)) drop-shadow(0 2px 4px rgba(45, 10, 30, 0.15));
-  transform: rotate(10deg);
+  filter: drop-shadow(0 14px 28px rgba(162, 39, 88, 0.28)) drop-shadow(0 3px 6px rgba(45, 10, 30, 0.18));
+  transform: rotate(12deg);
   transition: transform 0.4s cubic-bezier(.2, .75, .15, 1);
 }
 .paper:hover .paper-cap {
-  transform: rotate(15deg) scale(1.05);
+  transform: rotate(16deg) scale(1.04);
+}
+@media (max-width: 600px) {
+  .paper-cap {
+    top: -28px;
+    right: -10px;
+    width: clamp(105px, 28vw, 130px);
+    height: clamp(105px, 28vw, 130px);
+  }
 }
 /* Ngày tháng: font Playfair Display serif nghiêng, lùi vào để mũ không che khuất */
 .l-place {
@@ -487,8 +495,15 @@ a { color: var(--volt); }
   font-weight: 500;
   color: var(--slate);
   letter-spacing: 0;
-  margin-bottom: 0.4em !important;
-  padding-right: clamp(48px, 7vw, 84px);
+  margin-bottom: 0.5em !important;
+  padding-right: clamp(75px, 12vw, 135px);
+  position: relative;
+  z-index: 2;
+}
+@media (max-width: 600px) {
+  .l-place {
+    padding-right: 80px;
+  }
 }
 /* Lời chào: khoảng cách vừa vặn với đoạn sau */
 .l-greet { font-style: normal; font-weight: 600; font-size: 1em; color: var(--volt); margin-bottom: 0.55em !important; }
