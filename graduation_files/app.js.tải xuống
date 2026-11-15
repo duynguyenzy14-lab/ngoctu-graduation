@@ -448,29 +448,44 @@ ${introMarkup}
         </div>
 
         <div class="wrap board">
-          <div id="rsvp">
-            <h3>${fill(S.rsvp.title)}</h3>
-            ${S.rsvp.lead ? `<p class="rsvp-lead">${fill(S.rsvp.lead)}</p>` : ""}
-            <form id="form" novalidate>
-              <fieldset class="seg"><legend>Khung giờ</legend>${options}</fieldset>
-              ${
-                name && !guest.group
-                  ? ""
-                  : `<input class="field" type="text" id="name" name="name" placeholder="Họ tên" aria-label="Họ tên" autocomplete="name" maxlength="80">
-              <input class="field" type="email" id="email" name="email" placeholder="Email (không bắt buộc)" aria-label="Email" autocomplete="email" maxlength="120">`
-              }
-              <textarea class="field" id="msg" name="msg" placeholder="${esc(S.rsvp.msgPlaceholder)}" aria-label="Lời nhắn cho ${esc(S.shortName)}" maxlength="280"></textarea>
-              <label class="check"><input type="checkbox" id="public" name="public" checked> <span>${esc(S.rsvp.publicLabel)}</span></label>
-              <div class="hp" aria-hidden="true"><label>Website <input type="text" id="website" name="website" tabindex="-1" autocomplete="off"></label></div>
-              <p class="err" id="err" role="alert" hidden></p>
-              <button class="send" type="submit" id="send">Gửi xác nhận</button>
-              <div class="confirm" id="confirm" role="alertdialog" aria-labelledby="confirm-q" hidden>
-                <p id="confirm-q">${esc(S.rsvp.confirmText || "Gửi xong là không sửa được nữa nha — chắc chưa?")}</p>
-                <div><button class="send" type="button" id="confirm-yes">Chắc rồi, gửi</button><button class="ghost" type="button" id="confirm-no">Xem lại</button></div>
+          <article class="paper rsvp-paper" id="rsvp-paper">
+            <div class="rsvp-bow" aria-hidden="true">
+              <img src="./graduation_files/no-trang-tri.png" alt="Nơ trang trí" class="bow-img" decoding="async">
+              <span class="bow-star bstar-1">✦</span>
+              <span class="bow-star bstar-2">✦</span>
+              <span class="bow-star bstar-3">✦</span>
+              <span class="bow-star bstar-4">✦</span>
+              <span class="bow-star bstar-5">✦</span>
+            </div>
+            <div class="rsvp-header">
+              <div class="rsvp-badge">
+                <span>Your little reply</span>
               </div>
-            </form>
-            <div id="done" hidden></div>
-          </div>
+              <h3 class="rsvp-title">${fill(S.rsvp.title || "Đến chung vui với Tú nha")}</h3>
+              <p class="rsvp-subtitle">${fill(S.rsvp.lead || "Điền một chút thông tin để Ngọc Tú đón tiếp thật chu đáo nha")}</p>
+            </div>
+            <div id="rsvp">
+              <form id="form" novalidate>
+                <fieldset class="seg"><legend>Khung giờ bạn đến chung vui</legend>${options}</fieldset>
+                ${
+                  name && !guest.group
+                    ? ""
+                    : `<input class="field" type="text" id="name" name="name" placeholder="Họ và tên của bạn nè" aria-label="Họ tên" autocomplete="name" maxlength="80">
+                <input class="field" type="email" id="email" name="email" placeholder="Email (không bắt buộc)" aria-label="Email" autocomplete="email" maxlength="120">`
+                }
+                <textarea class="field" id="msg" name="msg" placeholder="Nhắn nhủ vài lời gửi đến Ngọc Tú nha..." aria-label="Lời nhắn cho ${esc(S.shortName)}" maxlength="280"></textarea>
+                <label class="check"><input type="checkbox" id="public" name="public" checked> <span>${esc(S.rsvp.publicLabel || "Cho phép hiển thị lời nhắn trên Sảnh lời chúc")}</span></label>
+                <div class="hp" aria-hidden="true"><label>Website <input type="text" id="website" name="website" tabindex="-1" autocomplete="off"></label></div>
+                <p class="err" id="err" role="alert" hidden></p>
+                <button class="send" type="submit" id="send">Gửi cho Tú nè ✨</button>
+                <div class="confirm" id="confirm" role="alertdialog" aria-labelledby="confirm-q" hidden>
+                  <p id="confirm-q">${esc(S.rsvp.confirmText || "Gửi xong là không sửa được nữa nhaaa")}</p>
+                  <div><button class="send" type="button" id="confirm-yes">Chắc rồi, gửi</button><button class="ghost" type="button" id="confirm-no">Xem lại</button></div>
+                </div>
+              </form>
+              <div id="done" hidden></div>
+            </div>
+          </article>
 
           <div class="gb">
             <h3>${esc(S.guestbook.title)}</h3>
