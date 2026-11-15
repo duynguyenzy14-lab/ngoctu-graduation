@@ -404,9 +404,35 @@ I hope this is the beginning of a bright and wonderful .  </div>
             </div>
             <div id="rsvp">
               <form id="form" novalidate="">
-                <input type="hidden" name="slot" value="7:00">
-                <input class="field" type="text" id="name" name="name" placeholder="Họ và tên của bạn nè" aria-label="Họ tên" autocomplete="name" maxlength="80">
-                <textarea class="field" id="msg" name="msg" placeholder="Nhắn nhủ vài lời gửi đến Ngọc Tú nha..." aria-label="Lời nhắn cho Tú" maxlength="280"></textarea>
+                <!-- Dòng 1: Tên của bạn (Bắt buộc) -->
+                <div class="form-group">
+                  <label class="form-label" for="name">
+                    Tên của bạn <span class="req">*</span>
+                  </label>
+                  <input class="field" type="text" id="name" name="name" placeholder="Nhập tên của bạn nè..." aria-label="Tên của bạn" autocomplete="name" maxlength="80" required>
+                </div>
+
+                <!-- Dòng 2: Phản hồi của bạn (Bắt buộc) -->
+                <div class="form-group">
+                  <label class="form-label" for="attending">
+                    Phản hồi của bạn <span class="req">*</span>
+                  </label>
+                  <div class="select-wrap">
+                    <select class="field select-field" id="attending" name="attending" aria-label="Phản hồi của bạn" required>
+                      <option value="yes" selected>Mình sẽ đến nhaa 💖</option>
+                      <option value="no">Hic hic, bận rùi không đến được</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- Dòng 3: Lời nhắn dành cho Ngọc Tú -->
+                <div class="form-group">
+                  <label class="form-label" for="msg">
+                    Lời nhắn dành cho Ngọc Tú
+                  </label>
+                  <textarea class="field" id="msg" name="msg" placeholder="Nhắn nhủ vài lời gửi đến Ngọc Tú nha..." aria-label="Lời nhắn dành cho Ngọc Tú" maxlength="280"></textarea>
+                </div>
+
                 <label class="check"><input type="checkbox" id="public" name="public" checked=""> <span>Cho phép hiển thị lời nhắn công khai trên Sảnh lời chúc</span></label>
                 <div class="hp" aria-hidden="true"><label>Website <input type="text" id="website" name="website" tabindex="-1" autocomplete="off"></label></div>
                 <p class="err" id="err" role="alert" hidden=""></p>

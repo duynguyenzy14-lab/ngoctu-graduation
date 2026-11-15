@@ -885,24 +885,101 @@ a { color: var(--volt); }
 .rsvp-subtitle {
   font-family: var(--font);
   font-weight: 600;
-  font-size: clamp(15.5px, 1vw + 9px, 19px);
+  font-size: clamp(15px, 0.9vw + 9px, 18px);
   line-height: 1.55;
   color: var(--volt);
   margin: 0;
 }
 
-form { display: grid; gap: 14px; }
-fieldset { border: 0; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 8px; }
-legend { padding: 0; margin-bottom: 10px; font-weight: 500; color: var(--ink); }
-.seg label { padding: 10px 18px; border-radius: 999px; border: 1.5px solid #F5B8CF; background: #FFF5F8; color: var(--ink); cursor: pointer; font-weight: 500; transition: background .25s, color .25s, transform .2s, box-shadow .2s; }
-.seg label:active { transform: scale(.96); }
-.seg input { position: absolute; opacity: 0; pointer-events: none; }
-.seg label:has(input:checked) { background: var(--volt); color: #fff; border-color: var(--volt); box-shadow: 0 4px 14px rgba(255, 64, 129, .35); }
-.seg label:has(input:focus-visible) { outline: 3px solid var(--volt); outline-offset: 3px; }
-.field { width: 100%; font: inherit; padding: 14px 16px; border-radius: 14px; border: 1.5px solid #F5B8CF; color: var(--ink); background: #FFFFFF; box-shadow: 0 2px 8px rgba(180, 40, 90, .04); }
-.field::placeholder { color: #A6738E; }
-.field:focus { outline: none; border-color: var(--volt); background: #FFFFFF; box-shadow: 0 0 0 3px rgba(255, 64, 129, .15); }
-textarea.field { resize: vertical; min-height: 96px; }
+form {
+  display: grid;
+  gap: 16px;
+}
+
+/* Các nhóm trường thông tin */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Nhãn trường: font thiệp, tone hồng dâu */
+.form-label {
+  font-family: var(--font);
+  font-weight: 600;
+  font-size: clamp(14px, 0.9vw + 9px, 15.5px);
+  color: var(--volt);
+  letter-spacing: -0.01em;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.form-label .req {
+  color: var(--volt);
+  font-weight: 700;
+  font-size: 15px;
+}
+
+/* Ô nhập liệu: bo tròn viền hồng mỏng tinh tế */
+.field {
+  width: 100%;
+  box-sizing: border-box;
+  font-family: var(--font);
+  font-size: 15px;
+  padding: 13px 18px;
+  border-radius: 16px;
+  border: 1.5px solid #F8B3CD;
+  color: var(--ink);
+  background: #FFFFFF;
+  box-shadow: 0 2px 8px rgba(232, 39, 94, 0.04);
+  transition: border-color .25s, box-shadow .25s, background-color .25s;
+}
+
+.field::placeholder {
+  color: #C08DA3;
+  font-weight: 400;
+}
+
+.field:focus {
+  outline: none;
+  border-color: var(--volt);
+  background: #FFFDFE;
+  box-shadow: 0 0 0 3px rgba(232, 39, 94, 0.15);
+}
+
+/* Ô xổ ra lựa chọn: bo tròn viền hồng mỏng có mũi tên xổ xuống */
+.select-wrap {
+  position: relative;
+  width: 100%;
+}
+
+.select-field {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+  padding-right: 44px;
+  background-color: #FFFFFF;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='10' viewBox='0 0 14 10' fill='none'%3E%3Cpath d='M1.5 2L7 7.5L12.5 2' stroke='%23E8275E' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 18px center;
+  background-size: 13px 9px;
+}
+
+.select-field option {
+  padding: 12px 16px;
+  font-family: var(--font);
+  font-size: 15px;
+  color: var(--ink);
+  background: #FFFFFF;
+}
+
+textarea.field {
+  resize: vertical;
+  min-height: 95px;
+  line-height: 1.5;
+}
 .check { display: flex; gap: 10px; align-items: flex-start; font-size: 14.5px; line-height: 1.5; color: var(--ink); cursor: pointer; }
 .check input { flex: 0 0 18px; width: 18px; height: 18px; margin: 2px 0 0; accent-color: var(--volt); }
 .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }

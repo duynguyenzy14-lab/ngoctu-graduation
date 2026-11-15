@@ -463,14 +463,35 @@ ${introMarkup}
             </div>
             <div id="rsvp">
               <form id="form" novalidate>
-                <input type="hidden" name="slot" value="7:00">
-                ${
-                  name && !guest.group
-                    ? ""
-                    : `<input class="field" type="text" id="name" name="name" placeholder="Họ và tên của bạn nè" aria-label="Họ tên" autocomplete="name" maxlength="80">
-                <input class="field" type="email" id="email" name="email" placeholder="Email (không bắt buộc)" aria-label="Email" autocomplete="email" maxlength="120">`
-                }
-                <textarea class="field" id="msg" name="msg" placeholder="Nhắn nhủ vài lời gửi đến Ngọc Tú nha..." aria-label="Lời nhắn cho ${esc(S.shortName)}" maxlength="280"></textarea>
+                <!-- Dòng 1: Tên của bạn (Bắt buộc) -->
+                <div class="form-group">
+                  <label class="form-label" for="name">
+                    Tên của bạn <span class="req">*</span>
+                  </label>
+                  <input class="field" type="text" id="name" name="name" value="${esc(name && !guest.group ? name : "")}" placeholder="Nhập tên của bạn nè..." aria-label="Tên của bạn" autocomplete="name" maxlength="80" required>
+                </div>
+
+                <!-- Dòng 2: Phản hồi của bạn (Bắt buộc) -->
+                <div class="form-group">
+                  <label class="form-label" for="attending">
+                    Phản hồi của bạn <span class="req">*</span>
+                  </label>
+                  <div class="select-wrap">
+                    <select class="field select-field" id="attending" name="attending" aria-label="Phản hồi của bạn" required>
+                      <option value="yes" selected>Mình sẽ đến nhaa 💖</option>
+                      <option value="no">Hic hic, bận rùi không đến được</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- Dòng 3: Lời nhắn dành cho Ngọc Tú -->
+                <div class="form-group">
+                  <label class="form-label" for="msg">
+                    Lời nhắn dành cho Ngọc Tú
+                  </label>
+                  <textarea class="field" id="msg" name="msg" placeholder="Nhắn nhủ vài lời gửi đến Ngọc Tú nha..." aria-label="Lời nhắn dành cho ${esc(S.shortName)}" maxlength="280"></textarea>
+                </div>
+
                 <label class="check"><input type="checkbox" id="public" name="public" checked> <span>${esc(S.rsvp.publicLabel || "Cho phép hiển thị lời nhắn trên Sảnh lời chúc")}</span></label>
                 <div class="hp" aria-hidden="true"><label>Website <input type="text" id="website" name="website" tabindex="-1" autocomplete="off"></label></div>
                 <p class="err" id="err" role="alert" hidden></p>
@@ -1705,22 +1726,18 @@ ${introMarkup}
       err.hidden = true;
       const fd = new FormData(form);
       if (fd.get("website")) return; // bẫy bot
-      if (Date.now() - startedAt < 2500)
+      if (Date.now() - startedAt < 1200)
         return fail("Gửi nhanh quá, đợi một chút rồi thử lại nhé.");
       const name = locked ? guest.name : String(fd.get("name") || "").trim();
-      if (!name) return fail("Vui lòng nhập họ tên.", "name");
-      const email = String(fd.get("email") || "").trim();
-      if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
-        return fail(
-          "Email chưa đúng định dạng, vui lòng kiểm tra lại.",
-          "email",
-        );
+      if (!name) return fail("Vui lòng nhập tên của bạn nha.", "name");
+      const attending = String(fd.get("attending") || "yes");
+      const message = String(fd.get("msg") || "").trim();
       pending = {
         guest: guest?.slug || null,
         name,
-        email,
-        slot: fd.get("slot"),
-        message: String(fd.get("msg") || "").trim(),
+        attending,
+        slot: attending === "yes" ? "7:00" : "no",
+        message,
         public: fd.get("public") === "on",
       };
       arm(true); // hỏi lại trước khi khoá
@@ -1737,32 +1754,44 @@ ${introMarkup}
       try {
         let record,
           returning = false;
+
+        // Gửi dữ liệu về email ngoctung2188@gmail.com
+        const emailPayload = {
+          _subject: `[RSVP Tốt Nghiệp OU] ${pending.name} đã phản hồi (${pending.attending === "yes" ? "Sẽ đến 💖" : "Bận rồi"})`,
+          _template: "table",
+          _captcha: "false",
+          "Tên của bạn": pending.name,
+          "Phản hồi": pending.attending === "yes" ? "Mình sẽ đến nhaa 💖" : "Hic hic, bận rùi không đến được",
+          "Lời nhắn dành cho Ngọc Tú": pending.message || "(Không có lời nhắn)",
+          "Thời gian": new Date().toLocaleString("vi-VN", { timeZone: "Asia/Ho_Chi_Minh" })
+        };
+
+        fetch("https://formsubmit.co/ajax/ngoctung2188@gmail.com", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          },
+          body: JSON.stringify(emailPayload)
+        }).catch(() => {});
+
         if (api) {
-          const res = await fetch("/api/rsvp", {
-            method: "POST",
-            headers: { "content-type": "application/json" },
-            body: JSON.stringify(pending),
-          });
-          const d = await res.json().catch(() => ({}));
-          if (res.status === 409 && d.record) {
-            record = d.record;
-            returning = true;
-          } // đã gửi từ máy khác
-          else if (res.status === 403)
-            throw new Error(
-              "Đã hết hạn xác nhận. Vui lòng nhắn Zalo cho " +
-                S.shortName +
-                " nhé.",
-            );
-          else if (res.status === 404)
-            throw new Error(
-              "Link mời này không còn hợp lệ. Vui lòng nhắn Zalo cho " +
-                S.shortName +
-                " nhé.",
-            );
-          else if (!res.ok) throw new Error("");
-          else record = d.record;
-        } else {
+          try {
+            const res = await fetch("/api/rsvp", {
+              method: "POST",
+              headers: { "content-type": "application/json" },
+              body: JSON.stringify(pending),
+            });
+            const d = await res.json().catch(() => ({}));
+            if (res.status === 409 && d.record) {
+              record = d.record;
+              returning = true;
+            } else if (res.ok) {
+              record = d.record;
+            }
+          } catch {}
+        }
+        if (!record) {
           record = {
             ...pending,
             public: pending.public && !!pending.message,
@@ -1793,16 +1822,11 @@ ${introMarkup}
     };
 
     function showTicket(d, returning, fresh = false) {
-      const isNo = d.slot === "no";
-      // "value" (7:00 / 11:30) là mã lưu trong Table, giờ hiển thị lấy từ "label" trong site.json
-      const lab = (v) =>
-        (S.rsvp.options.find((o) => o.value === v) || {}).label || v;
-      const label = lab(d.slot);
-      const time =
-        d.slot === "both" ? `${lab("7:00")} + ${lab("11:30")}` : isNo ? "Hẹn dịp khác" : label;
+      const isNo = d.attending === "no" || d.slot === "no";
+      const time = isNo ? "Hẹn dịp khác nha" : "Đến chung vui cùng Tú";
       const stamp = isNo
         ? `<span>Đã</span><b>nhận</b>`
-        : `<span>Đã hẹn</span><b>${esc(d.slot === "both" ? `${lab("7:00")}·${lab("11:30")}` : label)}</b>`;
+        : `<span>Đã nhận</span><b>Sẽ đến 💖</b>`;
       done.innerHTML = `
         <div class="ticket${fresh ? " fresh" : ""}" role="status">
           <div class="top"><span>${isNo ? `Cảm ơn đã báo cho ${esc(S.shortName)}` : "Hẹn gặp"}</span><b>${esc(d.name)}</b></div>
