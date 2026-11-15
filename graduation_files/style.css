@@ -1094,6 +1094,44 @@ textarea.field {
   filter: drop-shadow(0 2px 4px rgba(232, 39, 94, 0.25));
 }
 
+/* Dòng line đứt ngang thiệp */
+.ticket-cut {
+  height: 0;
+  border-top: 1.5px dashed #F8B3CD;
+  margin: 18px 0 16px;
+  position: relative;
+}
+
+/* Nội dung từ dòng line đứt trở xuống: Thời gian & Địa điểm */
+.ticket-details {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-family: var(--font);
+}
+
+.ticket-detail-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 14.5px;
+  line-height: 1.45;
+  color: var(--ink);
+}
+
+.ticket-detail-label {
+  font-weight: 700;
+  color: var(--volt);
+  flex-shrink: 0;
+  font-size: 14.5px;
+}
+
+.ticket-detail-val {
+  font-weight: 500;
+  color: var(--ink);
+  font-size: 14.5px;
+}
+
 /* hỏi lại trước khi gửi (gửi rồi là khoá) */
 .confirm { border: 1.5px dashed #F5B8CF; background: #FFF5F8; border-radius: 14px; padding: 16px 18px; animation: flyIn .45s var(--ease) both; }
 .confirm p { margin: 0 0 14px; color: var(--ink); font-weight: 500; }
