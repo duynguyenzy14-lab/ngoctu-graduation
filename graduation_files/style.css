@@ -869,20 +869,21 @@ a { color: var(--volt); }
 
 /* Dòng 1: Badge 'Your little reply' */
 .rsvp-badge {
-  margin-bottom: 6px;
+  margin-bottom: 5px;
 }
 .rsvp-badge span {
   display: inline-block;
   font-family: var(--font);
   font-weight: 600;
-  font-size: 11px;
-  letter-spacing: 0.08em;
+  font-size: 10px;
+  line-height: 1.2;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   color: #FFFFFF;
-  background: linear-gradient(135deg, #FF69B4 0%, #E0266B 100%);
-  padding: 4px 12px;
+  background: linear-gradient(135deg, #FFA0BE 0%, #E83A73 100%);
+  padding: 2px 8.5px;
   border-radius: 999px;
-  box-shadow: 0 3px 10px rgba(224, 38, 107, 0.25);
+  box-shadow: 0 1.5px 5px rgba(232, 58, 115, 0.16);
 }
 
 /* Dòng chữ: 'Điền một chút thông tin để Ngọc Tú đón tiếp thật chu đáo nha' */
