@@ -378,11 +378,37 @@ ${introMarkup}
                 <ellipse cx="124" cy="96.5" rx="2.5" ry="1.4" fill="#FFFDF5"/>
                 <circle cx="118.5" cy="98" r="3" fill="url(#pcapGold)"/>
                 <circle cx="118.5" cy="98" r="1.5" fill="#FFFDF5" opacity="0.7"/>
-                <path d="M120 99 C118 111 114 126 116 140 C121 143 127 143 132 140 C134 126 130 111 128 99 Z" fill="url(#pcapTasselSilk)"/>
-                <path d="M119 102 L117 139 M122 100 L121 141 M124 100 L124 142 M126 100 L127 141 M129 102 L131 139" stroke="#8C5C12" stroke-width="0.85" opacity="0.45"/>
-                <path d="M120 101 L119 140 M123 100 L123 142 M125 100 L126 142 M128 101 L130 140" stroke="#FFF9E0" stroke-width="0.8" opacity="0.85"/>
-                <path d="M34 26 Q34 32 28 32 Q34 32 34 38 Q34 32 40 32 Q34 32 34 26 Z" fill="url(#pcapGold)"/>
-                <circle cx="34" cy="32" r="1.2" fill="#FFFFFF"/>
+                <!-- Tua rua đung đưa nhẹ nhàng -->
+                <g class="tassel-sway">
+                  <path d="M120 99 C118 111 114 126 116 140 C121 143 127 143 132 140 C134 126 130 111 128 99 Z" fill="url(#pcapTasselSilk)"/>
+                  <path d="M119 102 L117 139 M122 100 L121 141 M124 100 L124 142 M126 100 L127 141 M129 102 L131 139" stroke="#8C5C12" stroke-width="0.85" opacity="0.45"/>
+                  <path d="M120 101 L119 140 M123 100 L123 142 M125 100 L126 142 M128 101 L130 140" stroke="#FFF9E0" stroke-width="0.8" opacity="0.85"/>
+                </g>
+                <!-- Các ngôi sao blink blink lấp lánh xung quanh mũ -->
+                <g class="star-blink star-1">
+                  <path d="M 32 21 Q 32 28 25 28 Q 32 28 32 35 Q 32 28 39 28 Q 32 28 32 21 Z" fill="url(#pcapGold)"/>
+                  <circle cx="32" cy="28" r="1.4" fill="#FFFFFF"/>
+                </g>
+                <g class="star-blink star-2">
+                  <path d="M 76 4.5 Q 76 10 70.5 10 Q 76 10 76 15.5 Q 76 10 81.5 10 Q 76 10 76 4.5 Z" fill="url(#pcapGold)"/>
+                  <circle cx="76" cy="10" r="1.2" fill="#FFFFFF"/>
+                </g>
+                <g class="star-blink star-3">
+                  <path d="M 20 53 Q 20 58 15 58 Q 20 58 20 63 Q 20 58 25 58 Q 20 58 20 53 Z" fill="url(#pcapGold)"/>
+                  <circle cx="20" cy="58" r="1" fill="#FFFFFF"/>
+                </g>
+                <g class="star-blink star-4">
+                  <path d="M 142 79.5 Q 142 86 135.5 86 Q 142 86 142 92.5 Q 142 86 148.5 86 Q 142 86 142 79.5 Z" fill="url(#pcapGold)"/>
+                  <circle cx="142" cy="86" r="1.3" fill="#FFFFFF"/>
+                </g>
+                <g class="star-blink star-5">
+                  <path d="M 138 141.5 Q 138 146 133.5 146 Q 138 146 138 150.5 Q 138 146 142.5 146 Q 138 146 138 141.5 Z" fill="url(#pcapGold)"/>
+                  <circle cx="138" cy="146" r="1" fill="#FFFFFF"/>
+                </g>
+                <g class="star-blink star-6">
+                  <path d="M 98 32.5 Q 98 36 94.5 36 Q 98 36 98 39.5 Q 98 36 101.5 36 Q 98 36 98 32.5 Z" fill="url(#pcapGold)"/>
+                  <circle cx="98" cy="36" r="0.9" fill="#FFFFFF"/>
+                </g>
               </svg>
             </div>
             <p class="l-place">${esc(L.place)}</p>
