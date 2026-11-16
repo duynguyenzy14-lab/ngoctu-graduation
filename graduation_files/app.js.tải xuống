@@ -228,42 +228,33 @@
     const introMarkup =
       introStyle === "diploma" || staged
         ? `
-      <section class="intro dip${staged ? " staged" : ""}" id="intro">${floaters}
-        <div class="scroll-wrapper">
-          <div class="scroll-container" id="scrollContainer" onclick="window.toggleScroll && window.toggleScroll()">
-            <div class="scroll-roller scroll-top">
-              <span class="knob left"></span>
-              <span class="roller-bar"></span>
-              <span class="knob right"></span>
+            <section class="intro dip${staged ? " staged" : ""}" id="intro">${floaters}
+        <div class="envelope-wrapper">
+          <div class="envelope" id="envelope" onclick="window.openEnvelope && window.openEnvelope()">
+            <!-- Nắp bao thư gập xuống -->
+            <div class="envelope-flap"></div>
+            <!-- Thân bao thư -->
+            <div class="envelope-pocket"></div>
+            <!-- Con dấu sáp niêm phong ở chính giữa -->
+            <div class="wax-seal" id="waxSeal">
+              <svg viewBox="0 0 100 100" class="seal-cap-icon">
+                <!-- Mũ cử nhân dập chìm trên sáp -->
+                <polygon points="50,20 85,38 50,56 15,38" fill="#FFF2F6" opacity="0.95"/>
+                <path d="M30,48 L30,68 C30,78 70,78 70,68 L70,48" fill="none" stroke="#FFF2F6" stroke-width="4"/>
+                <path d="M80,40 L88,52 L88,72" fill="none" stroke="#FFE082" stroke-width="2.5"/>
+                <circle cx="88" cy="74" r="3" fill="#FFE082"/>
+              </svg>
             </div>
-            <div class="scroll-body" id="scrollBody">
-              <div class="scroll-content">
-                <div class="scroll-header">
-                  <span class="scroll-badge">Graduation 2026</span>
-                  <p class="scroll-date">${esc(S.dateLong || "Sáng Thứ 7, 28.11.2026")}</p>
-                </div>
-                <div class="scroll-letter">
-                  <h3 class="scroll-to">${name ? `Thân gửi ${esc(name)},` : `Thân gửi người thương,`}</h3>
-                  <div class="scroll-polaroid">
-                    <img src="./graduation_files/lvhq0663-portrait.jpg" alt="Nguyễn Ngọc Tú">
-                    <p class="polaroid-cap">Ngọc Tú · Cử nhân Quản lý công</p>
-                  </div>
-                  <p class="scroll-p">${plain(guest?.message || S.letter?.general || "Cảm ơn vì đã luôn đồng hành cùng Tú trong suốt những năm tháng thanh xuân đại học rực rỡ.")}</p>
-                  <p class="scroll-sign">Nguyễn Ngọc Tú 🎓</p>
-                </div>
-              </div>
-            </div>
-            <div class="scroll-roller scroll-bottom">
-              <span class="knob left"></span>
-              <span class="roller-bar"></span>
-              <span class="knob right"></span>
+            <!-- Bức thư nhô ra khi mở -->
+            <div class="envelope-letter">
+              <p class="env-to">${name ? `Thân gửi ${esc(name)},` : `Thân gửi người thương,`}</p>
+              <p class="env-preview">${plain(guest?.message || S.letter?.general || "Tú tốt nghiệp rồi, mời bạn đến chung vui cùng Tú nha!").slice(0, 110)}...</p>
+              <span class="env-cta">Bấm để đọc toàn bộ thư 💌</span>
             </div>
           </div>
-          <button type="button" class="btn-unroll" id="btnUnroll" onclick="window.toggleScroll && window.toggleScroll()">
-            <span>Mở thư cuộn</span> 📜✨
-          </button>
+          <p class="env-hint">Chạm vào con dấu sáp để mở thư nha ✨</p>
         </div>
-      </section>`
+      </section>
         : `
       <section class="intro" id="intro">
         <div class="portrait">
