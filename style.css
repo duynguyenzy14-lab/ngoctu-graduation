@@ -1,0 +1,216 @@
+/* ================= 1. CẤU HÌNH CHUNG & MÀU SẮC ================= */
+:root {
+  --font-main: 'Nunito', sans-serif;
+  --font-editorial: 'Playfair Display', serif;
+  --font-handwrite: 'Caveat', cursive;
+
+  /* Tone màu Coquette Pastel x Scrapbook */
+  --bg-creamy: #FFFBF7;
+  --pink-pastel: #FCE8F0;
+  --pink-accent: #E8275E;
+  --text-dark: #382830;
+  --text-muted: #7A656F;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--bg-creamy);
+  color: var(--text-dark);
+  overflow-x: hidden;
+  /* Họa tiết lưới caro mờ chất liệu sổ tay scrapbook */
+  background-image: 
+    linear-gradient(rgba(248, 180, 200, 0.15) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(248, 180, 200, 0.15) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* ================= 2. SECTION 01: THE COVER ================= */
+.sec-cover {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 40px 20px;
+}
+
+.cover-wrapper {
+  max-width: 600px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  z-index: 2;
+}
+
+/* Tiêu đề phong cách Tạp chí Editorial */
+.editorial-header {
+  margin-bottom: 24px;
+}
+
+.sub-headline {
+  font-family: var(--font-editorial);
+  font-style: italic;
+  font-size: clamp(14px, 2vw, 17px);
+  color: var(--pink-accent);
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+}
+
+.main-title {
+  font-family: var(--font-editorial);
+  font-size: clamp(42px, 8vw, 68px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--text-dark);
+  text-transform: uppercase;
+}
+
+.tagline {
+  font-size: 13.5px;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-top: 8px;
+}
+
+/* TÂM ĐIỂM: TẤM POLAROID LỚN (LVHQ0663) */
+.polaroid-main {
+  position: relative;
+  margin: 10px 0 30px;
+  transform: rotate(-2deg); /* Nghiêng nhẹ tự nhiên như kẹp vào sổ */
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.polaroid-main:hover {
+  transform: rotate(0deg) scale(1.02); /* Rê chuột vào sẽ đứng thẳng & phóng to nhẹ */
+}
+
+/* Băng dính washi dán góc trên */
+.washi-tape {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%) rotate(2deg);
+  width: 110px;
+  height: 28px;
+  background-color: rgba(255, 182, 193, 0.65);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  backdrop-filter: blur(2px);
+  z-index: 5;
+  clip-path: polygon(4% 0%, 96% 0%, 100% 100%, 0% 100%);
+}
+
+/* Khung ảnh Polaroid */
+.polaroid-inner {
+  background: #FFFFFF;
+  padding: 14px 14px 22px;
+  border-radius: 4px;
+  box-shadow: 
+    0 20px 40px -15px rgba(120, 20, 60, 0.18),
+    0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.polaroid-photo {
+  width: 100%;
+  max-width: 380px;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: 2px;
+  display: block;
+}
+
+/* Phần chữ viết tay bên dưới ảnh */
+.polaroid-caption {
+  margin-top: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0 4px;
+}
+
+.handwriting {
+  font-family: var(--font-handwrite);
+  font-size: 22px;
+  color: var(--pink-accent);
+}
+
+.polaroid-date {
+  font-family: var(--font-editorial);
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* Sticker trang trí góc */
+.scrapbook-decor .sticker {
+  position: absolute;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+  z-index: 3;
+}
+
+.tag-date {
+  top: 12%;
+  left: 8%;
+  background: #FFF;
+  color: var(--pink-accent);
+  border: 1px dashed var(--pink-accent);
+  transform: rotate(-8deg);
+}
+
+.tag-edu {
+  bottom: 15%;
+  right: 8%;
+  background: var(--pink-pastel);
+  color: var(--text-dark);
+  transform: rotate(6deg);
+}
+
+/* Nút bấm chuyển sang Section tiếp theo */
+.btn-scroll-down {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  padding: 8px 18px;
+  border: 1px solid rgba(232, 39, 94, 0.25);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.8);
+  transition: all 0.3s ease;
+}
+
+.btn-scroll-down:hover {
+  color: var(--pink-accent);
+  border-color: var(--pink-accent);
+  background: #FFF;
+  transform: translateY(2px);
+}
+
+.btn-scroll-down .arrow {
+  animation: bounce 1.8s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(3px); }
+}
+
+/* Mobile responsive */
+@media (max-width: 600px) {
+  .tag-date, .tag-edu { display: none; }
+  .polaroid-caption { flex-direction: column; align-items: center; gap: 4px; }
+}
