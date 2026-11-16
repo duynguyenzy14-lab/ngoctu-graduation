@@ -66,22 +66,41 @@
         <div class="beam" aria-hidden="true"></div>
         <canvas class="dust" id="dust" aria-hidden="true" width="1924" height="1263"></canvas>
         <div class="blackout" aria-hidden="true"></div>
-       <!-- KHUNG CUỘN GIẤY THAY CHO BÌA THIỆP -->
-        <div class="scroll-container" id="scrollContainer">
-          <div class="scroll-roller scroll-top"></div>
-          <div class="scroll-body" id="reportBody">
-            <div class="scroll-content">
-              <p class="scroll-date">TP. Hồ Chí Minh, ngày 28 tháng 11 năm 2026</p>
-              <h3>Gửi người thương,</h3>
-              <p>Nội dung bức thư của bạn ở đây...</p>
-              <p class="scroll-sign">Ngọc Tú</p>
+        <!-- KHUNG CUỘN GIẤY THAY CHO BÌA THIỆP -->
+        <div class="scroll-wrapper">
+          <div class="scroll-container" id="scrollContainer" onclick="window.toggleScroll && window.toggleScroll()">
+            <div class="scroll-roller scroll-top">
+              <span class="knob left"></span>
+              <span class="roller-bar"></span>
+              <span class="knob right"></span>
+            </div>
+            <div class="scroll-body" id="scrollBody">
+              <div class="scroll-content">
+                <div class="scroll-header">
+                  <span class="scroll-badge">Graduation 2026</span>
+                  <p class="scroll-date">Sáng Thứ 7, 28.11.2026</p>
+                </div>
+                <div class="scroll-letter">
+                  <h3 class="scroll-to">Thân gửi người thương,</h3>
+                  <div class="scroll-polaroid">
+                    <img src="./graduation_files/lvhq0663-portrait.jpg" alt="Nguyễn Ngọc Tú">
+                    <p class="polaroid-cap">Ngọc Tú · Cử nhân Quản lý công</p>
+                  </div>
+                  <p class="scroll-p">Cảm ơn mọi người đã đồng hành cùng Ngọc Tú trong suốt quãng đời sinh viên, để những năm tháng thanh xuân này trở thành một dấu mốc thật đẹp và đáng nhớ. Mỗi người, mỗi mảnh ghép, mỗi kỷ niệm đều đã góp phần tạo nên một hành trình thật đáng nhớ tại OU.</p>
+                  <p class="scroll-sign">Nguyễn Ngọc Tú 🎓</p>
+                </div>
+              </div>
+            </div>
+            <div class="scroll-roller scroll-bottom">
+              <span class="knob left"></span>
+              <span class="roller-bar"></span>
+              <span class="knob right"></span>
             </div>
           </div>
-          <div class="scroll-roller scroll-bottom"></div>
+          <button type="button" class="btn-unroll" id="btnUnroll" onclick="window.toggleScroll && window.toggleScroll()">
+            <span>Mở thư cuộn</span> 📜✨
+          </button>
         </div>
-        <button type="button" class="btn-unroll" onclick="toggleScroll()">
-          Mở thư cuộn ✨
-        </button>
       </section>
 
       <section class="letter" id="letter">
@@ -252,7 +271,7 @@ I hope this is the beginning of a bright and wonderful .  </div>
           <article class="paper rsvp-paper" id="rsvp-paper">
             <div class="rsvp-bow" aria-hidden="true">
               <div class="bow-wrap">
-                <img src="./graduation_files/no-2fixed.webp" alt="Nơ trang trí" class="bow-img" decoding="async">
+                <img src="./graduation_files/no-3.png" alt="Nơ trang trí" class="bow-img" decoding="async">
                 <div class="bow-tint"></div>
               </div>
             </div>
