@@ -66,162 +66,22 @@
         <div class="beam" aria-hidden="true"></div>
         <canvas class="dust" id="dust" aria-hidden="true" width="1924" height="1263"></canvas>
         <div class="blackout" aria-hidden="true"></div>
-        <div class="stage" id="stage" style="--open: 0.0000;">
-          <div class="float" style="--tx: 0deg; --ty: 0deg; --sx: 50%;">
-            <div class="book" id="book">
-              <div class="inside">
-                <span class="diploma-border"></span>
-                <div class="inside-cap" aria-hidden="true">
-                  <svg viewBox="0 0 160 160" width="100%" height="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                      <linearGradient id="icapTop" x1="10%" y1="0%" x2="90%" y2="100%">
-                        <stop offset="0%" stop-color="#841E4B"/>
-                        <stop offset="40%" stop-color="#541230"/>
-                        <stop offset="100%" stop-color="#260616"/>
-                      </linearGradient>
-                      <linearGradient id="icapEdge" x1="0%" y1="0%" x2="100%" y2="50%">
-                        <stop offset="0%" stop-color="#380920"/>
-                        <stop offset="50%" stop-color="#240514"/>
-                        <stop offset="100%" stop-color="#14020A"/>
-                      </linearGradient>
-                      <linearGradient id="icapSkull" x1="0%" y1="0%" x2="0%" y2="100%">
-                        <stop offset="0%" stop-color="#541233"/>
-                        <stop offset="55%" stop-color="#350B20"/>
-                        <stop offset="100%" stop-color="#1A030F"/>
-                      </linearGradient>
-                      <linearGradient id="icapGold" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stop-color="#FFF8E0"/>
-                        <stop offset="25%" stop-color="#F5D77F"/>
-                        <stop offset="65%" stop-color="#D4A738"/>
-                        <stop offset="100%" stop-color="#9E7318"/>
-                      </linearGradient>
-                      <linearGradient id="icapTasselSilk" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stop-color="#F5D77F"/>
-                        <stop offset="35%" stop-color="#FFF2CC"/>
-                        <stop offset="70%" stop-color="#DCAE3B"/>
-                        <stop offset="100%" stop-color="#AA7818"/>
-                      </linearGradient>
-                    </defs>
-                    <path d="M52 68 C52 94 108 94 108 68 Z" fill="url(#icapSkull)"/>
-                    <path d="M52 68 C52 94 108 94 108 68" stroke="url(#icapGold)" stroke-width="1.2" opacity="0.55"/>
-                    <polygon points="18,48 80,78 142,48 142,54 80,84 18,54" fill="url(#icapEdge)"/>
-                    <polygon points="80,18 142,48 80,78 18,48" fill="url(#icapTop)" stroke="rgba(255, 215, 230, 0.45)" stroke-width="1.2"/>
-                    <path d="M78 22 L136 48 L80 75" stroke="rgba(255, 255, 255, 0.24)" stroke-width="1.2" stroke-linecap="round"/>
-                    <ellipse cx="80" cy="48" rx="5.5" ry="4.2" fill="url(#icapGold)"/>
-                    <circle cx="80" cy="47.2" r="2.2" fill="#FFFDF5"/>
-                    <path d="M80 48 Q96 44 114 45 Q130 47 126 62 Q122 75 124 96" stroke="url(#icapGold)" stroke-width="3" stroke-linecap="round" fill="none"/>
-                    <path d="M80 48 Q96 44 114 45 Q130 47 126 62 Q122 75 124 96" stroke="#FFFBEA" stroke-width="1" opacity="0.8" stroke-linecap="round" fill="none"/>
-                    <ellipse cx="124" cy="97" rx="4.5" ry="2.8" fill="url(#icapGold)"/>
-                    <ellipse cx="124" cy="96.5" rx="2.5" ry="1.4" fill="#FFFDF5"/>
-                    <circle cx="118.5" cy="98" r="3" fill="url(#icapGold)"/>
-                    <circle cx="118.5" cy="98" r="1.5" fill="#FFFDF5" opacity="0.7"/>
-                    <path d="M120 99 C118 111 114 126 116 140 C121 143 127 143 132 140 C134 126 130 111 128 99 Z" fill="url(#icapTasselSilk)"/>
-                    <path d="M119 102 L117 139 M122 100 L121 141 M124 100 L124 142 M126 100 L127 141 M129 102 L131 139" stroke="#8C5C12" stroke-width="0.85" opacity="0.45"/>
-                    <path d="M120 101 L119 140 M123 100 L123 142 M125 100 L126 142 M128 101 L130 140" stroke="#FFF9E0" stroke-width="0.8" opacity="0.85"/>
-                    <path d="M34 26 Q34 32 28 32 Q34 32 34 38 Q34 32 40 32 Q34 32 34 26 Z" fill="url(#icapGold)"/>
-                    <circle cx="34" cy="32" r="1.2" fill="#FFFFFF"/>
-                  </svg>
-                </div>
-                <p class="in-quote">“Có những ngày sẽ trở thành ký ức đẹp, và ngày 28.11.2026 là một ngày như thế – ngày một hành trình thanh xuân khép lại, để đánh dấu những chặng đường mới bắt đầu.”</p>
-                <p class="in-salute">Thân gửi những người thương của Ngọc Tú,</p>
-                <p class="in-message">Cảm ơn mọi người đã đồng hành cùng Ngọc Tú trong suốt quãng đời sinh viên, để những năm tháng thanh xuân này trở thành một dấu mốc thật đẹp và đáng nhớ. Mỗi người, mỗi mảnh ghép, mỗi kỷ niệm đều đã góp phần tạo nên một hành trình thật đáng nhớ tại OU.</p>
-                <a class="in-next" href="#letter">Đọc thư 💌</a>
-              </div>
-              <button class="cover" id="cover" type="button" aria-label="Mở bìa bằng tốt nghiệp">
-                <span class="face front">
-                  <span class="frame"></span>
-                  <span class="school">Trường Đại học Mở TP. Hồ Chí Minh</span>
-                  <svg class="emblem" viewBox="0 0 120 84" aria-hidden="true">
-                    <defs><linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ECC870"></stop><stop offset=".28" stop-color="#FFF5D6"></stop><stop offset=".5" stop-color="#DFB04F"></stop><stop offset=".65" stop-color="#FFFDF5"></stop><stop offset="1" stop-color="#C9962D"></stop></linearGradient></defs>
-                    <g fill="none" stroke="url(#gold)" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round">
-                      <path d="M60 10 L112 30 L60 50 L8 30 Z"></path><path d="M30 40 V58 C30 66 90 66 90 58 V40"></path><path d="M112 30 V54"></path><circle cx="112" cy="58" r="3.2" fill="url(#gold)"></circle>
-                      <path d="M22 76 H98" stroke-width="1.6"></path>
-                    </g>
-                  </svg>
-                  <span class="foil title">Bằng Đại học</span>
-                  <span class="sheen"></span>
-                </span>
-                <span class="face back">
-                  <span class="diploma-border"></span>
-                <div class="inside-cap" aria-hidden="true">
-                  <svg viewBox="0 0 160 160" width="100%" height="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                      <linearGradient id="icapTop" x1="10%" y1="0%" x2="90%" y2="100%">
-                        <stop offset="0%" stop-color="#841E4B"/>
-                        <stop offset="40%" stop-color="#541230"/>
-                        <stop offset="100%" stop-color="#260616"/>
-                      </linearGradient>
-                      <linearGradient id="icapEdge" x1="0%" y1="0%" x2="100%" y2="50%">
-                        <stop offset="0%" stop-color="#380920"/>
-                        <stop offset="50%" stop-color="#240514"/>
-                        <stop offset="100%" stop-color="#14020A"/>
-                      </linearGradient>
-                      <linearGradient id="icapSkull" x1="0%" y1="0%" x2="0%" y2="100%">
-                        <stop offset="0%" stop-color="#541233"/>
-                        <stop offset="55%" stop-color="#350B20"/>
-                        <stop offset="100%" stop-color="#1A030F"/>
-                      </linearGradient>
-                      <linearGradient id="icapGold" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stop-color="#FFF8E0"/>
-                        <stop offset="25%" stop-color="#F5D77F"/>
-                        <stop offset="65%" stop-color="#D4A738"/>
-                        <stop offset="100%" stop-color="#9E7318"/>
-                      </linearGradient>
-                      <linearGradient id="icapTasselSilk" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stop-color="#F5D77F"/>
-                        <stop offset="35%" stop-color="#FFF2CC"/>
-                        <stop offset="70%" stop-color="#DCAE3B"/>
-                        <stop offset="100%" stop-color="#AA7818"/>
-                      </linearGradient>
-                    </defs>
-                    <path d="M52 68 C52 94 108 94 108 68 Z" fill="url(#icapSkull)"/>
-                    <path d="M52 68 C52 94 108 94 108 68" stroke="url(#icapGold)" stroke-width="1.2" opacity="0.55"/>
-                    <polygon points="18,48 80,78 142,48 142,54 80,84 18,54" fill="url(#icapEdge)"/>
-                    <polygon points="80,18 142,48 80,78 18,48" fill="url(#icapTop)" stroke="rgba(255, 215, 230, 0.45)" stroke-width="1.2"/>
-                    <path d="M78 22 L136 48 L80 75" stroke="rgba(255, 255, 255, 0.24)" stroke-width="1.2" stroke-linecap="round"/>
-                    <ellipse cx="80" cy="48" rx="5.5" ry="4.2" fill="url(#icapGold)"/>
-                    <circle cx="80" cy="47.2" r="2.2" fill="#FFFDF5"/>
-                    <path d="M80 48 Q96 44 114 45 Q130 47 126 62 Q122 75 124 96" stroke="url(#icapGold)" stroke-width="3" stroke-linecap="round" fill="none"/>
-                    <path d="M80 48 Q96 44 114 45 Q130 47 126 62 Q122 75 124 96" stroke="#FFFBEA" stroke-width="1" opacity="0.8" stroke-linecap="round" fill="none"/>
-                    <ellipse cx="124" cy="97" rx="4.5" ry="2.8" fill="url(#icapGold)"/>
-                    <ellipse cx="124" cy="96.5" rx="2.5" ry="1.4" fill="#FFFDF5"/>
-                    <circle cx="118.5" cy="98" r="3" fill="url(#icapGold)"/>
-                    <circle cx="118.5" cy="98" r="1.5" fill="#FFFDF5" opacity="0.7"/>
-                    <path d="M120 99 C118 111 114 126 116 140 C121 143 127 143 132 140 C134 126 130 111 128 99 Z" fill="url(#icapTasselSilk)"/>
-                    <path d="M119 102 L117 139 M122 100 L121 141 M124 100 L124 142 M126 100 L127 141 M129 102 L131 139" stroke="#8C5C12" stroke-width="0.85" opacity="0.45"/>
-                    <path d="M120 101 L119 140 M123 100 L123 142 M125 100 L126 142 M128 101 L130 140" stroke="#FFF9E0" stroke-width="0.8" opacity="0.85"/>
-                    <path d="M34 26 Q34 32 28 32 Q34 32 34 38 Q34 32 40 32 Q34 32 34 26 Z" fill="url(#icapGold)"/>
-                    <circle cx="34" cy="32" r="1.2" fill="#FFFFFF"/>
-                  </svg>
-                </div>
-                  <span class="snap" id="snap">
-                    <img src="./graduation_files/lvhq0663-portrait.jpg" alt="Nguyễn Ngọc Tú" decoding="async">
-                  </span>
-                  <span class="back-text">
-                    <span class="b-name">Nguyễn Ngọc Tú</span>
-                    <span class="b-degree">Cử nhân ngành Quản lý công</span>
-                    <span class="b-cohort">Khóa 2022</span>
-                  </span>
-                </span>
-              </button>
-            </div>
-            <!-- tua nằm ở lớp phẳng phía trên bìa (không trong khối 3D) để Safari/iOS không vẽ nhầm ra sau bìa -->
-            <div class="book-ui" id="book-ui">
-              <svg class="tassel" id="tassel" aria-hidden="true" width="620" height="437" viewBox="0 0 620 437">
-                <defs><linearGradient id="tgold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ECC870"></stop><stop offset=".4" stop-color="#FFF5D6"></stop><stop offset="1" stop-color="#C9962D"></stop></linearGradient></defs>
-                <path id="t-cord" fill="none" stroke="url(#tgold)" stroke-width="2.4" stroke-linecap="round" d="M310 0 L620 0 Q630 4 632.9109963664447 143.15142857142862"></path>
-                <circle id="t-btn" r="5.5" fill="url(#tgold)" cx="310" cy="0"></circle>
-                <g id="t-head" transform="translate(632.9 149.2) rotate(-0.2)">
-                  <ellipse cx="0" cy="0" rx="5.5" ry="6.5" fill="url(#tgold)"></ellipse>
-                  <path d="M-4 5 L4 5 L9 40 L-9 40 Z" fill="url(#tgold)"></path>
-                  <path d="M-7 18 V40 M-4 14 V40 M-1 12 V40 M2 12 V40 M5 14 V40 M8 18 V40" stroke="#7A5210" stroke-width=".8" opacity=".65"></path>
-                </g>
-              </svg>
-              <button class="tassel-hit" id="tassel-hit" type="button" aria-label="Chuyển tua sang trái để mở thiệp" style="transform: translate(606.9px, 135.2px);"></button>
+       <!-- KHUNG CUỘN GIẤY THAY CHO BÌA THIỆP -->
+        <div class="scroll-container" id="scrollContainer">
+          <div class="scroll-roller scroll-top"></div>
+          <div class="scroll-body" id="reportBody">
+            <div class="scroll-content">
+              <p class="scroll-date">TP. Hồ Chí Minh, ngày 28 tháng 11 năm 2026</p>
+              <h3>Gửi người thương,</h3>
+              <p>Nội dung bức thư của bạn ở đây...</p>
+              <p class="scroll-sign">Ngọc Tú</p>
             </div>
           </div>
-          <p class="dip-hint" id="dip-hint">Thư gửi người thương của Tú, kéo tua sang bên phải để đọc những điều dễ thương nha <img src="./graduation_files/heart-mail.png" alt="💌" class="hint-icon"></p>
+          <div class="scroll-roller scroll-bottom"></div>
         </div>
+        <button type="button" class="btn-unroll" onclick="toggleScroll()">
+          Mở thư cuộn ✨
+        </button>
       </section>
 
       <section class="letter" id="letter">
