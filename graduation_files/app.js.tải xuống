@@ -788,11 +788,12 @@ ${introMarkup}
   }
 
   function initDiploma(staged = false) {
-    const book = document.getElementById("book");
-    if (!book) {
-      initScrollParchment();
-      return;
-    }
+     window.openEnvelope = function () {
+      const env = document.getElementById("envelope");
+      if (!env) return;
+      env.classList.toggle("is-open");
+    };
+    
     const stage = document.getElementById("stage"),
       cover = document.getElementById("cover"),
       hint = document.getElementById("dip-hint"),
