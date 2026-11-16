@@ -66,40 +66,26 @@
         <div class="beam" aria-hidden="true"></div>
         <canvas class="dust" id="dust" aria-hidden="true" width="1924" height="1263"></canvas>
         <div class="blackout" aria-hidden="true"></div>
-        <!-- KHUNG CUỘN GIẤY THAY CHO BÌA THIỆP -->
-        <div class="scroll-wrapper">
-          <div class="scroll-container" id="scrollContainer" onclick="window.toggleScroll && window.toggleScroll()">
-            <div class="scroll-roller scroll-top">
-              <span class="knob left"></span>
-              <span class="roller-bar"></span>
-              <span class="knob right"></span>
+        <!-- BAO THƯ NIÊM PHONG SÁP -->
+        <div class="envelope-wrapper">
+          <div class="envelope" id="envelope" onclick="window.openEnvelope && window.openEnvelope()">
+            <div class="envelope-flap"></div>
+            <div class="envelope-pocket"></div>
+            <div class="wax-seal" id="waxSeal">
+              <svg viewBox="0 0 100 100" class="seal-cap-icon">
+                <polygon points="50,20 85,38 50,56 15,38" fill="#FFF2F6" opacity="0.95"></polygon>
+                <path d="M30,48 L30,68 C30,78 70,78 70,68 L70,48" fill="none" stroke="#FFF2F6" stroke-width="4"></path>
+                <path d="M80,40 L88,52 L88,72" fill="none" stroke="#FFE082" stroke-width="2.5"></path>
+                <circle cx="88" cy="74" r="3" fill="#FFE082"></circle>
+              </svg>
             </div>
-            <div class="scroll-body" id="scrollBody">
-              <div class="scroll-content">
-                <div class="scroll-header">
-                  <span class="scroll-badge">Graduation 2026</span>
-                  <p class="scroll-date">Sáng Thứ 7, 28.11.2026</p>
-                </div>
-                <div class="scroll-letter">
-                  <h3 class="scroll-to">Thân gửi người thương,</h3>
-                  <div class="scroll-polaroid">
-                    <img src="./graduation_files/lvhq0663-portrait.jpg" alt="Nguyễn Ngọc Tú">
-                    <p class="polaroid-cap">Ngọc Tú · Cử nhân Quản lý công</p>
-                  </div>
-                  <p class="scroll-p">Cảm ơn mọi người đã đồng hành cùng Ngọc Tú trong suốt quãng đời sinh viên, để những năm tháng thanh xuân này trở thành một dấu mốc thật đẹp và đáng nhớ. Mỗi người, mỗi mảnh ghép, mỗi kỷ niệm đều đã góp phần tạo nên một hành trình thật đáng nhớ tại OU.</p>
-                  <p class="scroll-sign">Nguyễn Ngọc Tú 🎓</p>
-                </div>
-              </div>
-            </div>
-            <div class="scroll-roller scroll-bottom">
-              <span class="knob left"></span>
-              <span class="roller-bar"></span>
-              <span class="knob right"></span>
+            <div class="envelope-letter">
+              <p class="env-to">Thân gửi người thương,</p>
+              <p class="env-preview">Tú tốt nghiệp rồi, mời bạn đến chung vui cùng Tú nha!...</p>
+              <span class="env-cta">Bấm để đọc toàn bộ thư 💌</span>
             </div>
           </div>
-          <button type="button" class="btn-unroll" id="btnUnroll" onclick="window.toggleScroll && window.toggleScroll()">
-            <span>Mở thư cuộn</span> 📜✨
-          </button>
+          <p class="env-hint">Chạm vào con dấu sáp để mở thư nha ✨</p>
         </div>
       </section>
 

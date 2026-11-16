@@ -254,7 +254,7 @@
           </div>
           <p class="env-hint">Chạm vào con dấu sáp để mở thư nha ✨</p>
         </div>
-      </section>
+      </section>`
         : `
       <section class="intro" id="intro">
         <div class="portrait">
@@ -793,6 +793,7 @@ ${introMarkup}
       if (!env) return;
       env.classList.toggle("is-open");
     };
+    if (document.getElementById("envelope")) return;
     
     const stage = document.getElementById("stage"),
       cover = document.getElementById("cover"),

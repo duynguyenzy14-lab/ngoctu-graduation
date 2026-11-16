@@ -1519,3 +1519,108 @@ html.lenis, html.lenis body { height: auto; }
 .btn-unroll:active {
   transform: scale(0.97);
 }
+
+/* ================= BAO THƯ NIÊM PHONG SÁP (ENVELOPE WAX SEAL) ================= */
+.envelope-wrapper {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  padding: 40px 16px 20px;
+}
+
+.envelope {
+  position: relative;
+  width: 320px;
+  height: 210px;
+  background: #FCE8F0;
+  border-radius: 0 0 14px 14px;
+  box-shadow: 0 20px 45px rgba(224, 38, 107, 0.25);
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.envelope:hover {
+  transform: translateY(-3px);
+}
+
+/* Nắp tam giác gập xuống */
+.envelope-flap {
+  position: absolute;
+  top: 0; left: 0;
+  width: 0; height: 0;
+  border-left: 160px solid transparent;
+  border-right: 160px solid transparent;
+  border-top: 120px solid #F8B4C8;
+  transform-origin: top;
+  transition: transform 0.65s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 4;
+}
+
+/* Túi bao thư */
+.envelope-pocket {
+  position: absolute;
+  inset: 0;
+  width: 0; height: 0;
+  border-left: 160px solid #F5C2D2;
+  border-right: 160px solid #F5C2D2;
+  border-bottom: 110px solid #EDA2B9;
+  border-top: 100px solid transparent;
+  border-radius: 0 0 14px 14px;
+  z-index: 3;
+}
+
+/* Con dấu sáp tròn */
+.wax-seal {
+  position: absolute;
+  top: 95px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60px;
+  height: 60px;
+  background: radial-gradient(circle at 35% 35%, #FF6584, #D81B60 65%, #880E4F);
+  border-radius: 50%;
+  box-shadow: 0 6px 14px rgba(136, 14, 79, 0.4), inset 0 2px 4px rgba(255,255,255,0.4), inset 0 -3px 6px rgba(0,0,0,0.3);
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.seal-cap-icon {
+  width: 36px;
+  height: 36px;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.3));
+}
+
+/* Lá thư trồi lên khi mở */
+.envelope-letter {
+  position: absolute;
+  top: 10px;
+  left: 18px;
+  right: 18px;
+  height: 185px;
+  background: #FFFDF9;
+  border-radius: 8px;
+  padding: 16px;
+  box-sizing: border-box;
+  font-family: var(--font);
+  color: var(--ink);
+  z-index: 2;
+  transition: transform 0.75s cubic-bezier(0.2, 1, 0.3, 1) 0.35s;
+  box-shadow: 0 -4px 12px rgba(0,0,0,0.08);
+}
+
+.env-to { font-weight: 700; color: var(--volt); margin: 0 0 6px; font-size: 15px; }
+.env-preview { font-size: 13px; line-height: 1.5; color: #555; margin: 0 0 8px; }
+.env-cta { font-size: 11.5px; color: var(--volt); font-weight: 600; text-decoration: underline; }
+.env-hint { color: #FFF; margin-top: 22px; font-size: 14px; font-weight: 600; text-shadow: 0 2px 6px rgba(0,0,0,0.4); text-align: center; }
+
+/* KHI BẤM MỞ BAO THƯ (.is-open) */
+.envelope.is-open .envelope-flap { transform: rotateX(180deg); z-index: 1; }
+.envelope.is-open .wax-seal { opacity: 0; transform: translate(-50%, -50%) scale(0.6); pointer-events: none; }
+.envelope.is-open .envelope-letter { transform: translateY(-110px); }
