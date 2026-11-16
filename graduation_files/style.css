@@ -729,7 +729,7 @@ a { color: var(--volt); }
 /* ================= 4. TRANG CUỐI - CHIA 2 PHẦN: THIỆP BÊN TRÁI, SẢNH LỜI CHÚC BÊN PHẢI ================= */
 .board {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr 1fr;
   gap: 28px;
   width: 100%;
   max-width: 1140px;
@@ -749,6 +749,7 @@ a { color: var(--volt); }
 
 /* Thiệp phản hồi bên trái: cân bằng kích thước, giãn dòng gọn gàng */
 .rsvp-paper {
+  order: 2;
   position: relative;
   margin: 0;
   width: 100%;
@@ -756,7 +757,7 @@ a { color: var(--volt); }
   box-sizing: border-box;
   font-family: var(--font);
   padding: clamp(20px, 2.4vw, 30px);
-  background-color: #FFFDFC;
+  background: linear-gradient(135deg, #FFF5F8 0%, #FFFFFF 70%, #FFE4EE 100%);
   border: 1.5px solid #F8D3E2;
   border-radius: clamp(20px, 2.8vw, 28px) !important;
   box-shadow: 0 30px 60px -30px rgba(120, 20, 60, .22), inset 0 0 0 1px rgba(255, 182, 193, 0.4) !important;
@@ -1208,6 +1209,7 @@ textarea.field {
 
 /* Sảnh lời chúc: kích thước và thiết kế cân bằng hoàn hảo với thiệp bên trái */
 .gb {
+  order: 1;
   width: 100%;
   height: 100%;
   box-sizing: border-box;
