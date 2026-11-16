@@ -40,16 +40,37 @@ body {
   padding: 40px 20px;
 }
 
-/* Bố cục trang dọc thanh thoát, không bị trống */
-.cover-wrapper {
-  max-width: 480px;
+/* Bố cục trang chia 2 cột: Cột trái chứa nội dung đã làm, Cột phải chờ nội dung tiếp */
+.cover-grid {
   width: 100%;
+  max-width: 1040px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 36px;
+  align-items: center;
+  z-index: 2;
+}
+
+@media (min-width: 860px) {
+  .cover-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(36px, 5vw, 64px);
+  }
+}
+
+.cover-col-left {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  z-index: 2;
-  margin: 0 auto;
+  width: 100%;
+}
+
+.cover-col-right {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
 /* Tiêu đề phong cách Tạp chí Editorial */
