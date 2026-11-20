@@ -143,7 +143,7 @@ button, input, select, textarea {
 
 .sec-left-inner {
   width: 100%;
-  max-width: 480px;
+  max-width: 460px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -151,85 +151,13 @@ button, input, select, textarea {
   text-align: center;
 }
 
-/* Tiêu đề phong cách Editorial */
-.editorial-header {
-  margin-bottom: 22px;
-  width: 100%;
-}
-
-.header-stamp {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: rgba(255, 255, 255, 0.9);
-  border: 1px dashed rgba(232, 39, 94, 0.35);
-  padding: 4px 14px;
-  border-radius: 999px;
-  margin-bottom: 12px;
-  box-shadow: 0 2px 6px rgba(232, 39, 94, 0.06);
-}
-
-.stamp-icon {
-  font-size: 13px;
-}
-
-.stamp-text {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  color: var(--pink-accent);
-  text-transform: uppercase;
-}
-
-.sub-headline {
-  font-family: var(--font-editorial);
-  font-style: italic;
-  font-size: clamp(22px, 3.2vw, 30px);
-  font-weight: 500;
-  color: var(--pink-accent);
-  letter-spacing: 0.02em;
-  margin-bottom: 4px;
-  line-height: 1.25;
-}
-
-.main-title {
-  font-family: var(--font-editorial);
-  font-size: clamp(36px, 4.8vw, 48px);
-  font-weight: 800;
-  letter-spacing: -0.015em;
-  line-height: 1.12;
-  color: var(--text-dark);
-  text-transform: uppercase;
-}
-
-.tagline {
-  font-size: 13.5px;
-  font-weight: 600;
-  color: var(--text-muted);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  margin-top: 8px;
-}
-
-.school-tag {
-  display: inline-block;
-  margin-top: 6px;
-  font-size: 12.5px;
-  font-weight: 600;
-  color: var(--pink-accent);
-  background: rgba(255, 255, 255, 0.7);
-  padding: 2px 12px;
-  border-radius: 999px;
-  border: 1px solid rgba(232, 39, 94, 0.18);
-}
-
-/* ================= POLAROID PHOTO SCRAPBOOK ================= */
+/* ================= 1. POLAROID PORTRAIT (ẢNH CHÂN DUNG LỚN LÀM TRỌNG TÂM) ================= */
 .polaroid-wrapper {
   position: relative;
   width: 100%;
-  max-width: 350px;
-  margin: 12px auto 22px;
-  transform: rotate(-1.5deg);
+  max-width: clamp(280px, 27vw, 350px);
+  margin: 0 auto clamp(20px, 3vh, 30px);
+  transform: rotate(-2deg);
   transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
@@ -274,16 +202,16 @@ button, input, select, textarea {
   z-index: 6;
 }
 
-/* Khung ảnh Polaroid */
+/* Khung ảnh Polaroid kinh điển: viền giấy trắng, bóng đổ mềm sâu */
 .polaroid-inner {
   background: #FFFFFF;
-  padding: 15px 15px 18px;
+  padding: 14px 14px 24px;
   border-radius: 6px;
   box-shadow: var(--shadow-polaroid);
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 1px solid rgba(248, 211, 226, 0.6);
+  border: 1px solid rgba(248, 211, 226, 0.7);
 }
 
 .photo-container {
@@ -319,31 +247,10 @@ button, input, select, textarea {
   backdrop-filter: blur(2px);
 }
 
-.polaroid-caption {
-  width: 100%;
-  margin-top: 13px;
-  text-align: center;
-}
-
-.polaroid-quote {
-  font-family: var(--font-handwrite);
-  font-size: 20px;
-  font-weight: 700;
-  color: var(--pink-accent);
-  line-height: 1.35;
-}
-
-.polaroid-deco {
-  font-size: 11px;
-  color: #FFA0BE;
-  margin-top: 3px;
-  letter-spacing: 0.3em;
-}
-
 /* Nơ coquette trang trí đính góc dưới polaroid */
 .scrapbook-bow-left {
   position: absolute;
-  bottom: -22px;
+  bottom: -20px;
   left: -20px;
   width: 65px;
   height: auto;
@@ -353,22 +260,68 @@ button, input, select, textarea {
   pointer-events: none;
 }
 
-/* Footnote góc dưới */
-.cover-footnote {
+/* ================= 2. PERSONAL NAMEPLATE (KHỐI THÔNG TIN CÁ NHÂN CĂN GIỮA) ================= */
+.personal-nameplate {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 8px;
-  margin-top: 4px;
+  text-align: center;
+  width: 100%;
 }
 
-.footnote-pin {
-  font-size: 14px;
+/* Dòng chữ script nhỏ */
+.nameplate-script {
+  font-family: var(--font-handwrite);
+  font-size: clamp(20px, 2.3vw, 25px);
+  font-weight: 600;
+  color: var(--pink-accent);
+  letter-spacing: 0.02em;
+  line-height: 1.3;
+  margin-bottom: 6px;
 }
 
-.footnote-text {
-  font-size: 12.5px;
+/* Tên chính: NGUYỄN NGỌC TÚ – font serif, kích thước lớn, nổi bật nhất */
+.nameplate-fullname {
+  font-family: var(--font-editorial);
+  font-size: clamp(30px, 3.6vw, 42px);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  line-height: 1.15;
+  color: var(--text-dark);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+/* Chuyên ngành: QUẢN LÝ CÔNG – chữ in hoa, nhỏ hơn tên */
+.nameplate-major {
+  font-family: var(--font-main);
+  font-size: clamp(13px, 1.4vw, 15px);
+  font-weight: 700;
+  letter-spacing: 0.18em;
   color: var(--text-muted);
-  font-style: italic;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+/* Nhãn nhỏ: CLASS OF 2026 */
+.nameplate-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nameplate-badge span {
+  font-family: var(--font-main);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: var(--pink-accent);
+  background: var(--pink-pastel);
+  padding: 5px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(232, 39, 94, 0.25);
+  box-shadow: 0 2px 8px rgba(232, 39, 94, 0.08);
+  text-transform: uppercase;
 }
 
 
@@ -919,12 +872,12 @@ button, input, select, textarea {
     padding: 32px 14px;
   }
 
-  .main-title {
-    font-size: 32px;
+  .nameplate-fullname {
+    font-size: 28px;
   }
 
-  .sub-headline {
-    font-size: 22px;
+  .nameplate-script {
+    font-size: 19px;
   }
 
   .polaroid-wrapper {
