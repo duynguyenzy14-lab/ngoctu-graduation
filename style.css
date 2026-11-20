@@ -151,13 +151,13 @@ button, input, select, textarea {
   text-align: center;
 }
 
-/* ================= 1. POLAROID PORTRAIT (ẢNH CHÂN DUNG LỚN LÀM TRỌNG TÂM) ================= */
+/* ================= 1. POLAROID PORTRAIT (ẢNH CHÂN DUNG TỐI GIẢN, BỎ CHI TIẾT XUNG QUANH) ================= */
 .polaroid-wrapper {
   position: relative;
   width: 100%;
-  max-width: clamp(280px, 27vw, 350px);
-  margin: 0 auto clamp(20px, 3vh, 30px);
-  transform: rotate(-2deg);
+  max-width: clamp(270px, 27vw, 340px);
+  margin: 0 auto clamp(20px, 2.8vh, 28px);
+  transform: rotate(-1.5deg);
   transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
@@ -165,60 +165,23 @@ button, input, select, textarea {
   transform: rotate(0deg) scale(1.02);
 }
 
-/* Băng dính washi dán góc */
-.washi-tape {
-  position: absolute;
-  height: 24px;
-  background-color: var(--washi-bg);
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.06);
-  backdrop-filter: blur(2px);
-  z-index: 5;
-  clip-path: polygon(4% 0%, 96% 0%, 100% 100%, 0% 100%);
-}
-
-.washi-left {
-  top: -12px;
-  left: 18px;
-  width: 95px;
-  transform: rotate(-5deg);
-}
-
-/* Sticker OU Tag đính chéo góc trên phải */
-.sticker-ou-tag {
-  position: absolute;
-  top: -12px;
-  right: -12px;
-  background: linear-gradient(135deg, #FFA0BE 0%, #E8275E 100%);
-  color: #FFFFFF;
-  font-family: var(--font-main);
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  padding: 5px 14px;
-  border-radius: 999px;
-  box-shadow: 0 4px 14px var(--pink-badge-glow);
-  transform: rotate(12deg);
-  z-index: 6;
-}
-
-/* Khung ảnh Polaroid kinh điển: viền giấy trắng, bóng đổ mềm sâu */
+/* Khung ảnh Polaroid kinh điển: viền giấy trắng sạch sẽ, bóng đổ mềm sâu */
 .polaroid-inner {
   background: #FFFFFF;
-  padding: 14px 14px 24px;
+  padding: 13px 13px 22px;
   border-radius: 6px;
   box-shadow: var(--shadow-polaroid);
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 1px solid rgba(248, 211, 226, 0.7);
+  border: 1px solid rgba(248, 211, 226, 0.6);
 }
 
 .photo-container {
   position: relative;
   width: 100%;
   overflow: hidden;
-  border-radius: 4px;
+  border-radius: 3px;
 }
 
 .polaroid-photo {
@@ -230,37 +193,21 @@ button, input, select, textarea {
 }
 
 .polaroid-wrapper:hover .polaroid-photo {
-  transform: scale(1.03);
+  transform: scale(1.02);
 }
 
-.photo-date-badge {
+/* Băng dính washi cơ bản dùng cho các phần cần thiết (ví dụ thẻ thiệp Section 02) */
+.washi-tape {
   position: absolute;
-  bottom: 8px;
-  right: 8px;
-  background: rgba(0, 0, 0, 0.65);
-  color: #FFF;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  padding: 2px 8px;
-  border-radius: 4px;
+  height: 24px;
+  background-color: var(--washi-bg);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.06);
   backdrop-filter: blur(2px);
+  z-index: 5;
+  clip-path: polygon(4% 0%, 96% 0%, 100% 100%, 0% 100%);
 }
 
-/* Nơ coquette trang trí đính góc dưới polaroid */
-.scrapbook-bow-left {
-  position: absolute;
-  bottom: -20px;
-  left: -20px;
-  width: 65px;
-  height: auto;
-  z-index: 6;
-  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.12));
-  transform: rotate(-10deg);
-  pointer-events: none;
-}
-
-/* ================= 2. PERSONAL NAMEPLATE (KHỐI THÔNG TIN CÁ NHÂN CĂN GIỮA) ================= */
+/* ================= 2. PERSONAL NAMEPLATE (KHỐI THÔNG TIN CÁ NHÂN THEO MẪU) ================= */
 .personal-nameplate {
   display: flex;
   flex-direction: column;
@@ -269,58 +216,48 @@ button, input, select, textarea {
   width: 100%;
 }
 
-/* Dòng chữ script nhỏ */
+/* Dòng chữ script nhỏ: A little moment to remember ♡ */
 .nameplate-script {
   font-family: var(--font-handwrite);
-  font-size: clamp(20px, 2.3vw, 25px);
+  font-size: clamp(17px, 1.8vw, 21px);
   font-weight: 600;
   color: var(--pink-accent);
   letter-spacing: 0.02em;
   line-height: 1.3;
+  margin-bottom: 4px;
+}
+
+/* Dòng chữ The Graduation Day of in nghiêng */
+.nameplate-subhead {
+  font-family: var(--font-editorial);
+  font-style: italic;
+  font-size: clamp(18px, 2.1vw, 24px);
+  font-weight: 500;
+  color: var(--pink-accent);
+  letter-spacing: 0.02em;
+  line-height: 1.25;
   margin-bottom: 6px;
 }
 
 /* Tên chính: NGUYỄN NGỌC TÚ – font serif, kích thước lớn, nổi bật nhất */
 .nameplate-fullname {
   font-family: var(--font-editorial);
-  font-size: clamp(30px, 3.6vw, 42px);
+  font-size: clamp(28px, 3.4vw, 38px);
   font-weight: 800;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
   line-height: 1.15;
   color: var(--text-dark);
   text-transform: uppercase;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 
 /* Chuyên ngành: QUẢN LÝ CÔNG – chữ in hoa, nhỏ hơn tên */
 .nameplate-major {
   font-family: var(--font-main);
-  font-size: clamp(13px, 1.4vw, 15px);
+  font-size: clamp(12px, 1.3vw, 14px);
   font-weight: 700;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.16em;
   color: var(--text-muted);
-  text-transform: uppercase;
-  margin-bottom: 12px;
-}
-
-/* Nhãn nhỏ: CLASS OF 2026 */
-.nameplate-badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.nameplate-badge span {
-  font-family: var(--font-main);
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.14em;
-  color: var(--pink-accent);
-  background: var(--pink-pastel);
-  padding: 5px 18px;
-  border-radius: 999px;
-  border: 1px solid rgba(232, 39, 94, 0.25);
-  box-shadow: 0 2px 8px rgba(232, 39, 94, 0.08);
   text-transform: uppercase;
 }
 
