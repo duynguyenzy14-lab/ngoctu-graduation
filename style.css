@@ -1,87 +1,190 @@
-/* ================= 1. CẤU HÌNH CHUNG & MÀU SẮC ================= */
-:root {
-  --font-main: 'Nunito', sans-serif;
-  --font-editorial: 'Playfair Display', serif;
-  --font-handwrite: 'Dancing Script', cursive;
+/* ==========================================================================
+   NGỌC TÚ – GRADUATION INVITATION 2026
+   Style: Pastel Pink · Scrapbook × Editorial × Digital Invitation
+   Layout: Split-screen 50% Left (Section 01) & 50% Right (Section 02)
+   ========================================================================== */
 
-  /* Tone màu Coquette Pastel x Scrapbook */
-  --bg-creamy: #FFFBF7;
+/* ================= 1. CẤU HÌNH BIẾN & TONE MÀU SẮC ================= */
+:root {
+  /* Typography */
+  --font-main: 'Nunito', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-editorial: 'Playfair Display', Georgia, serif;
+  --font-handwrite: 'Dancing Script', 'Caveat', cursive;
+
+  /* 3 Tầng sắc độ chuyển màu theo yêu cầu:
+     1. Kem + hồng nền: Nền chủ đạo Section 01 và nền giấy ngà ấm áp
+     2. Hồng phấn: Nền Section 02, thẻ thiệp mời, tag đếm ngược
+     3. Hồng nhấn: Điểm nhấn rực rỡ, badge, tiêu đề phụ, nút bấm CTA
+  */
+  --bg-creamy: #FFFDF9;
+  --bg-cream-blush: #FFF5F8;
+  --bg-sec-01: #FFFBF7;
+  --bg-sec-02: #FCEEF4;
+  --bg-sec-02-mid: #FCE6EF;
+  --bg-sec-02-deep: #F8D8E6;
+
+  /* Hồng phấn Pastel */
   --pink-pastel: #FCE8F0;
+  --pink-pastel-light: #FFF0F6;
+  --pink-border: #F8D3E2;
+
+  /* Hồng nhấn (Accent & Highlights) */
   --pink-accent: #E8275E;
+  --pink-accent-hover: #D0184E;
+  --pink-accent-soft: rgba(232, 39, 94, 0.12);
+  --pink-badge-glow: rgba(232, 39, 94, 0.28);
+
+  /* Màu chữ */
   --text-dark: #382830;
-  --text-muted: #7A656F;
+  --text-muted: #7A626F;
+  --text-light: #9E8592;
+
+  /* Chi tiết scrapbook */
+  --washi-bg: rgba(255, 185, 205, 0.75);
+  --shadow-polaroid: 0 20px 45px -12px rgba(120, 20, 60, 0.18), 0 3px 10px rgba(0, 0, 0, 0.04);
+  --shadow-card: 0 25px 50px -15px rgba(150, 30, 80, 0.16), 0 4px 15px rgba(0, 0, 0, 0.03);
 }
 
+/* ================= 2. RESET & CƠ BẢN ================= */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
 body {
   font-family: var(--font-main);
   background-color: var(--bg-creamy);
   color: var(--text-dark);
+  line-height: 1.6;
   overflow-x: hidden;
-  /* Họa tiết lưới caro mờ chất liệu sổ tay scrapbook */
-  background-image: 
-    linear-gradient(rgba(248, 180, 200, 0.15) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(248, 180, 200, 0.15) 1px, transparent 1px);
-  background-size: 24px 24px;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* ================= 2. SECTION 01: THE COVER ================= */
-.sec-cover {
-  min-height: 100vh;
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+button, input, select, textarea {
+  font-family: inherit;
+}
+
+/* ================= 3. BỐ CỤC CHÍNH (DESKTOP SPLIT-SCREEN 50% / 50%) ================= */
+.invitation-screen {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  padding: 40px 20px;
-}
-
-/* Bố cục trang chia 2 cột: Cột trái chứa nội dung đã làm, Cột phải chờ nội dung tiếp */
-.cover-grid {
+  flex-direction: column;
   width: 100%;
-  max-width: 1040px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 36px;
-  align-items: center;
-  z-index: 2;
+  min-height: 100vh;
 }
 
-@media (min-width: 860px) {
-  .cover-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: clamp(36px, 5vw, 64px);
+/* Trên màn hình Desktop (từ 992px trở lên): 2 Section nằm cạnh nhau, mỗi bên 50% */
+@media (min-width: 992px) {
+  .invitation-screen {
+    flex-direction: row;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .section-panel {
+    flex: 0 0 50%;
+    width: 50%;
+    height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    /* Thanh cuộn pastel thanh mảnh */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(232, 39, 94, 0.25) transparent;
+  }
+
+  .section-panel::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .section-panel::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .section-panel::-webkit-scrollbar-thumb {
+    background: rgba(232, 39, 94, 0.25);
+    border-radius: 999px;
+  }
+
+  .section-panel::-webkit-scrollbar-thumb:hover {
+    background: var(--pink-accent);
   }
 }
 
-.cover-col-left {
+/* ================= 4. SECTION 01: BÊN TRÁI (KEM + HỒNG NỀN) ================= */
+.sec-left {
+  background-color: var(--bg-sec-01);
+  /* Chuyển sắc nền Kem + ánh Hồng nền nhẹ nhàng */
+  background-image: 
+    linear-gradient(rgba(240, 175, 195, 0.15) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(240, 175, 195, 0.15) 1px, transparent 1px),
+    linear-gradient(150deg, #FFFDF9 0%, #FFF5F8 50%, #FEEDF4 100%);
+  background-size: 24px 24px, 24px 24px, 100% 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(32px, 4vw, 48px) clamp(20px, 3.5vw, 40px);
+  /* Đường chỉ may scrapbook phân cách 2 section */
+  border-right: 2px dashed rgba(232, 39, 94, 0.22);
+  z-index: 2;
+}
+
+.sec-left-inner {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  width: 100%;
 }
 
-.cover-col-right {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-
-/* Tiêu đề phong cách Tạp chí Editorial */
+/* Tiêu đề phong cách Editorial */
 .editorial-header {
-  margin-bottom: 20px;
+  margin-bottom: 22px;
+  width: 100%;
+}
+
+.header-stamp {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px dashed rgba(232, 39, 94, 0.35);
+  padding: 4px 14px;
+  border-radius: 999px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 6px rgba(232, 39, 94, 0.06);
+}
+
+.stamp-icon {
+  font-size: 13px;
+}
+
+.stamp-text {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--pink-accent);
+  text-transform: uppercase;
 }
 
 .sub-headline {
   font-family: var(--font-editorial);
   font-style: italic;
-  font-size: clamp(22px, 3.5vw, 30px);
+  font-size: clamp(22px, 3.2vw, 30px);
   font-weight: 500;
   color: var(--pink-accent);
   letter-spacing: 0.02em;
@@ -91,140 +194,749 @@ body {
 
 .main-title {
   font-family: var(--font-editorial);
-  font-size: clamp(32px, 5.5vw, 44px);
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  line-height: 1.15;
+  font-size: clamp(36px, 4.8vw, 48px);
+  font-weight: 800;
+  letter-spacing: -0.015em;
+  line-height: 1.12;
   color: var(--text-dark);
   text-transform: uppercase;
 }
 
 .tagline {
-  font-size: 13px;
+  font-size: 13.5px;
+  font-weight: 600;
   color: var(--text-muted);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   margin-top: 8px;
 }
 
-/* TÂM ĐIỂM: TẤM POLAROID LỚN (LVHQ0663) */
-.polaroid-main {
+.school-tag {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--pink-accent);
+  background: rgba(255, 255, 255, 0.7);
+  padding: 2px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(232, 39, 94, 0.18);
+}
+
+/* ================= POLAROID PHOTO SCRAPBOOK ================= */
+.polaroid-wrapper {
   position: relative;
   width: 100%;
-  max-width: 360px;
-  margin: 15px auto 26px;
+  max-width: 350px;
+  margin: 12px auto 22px;
   transform: rotate(-1.5deg);
   transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-.polaroid-main:hover {
+.polaroid-wrapper:hover {
   transform: rotate(0deg) scale(1.02);
 }
 
-/* Băng dính washi dán góc trên bên trái */
+/* Băng dính washi dán góc */
 .washi-tape {
   position: absolute;
-  top: -12px;
-  left: 20px;
-  transform: rotate(-5deg);
-  width: 90px;
   height: 24px;
-  background-color: rgba(255, 182, 193, 0.7);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  background-color: var(--washi-bg);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.06);
   backdrop-filter: blur(2px);
   z-index: 5;
   clip-path: polygon(4% 0%, 96% 0%, 100% 100%, 0% 100%);
 }
 
-/* Sticker 'OU Graduation' đính chéo góc trên cùng bên phải ảnh polaroid */
+.washi-left {
+  top: -12px;
+  left: 18px;
+  width: 95px;
+  transform: rotate(-5deg);
+}
+
+/* Sticker OU Tag đính chéo góc trên phải */
 .sticker-ou-tag {
   position: absolute;
-  top: -10px;
+  top: -12px;
   right: -12px;
   background: linear-gradient(135deg, #FFA0BE 0%, #E8275E 100%);
   color: #FFFFFF;
   font-family: var(--font-main);
-  font-size: 11.5px;
-  font-weight: 700;
+  font-size: 11px;
+  font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   padding: 5px 14px;
   border-radius: 999px;
-  box-shadow: 0 4px 12px rgba(224, 38, 107, 0.28);
+  box-shadow: 0 4px 14px var(--pink-badge-glow);
   transform: rotate(12deg);
   z-index: 6;
 }
 
-/* Khung ảnh Polaroid: ảnh nằm giữa, cách đều viền trắng */
+/* Khung ảnh Polaroid */
 .polaroid-inner {
   background: #FFFFFF;
-  padding: 16px 16px 20px;
+  padding: 15px 15px 18px;
   border-radius: 6px;
-  box-shadow: 
-    0 20px 45px -15px rgba(120, 20, 60, 0.18),
-    0 2px 8px rgba(0, 0, 0, 0.04);
+  box-shadow: var(--shadow-polaroid);
   display: flex;
   flex-direction: column;
   align-items: center;
+  border: 1px solid rgba(248, 211, 226, 0.6);
+}
+
+.photo-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 4px;
 }
 
 .polaroid-photo {
   width: 100%;
   aspect-ratio: 2 / 3;
   object-fit: cover;
-  border-radius: 3px;
   display: block;
+  transition: transform 0.5s ease;
 }
 
-/* Phần chữ bên dưới ảnh: cùng font chữ với tagline, không ngày & ngôi sao */
+.polaroid-wrapper:hover .polaroid-photo {
+  transform: scale(1.03);
+}
+
+.photo-date-badge {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background: rgba(0, 0, 0, 0.65);
+  color: #FFF;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  padding: 2px 8px;
+  border-radius: 4px;
+  backdrop-filter: blur(2px);
+}
+
 .polaroid-caption {
   width: 100%;
-  margin-top: 14px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  margin-top: 13px;
   text-align: center;
 }
 
-.polaroid-text {
-  font-family: var(--font-main);
-  font-size: 12.5px;
-  font-weight: 600;
+.polaroid-quote {
+  font-family: var(--font-handwrite);
+  font-size: 20px;
+  font-weight: 700;
   color: var(--pink-accent);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  margin: 0;
-  text-align: center;
+  line-height: 1.35;
 }
 
-/* Nút bấm chuyển sang Section tiếp theo */
-.btn-scroll-down {
-  display: inline-flex;
+.polaroid-deco {
+  font-size: 11px;
+  color: #FFA0BE;
+  margin-top: 3px;
+  letter-spacing: 0.3em;
+}
+
+/* Nơ coquette trang trí đính góc dưới polaroid */
+.scrapbook-bow-left {
+  position: absolute;
+  bottom: -22px;
+  left: -20px;
+  width: 65px;
+  height: auto;
+  z-index: 6;
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.12));
+  transform: rotate(-10deg);
+  pointer-events: none;
+}
+
+/* Footnote góc dưới */
+.cover-footnote {
+  display: flex;
   align-items: center;
   gap: 8px;
-  text-decoration: none;
+  margin-top: 4px;
+}
+
+.footnote-pin {
+  font-size: 14px;
+}
+
+.footnote-text {
+  font-size: 12.5px;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+
+/* ================= 5. SECTION 02: BÊN PHẢI (HỒNG PHẤN => HỒNG NHẤN) ================= */
+.sec-right {
+  background-color: var(--bg-sec-02);
+  /* Chuyển sắc Hồng phấn sang tone dịu ấm */
+  background-image: 
+    linear-gradient(rgba(232, 39, 94, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(232, 39, 94, 0.05) 1px, transparent 1px),
+    linear-gradient(155deg, #FDF0F6 0%, #FCE8F0 50%, #F9DCE8 100%);
+  background-size: 20px 20px, 20px 20px, 100% 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(32px, 4vw, 48px) clamp(20px, 3.5vw, 40px);
+  z-index: 1;
+}
+
+.sec-right-inner {
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+/* THIỆP MỜI GIẤY MỸ THUẬT (THE INVITATION CARD) */
+.invitation-card {
+  position: relative;
+  background: #FFFDFD;
+  border: 1.5px solid var(--pink-border);
+  border-radius: clamp(18px, 2.5vw, 26px);
+  padding: clamp(24px, 3vw, 34px) clamp(20px, 2.5vw, 28px);
+  box-shadow: var(--shadow-card);
+}
+
+/* Washi dán giữa mép trên thiệp */
+.washi-card-top {
+  top: -11px;
+  left: 50%;
+  transform: translateX(-50%) rotate(1deg);
+  width: 100px;
+}
+
+/* Nơ đính giữa đầu thiệp */
+.card-bow-container {
+  display: flex;
+  justify-content: center;
+  margin-top: -6px;
+  margin-bottom: 12px;
+}
+
+.card-bow-img {
+  width: 60px;
+  height: auto;
+  filter: drop-shadow(0 2px 5px rgba(220, 40, 100, 0.18));
+}
+
+/* Huy hiệu thẻ mời */
+.card-badge {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.card-badge span {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: var(--pink-accent);
+  background: var(--pink-pastel);
+  padding: 4px 14px;
+  border-radius: 999px;
+  text-transform: uppercase;
+  border: 1px solid rgba(232, 39, 94, 0.15);
+}
+
+/* Lời chào viết tay */
+.letter-greeting-box {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.letter-greeting {
+  font-family: var(--font-handwrite);
+  font-size: clamp(26px, 3.8vw, 34px);
+  font-weight: 700;
+  color: var(--pink-accent);
+  line-height: 1.25;
+}
+
+/* Nội dung thư */
+.letter-message-box {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.letter-text {
+  font-size: 14.5px;
+  color: var(--text-dark);
+  line-height: 1.65;
+  font-weight: 500;
+}
+
+/* KHUNG THÔNG TIN THỜI GIAN & ĐỊA ĐIỂM (TICKET STYLE) */
+.event-details-ticket {
+  background: #FFF7FA;
+  border: 1px dashed rgba(232, 39, 94, 0.3);
+  border-radius: 16px;
+  padding: 18px 16px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.detail-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.detail-icon-circle {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  background: #FFFFFF;
+  border: 1px solid var(--pink-border);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  box-shadow: 0 2px 6px rgba(232, 39, 94, 0.08);
+}
+
+.detail-content {
+  flex: 1;
+}
+
+.detail-label {
+  display: block;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--pink-accent);
+  margin-bottom: 2px;
+}
+
+.detail-val-strong {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--text-dark);
+  line-height: 1.35;
+}
+
+.detail-sub-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #FFFFFF;
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(232, 39, 94, 0.2);
+  margin-top: 6px;
+  font-size: 12.5px;
+  color: var(--pink-accent);
+}
+
+.pill-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--pink-accent);
+  border-radius: 50%;
+}
+
+.detail-val-sub {
   font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 3px;
+  line-height: 1.4;
+}
+
+/* Đường cắt vé */
+.ticket-divider {
+  position: relative;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px 0;
+}
+
+.ticket-divider .dash-line {
+  width: 100%;
+  border-bottom: 1px dashed rgba(232, 39, 94, 0.25);
+}
+
+.ticket-divider .notch {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  background-color: #FFFDFD;
+  border-radius: 50%;
+  border: 1px dashed rgba(232, 39, 94, 0.3);
+}
+
+.ticket-divider .notch-left {
+  left: -24px;
+}
+
+.ticket-divider .notch-right {
+  right: -24px;
+}
+
+/* ================= COUNTDOWN TIMER ================= */
+.countdown-section {
+  text-align: center;
+  margin-bottom: 22px;
+  background: linear-gradient(135deg, rgba(254, 238, 244, 0.6) 0%, rgba(252, 228, 238, 0.6) 100%);
+  border-radius: 16px;
+  padding: 14px 12px;
+  border: 1px solid rgba(248, 211, 226, 0.8);
+}
+
+.countdown-title {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: var(--pink-accent);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.heart-icon {
+  font-size: 11px;
+}
+
+.countdown-grid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(6px, 1.5vw, 12px);
+}
+
+.countdown-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #FFFFFF;
+  border: 1.5px solid var(--pink-border);
+  border-radius: 10px;
+  min-width: clamp(52px, 8vw, 64px);
+  padding: 6px 4px;
+  box-shadow: 0 3px 8px rgba(220, 70, 120, 0.08);
+}
+
+.countdown-num {
+  font-family: var(--font-editorial);
+  font-size: clamp(20px, 2.6vw, 26px);
+  font-weight: 700;
+  color: var(--pink-accent);
+  line-height: 1.1;
+}
+
+.countdown-unit {
+  font-size: 11px;
   font-weight: 600;
   color: var(--text-muted);
-  padding: 8px 18px;
-  border: 1px solid rgba(232, 39, 94, 0.25);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.85);
-  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 2px;
 }
 
-.btn-scroll-down:hover {
+.countdown-colon {
+  font-family: var(--font-editorial);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--pink-accent);
+  margin-top: -12px;
+}
+
+/* ================= CÁC NÚT TƯƠNG TÁC (DIGITAL ACTIONS) ================= */
+.card-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.btn-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 11px 18px;
+  border-radius: 999px;
+  font-size: 13.5px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
+  border: none;
+}
+
+/* Nút chính: Hồng nhấn */
+.btn-primary {
+  background: linear-gradient(135deg, #FFA0BE 0%, #E8275E 100%);
+  color: #FFFFFF;
+  box-shadow: 0 6px 16px var(--pink-badge-glow);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(232, 39, 94, 0.38);
+}
+
+/* Nút phụ: Hồng kem pastel viền */
+.btn-secondary {
+  background: #FFF5F9;
+  color: var(--pink-accent);
+  border: 1px solid rgba(232, 39, 94, 0.3);
+}
+
+.btn-secondary:hover {
+  background: #FFE8F2;
+  border-color: var(--pink-accent);
+  transform: translateY(-2px);
+}
+
+/* Nút outline liên hệ */
+.btn-outline {
+  background: #FFFFFF;
+  color: var(--text-muted);
+  border: 1px dashed rgba(122, 98, 111, 0.35);
+}
+
+.btn-outline:hover {
   color: var(--pink-accent);
   border-color: var(--pink-accent);
-  background: #FFF;
-  transform: translateY(2px);
+  background: #FFFDFD;
+  transform: translateY(-2px);
 }
 
-.btn-scroll-down .arrow {
-  animation: bounce 1.8s infinite;
+.btn-icon {
+  font-size: 15px;
 }
 
-@keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(3px); }
+/* Lời kết & Chữ ký */
+.card-signature {
+  text-align: center;
+  margin-top: 8px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(248, 211, 226, 0.5);
+}
+
+.sig-lead {
+  font-size: 12.5px;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.sig-name {
+  font-family: var(--font-handwrite);
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--pink-accent);
+  margin-top: 2px;
+}
+
+
+/* ================= 6. MODAL HƯỚNG DẪN GỬI XE ================= */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(56, 40, 48, 0.45);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 9999;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.modal-backdrop[hidden] {
+  display: none !important;
+}
+
+.modal-card {
+  position: relative;
+  background: #FFFDFD;
+  border: 1.5px solid var(--pink-border);
+  border-radius: 20px;
+  width: 100%;
+  max-width: 440px;
+  padding: 28px 22px 22px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2);
+  animation: modalFadeIn 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: #FFF2F6;
+  border: 1px solid var(--pink-border);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--pink-accent);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.modal-close:hover {
+  background: var(--pink-accent);
+  color: #FFFFFF;
+}
+
+.modal-header {
+  text-align: center;
+  margin-bottom: 18px;
+}
+
+.modal-icon {
+  font-size: 28px;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.modal-title {
+  font-family: var(--font-editorial);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--pink-accent);
+  margin-bottom: 6px;
+}
+
+.modal-sub {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.45;
+}
+
+.parking-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.parking-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: #FFF7FA;
+  border: 1px dashed rgba(232, 39, 94, 0.25);
+  border-radius: 12px;
+  padding: 10px 14px;
+}
+
+.parking-badge {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  background: var(--pink-accent);
+  color: #FFFFFF;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
+}
+
+.parking-info strong {
+  display: block;
+  font-size: 13.5px;
+  color: var(--text-dark);
+}
+
+.parking-info p {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.modal-ok-btn {
+  margin-top: 4px;
+}
+
+
+/* ================= 7. RESPONSIVE TRÊN MÀN HÌNH NHỎ (TABLET & MOBILE) ================= */
+@media (max-width: 991px) {
+  .invitation-screen {
+    flex-direction: column;
+    min-height: auto;
+    height: auto;
+  }
+
+  .sec-left, .sec-right {
+    flex: 0 0 auto;
+    width: 100%;
+    min-height: auto;
+    height: auto;
+    padding: 40px 18px;
+  }
+
+  .sec-left {
+    border-right: none;
+    border-bottom: 2px dashed rgba(232, 39, 94, 0.22);
+  }
+
+  .polaroid-wrapper {
+    max-width: 320px;
+  }
+
+  .invitation-card {
+    max-width: 480px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .sec-left, .sec-right {
+    padding: 32px 14px;
+  }
+
+  .main-title {
+    font-size: 32px;
+  }
+
+  .sub-headline {
+    font-size: 22px;
+  }
+
+  .polaroid-wrapper {
+    max-width: 290px;
+  }
+
+  .countdown-item {
+    min-width: 48px;
+    padding: 4px 2px;
+  }
+
+  .countdown-num {
+    font-size: 18px;
+  }
 }

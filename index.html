@@ -3,49 +3,252 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Ngọc Tú – Graduation 2026</title>
+  <title>Ngọc Tú – Graduation 2026 | Thiệp Mời Tốt Nghiệp</title>
+  <meta name="description" content="Thiệp mời lễ tốt nghiệp của Nguyễn Ngọc Tú – Trường Đại học Mở TP.HCM ngày 28.11.2026. Mời bạn đến chung vui và chụp ảnh cùng Tú!">
+
+  <!-- Open Graph Meta Tags cho chia sẻ Zalo / Facebook / Messenger -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Ngọc Tú tốt nghiệp rồi nè! 🎓✨">
+  <meta property="og:description" content="Sáng Thứ 7, 28.11.2026 tại Trường Đại học Mở TP.HCM. Mời bạn đến chung vui cùng Tú nha!">
+  <meta property="og:image" content="./graduation_files/lvhq0663-portrait.jpg">
   
-  <!-- Font chữ tạp chí (Playfair Display) và font viết tay tiếng Việt chuẩn (Dancing Script) -->
+  <!-- Font chữ: Playfair Display (Editorial), Dancing Script (Chữ viết tay), Nunito (Nội dung) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Nunito:wght@400;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Dancing+Script:wght@600;700&family=Nunito:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
   
   <!-- File CSS giao diện Scrapbook x Editorial -->
   <link rel="stylesheet" href="./style.css">
 </head>
 <body>
 
-  <!-- SECTION 01: THE COVER (SCRAPBOOK × EDITORIAL 2 CỘT) -->
-  <section class="sec-cover" id="cover">
-    <div class="cover-grid">
-      <!-- CỘT TRÁI: NHỮNG GÌ ĐÃ LÀM -->
-      <div class="cover-col-left">
-        <!-- Tiêu đề phong cách Editorial -->
+  <!-- ================= BỐ CỤC CHÍNH: 2 SECTION CẠNH NHAU TRÊN DESKTOP (50% - 50%) ================= -->
+  <main class="invitation-screen" id="invitationScreen">
+
+    <!-- ================= SECTION 01: NẰM BÊN TRÁI (THE EDITORIAL COVER & POLAROID) ================= -->
+    <section class="section-panel sec-left" id="section01" aria-label="Section 01 - Bìa tốt nghiệp Ngọc Tú">
+      <div class="sec-left-inner">
+
+        <!-- Tiêu đề phong cách Tạp chí Editorial -->
         <header class="editorial-header">
+          <div class="header-stamp">
+            <span class="stamp-icon">🎓</span>
+            <span class="stamp-text">SPECIAL INVITATION · 2026</span>
+          </div>
           <p class="sub-headline">The Graduation Day of</p>
           <h1 class="main-title">Ngọc Tú</h1>
           <p class="tagline">Class of 2022 – 2026 · Quản lý công</p>
+          <div class="school-tag">
+            <span>Trường Đại học Mở TP. Hồ Chí Minh</span>
+          </div>
         </header>
 
-        <!-- TẤM POLAROID LỚN (LVHQ0663) -->
-        <div class="polaroid-main">
+        <!-- TÂM ĐIỂM: TẤM POLAROID LỚN NGHỆ THUẬT -->
+        <div class="polaroid-wrapper">
           <!-- Băng dính washi dán góc trên trái -->
-          <div class="washi-tape"></div>
+          <div class="washi-tape washi-left"></div>
 
+          <!-- Sticker OU Graduation dán chéo góc phải -->
+          <div class="sticker-ou-tag">OU GRADUATION</div>
+
+          <!-- Khung ảnh Polaroid -->
           <div class="polaroid-inner">
-            <img src="./graduation_files/lvhq0663-portrait.jpg" alt="Nguyễn Ngọc Tú - Graduation 2026" class="polaroid-photo">
-            <div class="polaroid-caption">
-              <p class="polaroid-text">Một ngày thật đẹp để khởi đầu chương mới</p>
+            <div class="photo-container">
+              <img src="./graduation_files/lvhq0663-portrait.jpg" alt="Nguyễn Ngọc Tú - Graduation 2026" class="polaroid-photo" loading="eager">
+              <div class="photo-date-badge">28.11.2026</div>
             </div>
+            <div class="polaroid-caption">
+              <p class="polaroid-quote">“Một ngày thật đẹp để khởi đầu chương mới”</p>
+              <div class="polaroid-deco">✦ 🌸 ✦</div>
+            </div>
+          </div>
+
+          <!-- Nơ coquette trang trí đính góc dưới polaroid -->
+          <img src="./graduation_files/no-3.png" alt="Nơ trang trí" class="scrapbook-bow-left" aria-hidden="true">
+        </div>
+
+        <!-- Scrapbook Footnote -->
+        <div class="cover-footnote">
+          <span class="footnote-pin">📍</span>
+          <p class="footnote-text">Lưu giữ những khoảnh khắc thanh xuân rực rỡ nhất</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= SECTION 02: NẰM BÊN PHẢI (THE DIGITAL INVITATION & DETAILS) ================= -->
+    <section class="section-panel sec-right" id="section02" aria-label="Section 02 - Thư mời & Thông tin buổi lễ">
+      <div class="sec-right-inner">
+
+        <!-- TẤM THIỆP MỜI SCRAPBOOK GIẤY MỸ THUẬT -->
+        <article class="invitation-card" id="invitationCard">
+          
+          <!-- Băng dính washi trên đầu thiệp -->
+          <div class="washi-tape washi-card-top"></div>
+
+          <!-- Nơ trang trí coquette ở giữa đầu thiệp -->
+          <div class="card-bow-container" aria-hidden="true">
+            <img src="./graduation_files/no-3.png" alt="Nơ trang trí" class="card-bow-img">
+          </div>
+
+          <!-- Huy hiệu lời mời -->
+          <div class="card-badge">
+            <span>OFFICIAL INVITATION · CLASS OF 2026</span>
+          </div>
+
+          <!-- Lời chào cá nhân hóa (Personalized Greeting) -->
+          <div class="letter-greeting-box">
+            <h2 class="letter-greeting" id="guestGreeting">Gửi bạn thương mến,</h2>
+          </div>
+
+          <!-- Nội dung tâm sự / lời nhắn mời -->
+          <div class="letter-message-box">
+            <p class="letter-text" id="guestMessage">
+              Có những người không cần đứng trên sân khấu cùng mình, nhưng lại là lý do mình đi được tới đó.
+              Cảm ơn bạn vì bốn năm thanh xuân rực rỡ vừa qua. Ngày 28.11 này, Tú rất mong có bạn ở bên cạnh để cùng Tú ghi lại dấu mốc quan trọng này nhé! ❤️
+            </p>
+          </div>
+
+          <!-- KHUNG THÔNG TIN THỜI GIAN & ĐỊA ĐIỂM (SCRAPBOOK TICKET STYLE) -->
+          <div class="event-details-ticket">
+            
+            <!-- Hàng 1: Thời gian -->
+            <div class="detail-row">
+              <div class="detail-icon-circle">
+                <span>🗓️</span>
+              </div>
+              <div class="detail-content">
+                <span class="detail-label">Thời gian</span>
+                <p class="detail-val-strong">Sáng Thứ 7, ngày 28 tháng 11 năm 2026</p>
+                <div class="detail-sub-pill">
+                  <span class="pill-dot"></span>
+                  <span>Khung giờ chụp hình cùng Tú: <strong>10:30 – 12:30</strong></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Đường cắt vé scrapbook -->
+            <div class="ticket-divider" aria-hidden="true">
+              <span class="notch notch-left"></span>
+              <span class="dash-line"></span>
+              <span class="notch notch-right"></span>
+            </div>
+
+            <!-- Hàng 2: Địa điểm -->
+            <div class="detail-row">
+              <div class="detail-icon-circle">
+                <span>📍</span>
+              </div>
+              <div class="detail-content">
+                <span class="detail-label">Địa điểm tổ chức</span>
+                <p class="detail-val-strong">Trường Đại học Mở TP. Hồ Chí Minh</p>
+                <p class="detail-val-sub">97 Võ Văn Tần, Phường Xuân Hòa (Võ Thị Sáu), Quận 3, TP.HCM</p>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- BỘ ĐẾM NGƯỢC COUNTDOWN TIMER -->
+          <div class="countdown-section">
+            <p class="countdown-title">
+              <span class="heart-icon">💖</span> CÙNG TÚ ĐẾM NGƯỢC NÀO <span class="heart-icon">💖</span>
+            </p>
+            <div class="countdown-grid" id="countdownGrid">
+              <div class="countdown-item">
+                <span class="countdown-num" id="cdDays">00</span>
+                <span class="countdown-unit">Ngày</span>
+              </div>
+              <span class="countdown-colon">:</span>
+              <div class="countdown-item">
+                <span class="countdown-num" id="cdHours">00</span>
+                <span class="countdown-unit">Giờ</span>
+              </div>
+              <span class="countdown-colon">:</span>
+              <div class="countdown-item">
+                <span class="countdown-num" id="cdMinutes">00</span>
+                <span class="countdown-unit">Phút</span>
+              </div>
+              <span class="countdown-colon">:</span>
+              <div class="countdown-item">
+                <span class="countdown-num" id="cdSeconds">00</span>
+                <span class="countdown-unit">Giây</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- CÁC NÚT HÀNH ĐỘNG TƯƠNG TÁC (DIGITAL ACTIONS) -->
+          <div class="card-actions">
+            <a href="https://maps.app.goo.gl/ZjacVTJBH1mfbgay9" target="_blank" rel="noopener noreferrer" class="btn-action btn-primary">
+              <span class="btn-icon">🗺️</span>
+              <span>Chỉ đường Google Maps</span>
+            </a>
+            
+            <button type="button" class="btn-action btn-secondary" id="btnParking">
+              <span class="btn-icon">🛵</span>
+              <span>Hướng dẫn gửi xe</span>
+            </button>
+            
+            <a href="tel:0376693219" class="btn-action btn-outline">
+              <span class="btn-icon">📞</span>
+              <span>Liên hệ Tú: 0376 693 219</span>
+            </a>
+          </div>
+
+          <!-- LỜI KẾT VÀ CHỮ KÝ VIẾT TAY -->
+          <div class="card-signature">
+            <p class="sig-lead">With love & warmest gratitude,</p>
+            <p class="sig-name">Ngọc Tú</p>
+          </div>
+
+        </article>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= POPUP / MODAL HƯỚNG DẪN GỬI XE ================= -->
+  <div class="modal-backdrop" id="parkingModal" hidden>
+    <div class="modal-card">
+      <button type="button" class="modal-close" id="btnCloseParking" aria-label="Đóng popup">✕</button>
+      
+      <div class="modal-header">
+        <span class="modal-icon">🛵</span>
+        <h3 class="modal-title">Gợi ý địa điểm gửi xe gần OU</h3>
+        <p class="modal-sub">Trường hợp bãi xe của Trường Đại học Mở đông, bạn có thể ghé các bãi gửi xe gần đó nhé:</p>
+      </div>
+
+      <div class="parking-list">
+        <div class="parking-item">
+          <div class="parking-badge">1</div>
+          <div class="parking-info">
+            <strong>Bãi xe Du Lịch Hòa Bình</strong>
+            <p>Số 60 Võ Văn Tần, P. Xuân Hòa, Q.3 (Cách trường ~150m)</p>
+          </div>
+        </div>
+
+        <div class="parking-item">
+          <div class="parking-badge">2</div>
+          <div class="parking-info">
+            <strong>Tòa nhà Báo Người Lao Động</strong>
+            <p>Số 123 Võ Văn Tần, P. Xuân Hòa, Q.3 (Cách trường ~100m)</p>
+          </div>
+        </div>
+
+        <div class="parking-item">
+          <div class="parking-badge">3</div>
+          <div class="parking-info">
+            <strong>Bãi giữ xe Công viên Tao Đàn</strong>
+            <p>Góc đường Trương Định – Nguyễn Thị Minh Khai</p>
           </div>
         </div>
       </div>
 
-      <!-- CỘT PHẢI: CHỜ NỘI DUNG TIẾP THEO -->
-      <div class="cover-col-right" id="coverColRight">
-      </div>
+      <button type="button" class="btn-action btn-primary modal-ok-btn" id="btnOkParking">Đã hiểu nè, cảm ơn Tú ✨</button>
     </div>
-  </section>
+  </div>
 
+  <!-- Script xử lý cá nhân hóa theo ?to=..., countdown và tương tác -->
+  <script src="./script.js"></script>
 </body>
 </html>
