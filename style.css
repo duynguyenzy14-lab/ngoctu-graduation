@@ -229,50 +229,42 @@ button, input, select, textarea {
   }
 }
 
-/* ================= 4. ĐƯỜNG NÉT ĐỨT ĐIỆU ĐÀ NỐI SECTION 1 SANG SECTION 2 (BỎ LINE ĐỨNG) ================= */
-.scrapbook-connector-doodle {
+/* ================= 4. THƯỚC PHIM NỐI 2 SECTION THEO MẪU DEMO (CONNECTING 35MM FILM RIBBON) ================= */
+.connecting-film-ribbon-wrapper {
   position: absolute;
-  left: 50%;
-  top: clamp(40%, 43vh, 48%);
-  transform: translate(-50%, -50%);
-  width: clamp(210px, 22vw, 290px);
-  height: clamp(75px, 9vh, 95px);
-  z-index: 30;
+  top: 48%;
+  left: 0;
+  width: 100%;
+  height: clamp(380px, 48vh, 520px);
+  transform: translateY(-50%);
+  z-index: 1; /* Nằm phía sau Polaroid và Khung thẻ phim Section 2 */
   pointer-events: none;
+  overflow: hidden;
 }
 
-.doodle-svg {
+.connecting-film-ribbon-svg {
   width: 100%;
   height: 100%;
-  overflow: visible;
-  filter: drop-shadow(0 2px 4px rgba(232, 39, 94, 0.15));
+  display: block;
 }
 
-.doodle-label {
-  font-family: var(--font-handwrite);
-  font-size: 15px;
-  font-weight: 700;
-  fill: var(--pink-accent);
-  letter-spacing: 0.04em;
+/* Nền Spread 1 đồng bộ pastel grid để dải phim nối hiển thị tự nhiên */
+.book-spread.spread-1 {
+  background-color: var(--bg-creamy);
+  background-image: 
+    linear-gradient(rgba(240, 175, 195, 0.14) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(240, 175, 195, 0.14) 1px, transparent 1px),
+    linear-gradient(135deg, #FFFDF9 0%, #FFF4F8 45%, #FCEAF2 100%);
+  background-size: 24px 24px, 24px 24px, 100% 100%;
 }
 
-.doodle-dashed-line {
-  stroke: var(--pink-accent);
-  stroke-width: 2.5;
-  stroke-linecap: round;
-  stroke-dasharray: 7 6;
-  fill: none;
-  animation: doodleDashFlow 16s linear infinite;
-}
-
-.doodle-arrowhead {
-  fill: var(--pink-accent);
-}
-
-@keyframes doodleDashFlow {
-  to {
-    stroke-dashoffset: -52;
-  }
+/* Section 1 và Section 2 trong suốt để thước phim nối uốn lượn phía sau */
+.spread-1 .sec-left,
+.spread-1 .sec-right {
+  background: transparent !important;
+  background-image: none !important;
+  position: relative;
+  z-index: 2;
 }
 
 /* ================= 5. SECTION 01: BÊN TRÁI (KEM + HỒNG NỀN) ================= */
@@ -361,11 +353,12 @@ button, input, select, textarea {
 }
 
 .polaroid-caption-text {
-  font-family: var(--font-handwrite);
-  font-size: clamp(16px, 1.7vw, 19.5px);
-  font-weight: 600;
+  font-family: var(--font-editorial);
+  font-style: italic;
+  font-size: clamp(16.5px, 1.75vw, 20.5px);
+  font-weight: 500;
   color: var(--pink-accent);
-  letter-spacing: 0.05em;
+  letter-spacing: 0.025em;
   line-height: 1.35;
   white-space: nowrap;
 }
@@ -1057,6 +1050,49 @@ button, input, select, textarea {
   z-index: 9999;
 }
 
+.music-autoplay-prompt {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  right: 0;
+  background: var(--pink-accent);
+  color: #FFFFFF;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 700;
+  white-space: nowrap;
+  box-shadow: 0 4px 14px rgba(232, 39, 94, 0.35);
+  pointer-events: none;
+  animation: promptBounce 2s infinite ease-in-out;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.music-autoplay-prompt::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  right: 24px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: var(--pink-accent) transparent transparent transparent;
+}
+
+.music-floating-widget.is-playing .music-autoplay-prompt,
+.music-autoplay-prompt.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(6px);
+}
+
+@keyframes promptBounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
 .btn-music-toggle {
   display: flex;
   align-items: center;
@@ -1206,14 +1242,11 @@ button, input, select, textarea {
     border-bottom: none !important;
   }
 
-  /* Đường nét đứt trên mobile hướng xuống Section 2 */
-  .scrapbook-connector-doodle {
-    top: auto;
-    bottom: -36px;
-    left: 50%;
-    transform: translateX(-50%) rotate(75deg);
-    width: 160px;
-    height: 70px;
+  /* Thước phim nối trên mobile */
+  .connecting-film-ribbon-wrapper {
+    top: 50%;
+    height: 360px;
+    opacity: 0.65;
   }
 
   .polaroid-wrapper {

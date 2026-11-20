@@ -129,13 +129,64 @@ function initBookPageFlip() {
   });
 }
 
-// ================= 3. TRÌNH PHÁT NHẠC NỀN YOUTUBE TỰ ĐỘNG PHÁT =================
+// ================= 3. TRÌNH PHÁT NHẠC NỀN YOUTUBE (TỰ ĐỘNG PHÁT & DỰ PHÒNG CỬ CHỈ) =================
 // Bài hát: Cảm Ơn Người Đã Thức Cùng Tôi - Phùng Khánh Linh (Video ID: J3IRYx3PzzM)
 let ytPlayer = null;
 let isAudioPlaying = false;
+let userHasInteracted = false;
 
+function hideMusicPrompt() {
+  const prompt = document.getElementById("musicPrompt");
+  if (prompt) prompt.classList.add("is-hidden");
+}
+
+function tryTriggerAudioPlayback() {
+  userHasInteracted = true;
+  hideMusicPrompt();
+  if (ytPlayer) {
+    try {
+      if (typeof ytPlayer.unMute === "function") ytPlayer.unMute();
+      if (typeof ytPlayer.setVolume === "function") ytPlayer.setVolume(100);
+      if (typeof ytPlayer.playVideo === "function") ytPlayer.playVideo();
+    } catch (e) {
+      console.log("Audio play attempt:", e);
+    }
+  }
+}
+
+// Lắng nghe cử chỉ tương tác sớm ngay từ giây đầu tiên trang web tải
+const earlyEvents = ["click", "touchstart", "touchend", "mousedown", "pointerdown", "scroll", "keydown", "wheel"];
+function onEarlyGesture() {
+  tryTriggerAudioPlayback();
+  earlyEvents.forEach((evt) => {
+    window.removeEventListener(evt, onEarlyGesture, { capture: true, passive: true });
+    document.removeEventListener(evt, onEarlyGesture, { capture: true, passive: true });
+  });
+}
+
+earlyEvents.forEach((evt) => {
+  window.addEventListener(evt, onEarlyGesture, { capture: true, passive: true, once: true });
+  document.addEventListener(evt, onEarlyGesture, { capture: true, passive: true, once: true });
+});
+
+// Khởi tạo YouTube Iframe API
 window.onYouTubeIframeAPIReady = function () {
   ytPlayer = new YT.Player("ytMusicPlayer", {
+    height: "200",
+    width: "200",
+    videoId: "J3IRYx3PzzM",
+    playerVars: {
+      autoplay: 1,
+      controls: 0,
+      disablekb: 1,
+      enablejsapi: 1,
+      fs: 0,
+      loop: 1,
+      playlist: "J3IRYx3PzzM",
+      modestbranding: 1,
+      playsinline: 1,
+      rel: 0
+    },
     events: {
       onReady: onPlayerReady,
       onStateChange: onPlayerStateChange
@@ -146,40 +197,44 @@ window.onYouTubeIframeAPIReady = function () {
 function onPlayerReady(event) {
   const btnToggle = document.getElementById("btnToggleMusic");
 
-  // 1. Kích hoạt phát tự động ngay khi sẵn sàng
+  // 1. Thử tự động phát ngay lập tức
   try {
-    event.target.playVideo();
-  } catch (err) {
-    console.log("Autoplay waiting for user interaction:", err);
-  }
-
-  // 2. Dự phòng chuẩn W3C Autoplay Policy:
-  // Nếu trình duyệt chặn phát âm thanh ban đầu, ngay khi người dùng chạm, click, cuộn chuột hoặc gõ phím,
-  // nhạc lập tức phát ngay mà không cần ấn trúng nút nhạc!
-  const triggerEvents = ["click", "touchstart", "scroll", "keydown", "wheel", "pointerdown"];
-  const startAudioImmediately = () => {
-    if (ytPlayer && ytPlayer.playVideo) {
-      ytPlayer.playVideo();
+    event.target.unMute();
+    event.target.setVolume(100);
+    const p = event.target.playVideo();
+    if (p && p.catch) {
+      p.catch(() => {
+        console.log("Browser autoplay policy requires initial user gesture.");
+      });
     }
-    triggerEvents.forEach((evt) => {
-      window.removeEventListener(evt, startAudioImmediately, { capture: true, passive: true });
-    });
-  };
+  } catch (err) {}
 
-  triggerEvents.forEach((evt) => {
-    window.addEventListener(evt, startAudioImmediately, { capture: true, passive: true, once: true });
-  });
+  // 2. Nếu người dùng đã click / chạm trước khi player ready, phát ngay!
+  if (userHasInteracted) {
+    try {
+      event.target.unMute();
+      event.target.setVolume(100);
+      event.target.playVideo();
+      hideMusicPrompt();
+    } catch (e) {}
+  }
 
   // 3. Nút bấm bật / tắt nhạc thủ công trên widget đĩa than
   if (btnToggle) {
     btnToggle.addEventListener("click", (e) => {
       e.stopPropagation();
+      userHasInteracted = true;
+      hideMusicPrompt();
       if (!ytPlayer || !ytPlayer.playVideo) return;
 
       if (isAudioPlaying) {
         ytPlayer.pauseVideo();
       } else {
-        ytPlayer.playVideo();
+        try {
+          ytPlayer.unMute();
+          ytPlayer.setVolume(100);
+          ytPlayer.playVideo();
+        } catch (err) {}
       }
     });
   }
@@ -187,15 +242,24 @@ function onPlayerReady(event) {
 
 function onPlayerStateChange(event) {
   const btnToggle = document.getElementById("btnToggleMusic");
+  const musicWidget = document.getElementById("musicWidget");
   const stateIcon = document.getElementById("musicStateIcon");
 
   if (event.data === YT.PlayerState.PLAYING) {
     isAudioPlaying = true;
+    hideMusicPrompt();
     if (btnToggle) btnToggle.classList.add("is-playing");
+    if (musicWidget) musicWidget.classList.add("is-playing");
     if (stateIcon) stateIcon.textContent = "⏸";
   } else if (event.data === YT.PlayerState.PAUSED || event.data === YT.PlayerState.ENDED) {
     isAudioPlaying = false;
     if (btnToggle) btnToggle.classList.remove("is-playing");
+    if (musicWidget) musicWidget.classList.remove("is-playing");
     if (stateIcon) stateIcon.textContent = "▶";
   }
+}
+
+// Nếu YouTube API đã load sẵn từ trước
+if (window.YT && window.YT.Player) {
+  window.onYouTubeIframeAPIReady();
 }
