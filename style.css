@@ -417,379 +417,176 @@ button, input, select, textarea {
   opacity: 0.85;
 }
 
-/* ================= KHUNG CHIẾU DẢI PHIM (VIEWPORT & TRACK) ================= */
-.film-viewport {
+/* ================= KHUNG CHIẾU DẢI PHIM TỰ ĐỘNG CHẠY NGANG ================= */
+.film-marquee-viewport {
   width: 100%;
   overflow: hidden;
   position: relative;
   padding: 8px 0;
-  outline: none;
-  touch-action: pan-y pinch-zoom;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 4%, #000 96%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, #000 4%, #000 96%, transparent 100%);
 }
 
-.film-track {
+.film-marquee-track {
   display: flex;
-  width: 100%;
-  transition: transform 0.65s cubic-bezier(0.25, 1, 0.5, 1);
+  gap: 12px;
+  width: max-content;
+  animation: filmMarqueeScroll 55s linear infinite;
   will-change: transform;
 }
 
-/* Từng khung phim (35mm Film Frame) */
-.film-frame {
-  flex: 0 0 100%;
-  width: 100%;
-  padding: 0 10px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.film-marquee-viewport:hover .film-marquee-track {
+  animation-play-state: paused;
 }
 
-.frame-edge-label {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-family: 'Courier New', Courier, monospace, sans-serif;
-  font-size: 10.5px;
-  font-weight: 700;
-  color: #FFB3D1;
-  letter-spacing: 0.12em;
-  margin-bottom: 5px;
-  padding: 0 4px;
+@keyframes filmMarqueeScroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
-.frame-code {
-  color: #FFA3C7;
-}
-
-.frame-scene {
-  color: #ECC870;
-}
-
-/* Hộp chứa ảnh phim */
-.frame-photo-box {
-  position: relative;
-  width: 100%;
+/* Từng khung phim 35mm: thuần ảnh từ bg-pics, không chữ chèn */
+.film-frame-item {
+  flex: 0 0 auto;
+  width: clamp(230px, 25vw, 290px);
   aspect-ratio: 3 / 2;
+  border-radius: 4px;
   overflow: hidden;
-  border-radius: 5px;
-  background: #0D080B;
-  box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.65);
+  background: #000000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
 }
 
-.film-photo {
+.film-frame-item .film-photo {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition: transform 0.4s ease;
 }
 
-.film-frame:hover .film-photo {
-  transform: scale(1.025);
+.film-frame-item:hover .film-photo {
+  transform: scale(1.035);
 }
 
-.frame-year-badge {
-  position: absolute;
-  bottom: 8px;
-  right: 8px;
-  background: rgba(24, 15, 20, 0.88);
-  color: #FFA3C7;
+
+/* ================= 6. WIDGET NHẠC NỀN: CẢM ƠN NGƯỜI ĐÃ THỨC CÙNG TÔI ================= */
+.music-floating-widget {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  z-index: 9999;
+}
+
+.btn-music-toggle {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 253, 253, 0.94);
+  border: 1px solid rgba(232, 39, 94, 0.28);
+  border-radius: 999px;
+  padding: 8px 16px 8px 10px;
+  box-shadow: 0 8px 24px -4px rgba(120, 20, 60, 0.16), 0 2px 8px rgba(0, 0, 0, 0.04);
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  color: var(--text-dark);
+  text-align: left;
+}
+
+.btn-music-toggle:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px -4px rgba(232, 39, 94, 0.25);
+  border-color: var(--pink-accent);
+}
+
+/* Đĩa than cổ điển xoay tròn khi phát nhạc */
+.vinyl-record {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #2C2026 25%, #181115 50%, #2A1E24 75%, #110B0E 100%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+  flex-shrink: 0;
+  animation: spinRecord 3.5s linear infinite;
+  animation-play-state: paused;
+}
+
+.btn-music-toggle.is-playing .vinyl-record {
+  animation-play-state: running;
+}
+
+@keyframes spinRecord {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.vinyl-core {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #FFA0BE 0%, #E8275E 100%);
+  border: 2px solid #FFFDF9;
+}
+
+/* Thông tin bài hát */
+.music-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.music-tag {
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: var(--pink-accent);
+  text-transform: uppercase;
+  margin-bottom: 1px;
+}
+
+.music-title {
   font-family: var(--font-editorial);
   font-size: 13px;
   font-weight: 700;
-  padding: 3px 10px;
-  border-radius: 6px;
-  border: 1px solid rgba(255, 163, 199, 0.35);
-  backdrop-filter: blur(4px);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-}
-
-.frame-year-badge.badge-graduation {
-  background: linear-gradient(135deg, #FFA0BE 0%, #E8275E 100%);
-  color: #FFFFFF;
-  border: none;
-  box-shadow: 0 3px 10px var(--pink-badge-glow);
-}
-
-/* Hộp chú thích dưới khung ảnh */
-.frame-caption-box {
-  background: rgba(255, 255, 255, 0.96);
-  border-radius: 8px;
-  padding: 10px 14px;
-  margin-top: 10px;
-  width: 100%;
-  text-align: center;
-  border: 1px solid rgba(248, 211, 226, 0.7);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
-}
-
-.frame-title {
-  font-family: var(--font-main);
-  font-size: 13.5px;
-  font-weight: 800;
-  color: var(--pink-accent);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: 3px;
-}
-
-.frame-desc {
-  font-size: 12.5px;
   color: var(--text-dark);
-  line-height: 1.5;
-  margin: 0;
-  font-weight: 500;
+  line-height: 1.25;
+  white-space: nowrap;
 }
 
-/* ================= BỘ ĐIỀU KHIỂN DẢI PHIM & TIMELINE ================= */
-.film-controls-panel {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  margin-top: 14px;
-  width: 100%;
-}
-
-.film-button-group {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-}
-
-.btn-film-nav {
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  background: #FFF5F9;
-  border: 1px solid rgba(232, 39, 94, 0.25);
-  color: var(--pink-accent);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  cursor: pointer;
-  transition: all 0.25s ease;
-}
-
-.btn-film-nav:hover {
-  background: var(--pink-accent);
-  color: #FFFFFF;
-  transform: scale(1.06);
-}
-
-.btn-film-play {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 16px;
-  border-radius: 999px;
-  background: linear-gradient(135deg, #FFA0BE 0%, #E8275E 100%);
-  color: #FFFFFF;
-  border: none;
-  font-size: 12.5px;
-  font-weight: 700;
-  cursor: pointer;
-  box-shadow: 0 3px 10px var(--pink-badge-glow);
-  transition: all 0.25s ease;
-}
-
-.btn-film-play:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 5px 14px rgba(232, 39, 94, 0.38);
-}
-
-/* Thanh mốc thời gian (Timeline) */
-.film-timeline {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  flex-wrap: wrap;
-}
-
-.timeline-dot {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  padding: 4px 12px;
-  border-radius: 999px;
-  background: #FFF7FA;
-  border: 1px solid rgba(232, 39, 94, 0.2);
-  font-size: 11.5px;
-  font-weight: 700;
+.music-artist {
+  font-size: 11px;
   color: var(--text-muted);
-  cursor: pointer;
-  transition: all 0.25s ease;
 }
 
-.timeline-dot .dot-indicator {
-  width: 6px;
-  height: 6px;
+.music-state-icon {
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
-  background: rgba(232, 39, 94, 0.35);
-  transition: all 0.25s ease;
-}
-
-.timeline-dot:hover {
-  border-color: var(--pink-accent);
+  background: #FFF0F5;
   color: var(--pink-accent);
-  background: #FFEBF3;
-}
-
-.timeline-dot.active {
-  background: var(--pink-accent);
-  color: #FFFFFF;
-  border-color: var(--pink-accent);
-  box-shadow: 0 2px 8px rgba(232, 39, 94, 0.28);
-}
-
-.timeline-dot.active .dot-indicator {
-  background: #FFFFFF;
-  transform: scale(1.2);
-}
-
-
-/* ================= 6. MODAL HƯỚNG DẪN GỬI XE ================= */
-.modal-backdrop {
-  position: fixed;
-  inset: 0;
-  background: rgba(56, 40, 48, 0.45);
-  backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
-  z-index: 9999;
-  opacity: 1;
-  transition: opacity 0.3s ease;
-}
-
-.modal-backdrop[hidden] {
-  display: none !important;
-}
-
-.modal-card {
-  position: relative;
-  background: #FFFDFD;
-  border: 1.5px solid var(--pink-border);
-  border-radius: 20px;
-  width: 100%;
-  max-width: 440px;
-  padding: 28px 22px 22px;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2);
-  animation: modalFadeIn 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-
-@keyframes modalFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(15px) scale(0.97);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-.modal-close {
-  position: absolute;
-  top: 14px;
-  right: 14px;
-  background: #FFF2F6;
-  border: 1px solid var(--pink-border);
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--pink-accent);
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 700;
-  cursor: pointer;
+  flex-shrink: 0;
+  margin-left: 4px;
   transition: all 0.2s ease;
 }
 
-.modal-close:hover {
+.btn-music-toggle:hover .music-state-icon {
   background: var(--pink-accent);
   color: #FFFFFF;
-}
-
-.modal-header {
-  text-align: center;
-  margin-bottom: 18px;
-}
-
-.modal-icon {
-  font-size: 28px;
-  display: block;
-  margin-bottom: 6px;
-}
-
-.modal-title {
-  font-family: var(--font-editorial);
-  font-size: 20px;
-  font-weight: 700;
-  color: var(--pink-accent);
-  margin-bottom: 6px;
-}
-
-.modal-sub {
-  font-size: 13px;
-  color: var(--text-muted);
-  line-height: 1.45;
-}
-
-.parking-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-bottom: 20px;
-}
-
-.parking-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  background: #FFF7FA;
-  border: 1px dashed rgba(232, 39, 94, 0.25);
-  border-radius: 12px;
-  padding: 10px 14px;
-}
-
-.parking-badge {
-  flex-shrink: 0;
-  width: 24px;
-  height: 24px;
-  background: var(--pink-accent);
-  color: #FFFFFF;
-  border-radius: 50%;
-  font-size: 12px;
-  font-weight: 800;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 2px;
-}
-
-.parking-info strong {
-  display: block;
-  font-size: 13.5px;
-  color: var(--text-dark);
-}
-
-.parking-info p {
-  font-size: 12px;
-  color: var(--text-muted);
-  margin-top: 2px;
-}
-
-.modal-ok-btn {
-  margin-top: 4px;
 }
 
 
