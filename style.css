@@ -6,10 +6,10 @@
 
 /* ================= 1. CẤU HÌNH BIẾN & TONE MÀU SẮC ================= */
 :root {
-  /* Typography */
-  --font-main: 'Nunito', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  /* Typography - Đồng nhất font chữ của "The Graduation Day of" (Playfair Display) cho toàn trang */
+  --font-main: 'Playfair Display', Georgia, serif;
   --font-editorial: 'Playfair Display', Georgia, serif;
-  --font-handwrite: 'Dancing Script', 'Caveat', cursive;
+  --font-handwrite: 'Playfair Display', Georgia, serif;
 
   /* 3 Tầng sắc độ chuyển màu theo yêu cầu:
      1. Kem + hồng nền: Nền chủ đạo Section 01 và nền giấy ngà ấm áp
