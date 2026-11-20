@@ -165,10 +165,10 @@ button, input, select, textarea {
   transform: rotate(0deg) scale(1.02);
 }
 
-/* Khung ảnh Polaroid kinh điển: viền giấy trắng sạch sẽ, bóng đổ mềm sâu */
+/* Khung ảnh Polaroid kinh điển: viền giấy trắng sạch sẽ, viền dưới rộng chứa chữ script */
 .polaroid-inner {
   background: #FFFFFF;
-  padding: 13px 13px 22px;
+  padding: 14px 14px 18px;
   border-radius: 6px;
   box-shadow: var(--shadow-polaroid);
   display: flex;
@@ -196,6 +196,27 @@ button, input, select, textarea {
   transform: scale(1.02);
 }
 
+/* Phần viền trắng dưới ảnh Polaroid: rộng rãi, chứa dòng chữ script nắn nót */
+.polaroid-caption {
+  width: 100%;
+  padding-top: 14px;
+  padding-bottom: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.polaroid-caption-text {
+  font-family: var(--font-handwrite);
+  font-size: clamp(16px, 1.7vw, 19.5px);
+  font-weight: 600;
+  color: var(--pink-accent);
+  letter-spacing: 0.05em;
+  line-height: 1.35;
+  white-space: nowrap;
+}
+
 /* Băng dính washi cơ bản dùng cho các phần cần thiết (ví dụ thẻ thiệp Section 02) */
 .washi-tape {
   position: absolute;
@@ -216,22 +237,11 @@ button, input, select, textarea {
   width: 100%;
 }
 
-/* Dòng chữ script nhỏ: A little moment to remember ♡ */
-.nameplate-script {
-  font-family: var(--font-handwrite);
-  font-size: clamp(17px, 1.8vw, 21px);
-  font-weight: 600;
-  color: var(--pink-accent);
-  letter-spacing: 0.02em;
-  line-height: 1.3;
-  margin-bottom: 4px;
-}
-
 /* Dòng chữ The Graduation Day of in nghiêng */
 .nameplate-subhead {
   font-family: var(--font-editorial);
   font-style: italic;
-  font-size: clamp(18px, 2.1vw, 24px);
+  font-size: clamp(19px, 2.2vw, 25px);
   font-weight: 500;
   color: var(--pink-accent);
   letter-spacing: 0.02em;
@@ -254,9 +264,9 @@ button, input, select, textarea {
 /* Chuyên ngành: QUẢN LÝ CÔNG – chữ in hoa, nhỏ hơn tên */
 .nameplate-major {
   font-family: var(--font-main);
-  font-size: clamp(12px, 1.3vw, 14px);
+  font-size: clamp(12.5px, 1.35vw, 14.5px);
   font-weight: 700;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.18em;
   color: var(--text-muted);
   text-transform: uppercase;
 }
@@ -810,11 +820,11 @@ button, input, select, textarea {
   }
 
   .nameplate-fullname {
-    font-size: 28px;
+    font-size: 26px;
   }
 
-  .nameplate-script {
-    font-size: 19px;
+  .polaroid-caption-text {
+    font-size: 15.5px;
   }
 
   .polaroid-wrapper {
