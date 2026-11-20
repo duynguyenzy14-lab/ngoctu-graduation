@@ -283,16 +283,17 @@ button, input, select, textarea {
   background-size: 20px 20px, 20px 20px, 100% 100%;
   position: relative;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: clamp(28px, 3.5vw, 44px) clamp(18px, 2.8vw, 36px);
+  justify-content: flex-start;
+  padding: clamp(36px, 4.5vh, 48px) clamp(18px, 2.8vw, 36px) clamp(24px, 3vh, 36px);
   z-index: 1;
 }
 
 .sec-right-inner {
   width: 100%;
   max-width: 500px;
-  margin: 0 auto;
+  margin: auto 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -301,25 +302,27 @@ button, input, select, textarea {
 /* ================= HEADER CỦA DẢI PHIM ================= */
 .film-header {
   text-align: center;
-  margin-bottom: 18px;
+  margin-bottom: 16px;
   width: 100%;
+  padding-top: 4px;
 }
 
 .film-header-badge {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.95);
   border: 1px solid rgba(232, 39, 94, 0.22);
-  padding: 4px 14px;
+  padding: 5px 15px;
   border-radius: 999px;
-  margin-bottom: 10px;
+  margin-top: 4px;
+  margin-bottom: 12px;
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 0.1em;
   color: var(--pink-accent);
   text-transform: uppercase;
-  box-shadow: 0 2px 6px rgba(232, 39, 94, 0.06);
+  box-shadow: 0 2px 6px rgba(232, 39, 94, 0.08);
 }
 
 .film-header-icon {
@@ -328,22 +331,27 @@ button, input, select, textarea {
 
 .film-main-title {
   font-family: var(--font-editorial);
-  font-size: clamp(20px, 2.3vw, 25px);
+  font-size: clamp(14px, 1.65vw, 19.5px);
   font-weight: 800;
   color: var(--pink-accent);
   text-transform: uppercase;
-  letter-spacing: 0.01em;
+  letter-spacing: 0.02em;
   line-height: 1.25;
   margin-bottom: 8px;
+  white-space: nowrap;
+  width: 100%;
+  text-align: center;
 }
 
 .film-sub-text {
   font-family: var(--font-main);
-  font-size: clamp(13px, 1.35vw, 14.5px);
+  font-size: clamp(12.5px, 1.25vw, 13.8px);
   color: var(--text-muted);
   line-height: 1.6;
   font-style: italic;
   font-weight: 500;
+  margin: 0 auto;
+  max-width: 440px;
 }
 
 /* ================= KHUNG CHỨA DẢI PHIM (SCRAPBOOK CARD) ================= */
@@ -834,7 +842,8 @@ button, input, select, textarea {
   }
 
   .film-main-title {
-    font-size: 18.5px;
+    font-size: clamp(12px, 3.8vw, 15.5px);
+    white-space: nowrap;
   }
 
   .film-sub-text {
