@@ -1,149 +1,240 @@
 /**
  * NGỌC TÚ – GRADUATION INVITATION 2026
  * Script xử lý:
- * 1. Đọc URL Query Parameter (?to=...) để cá nhân hóa lời mời
- * 2. Bộ đếm ngược Countdown Timer đến 08:00 ngày 28.11.2026
- * 3. Modal hướng dẫn gửi xe
+ * 1. Đọc URL Query Parameter (?to=...) để cá nhân hóa tiêu đề trang
+ * 2. Bộ điều khiển Dải phim 35mm "Hành trình đại học 2022–2026":
+ *    - Tự động trôi ngang mượt mà, không giật
+ *    - Tự động dừng tại phân cảnh tốt nghiệp 2026
+ *    - Nút Phát / Tạm dừng / Xem lại
+ *    - Nút Chuyển cảnh Trước / Sau & Thanh mốc thời gian (Timeline)
+ *    - Hỗ trợ vuốt chạm trên thiết bị di động (Touch swipe)
+ *    - Tương thích prefers-reduced-motion, không phát âm thanh
  */
 
 document.addEventListener("DOMContentLoaded", () => {
-  // ================= 1. DỮ LIỆU KHÁCH MỜI CÁ NHÂN HÓA =================
-  const GUESTS_DATA = {
-    "Nhi": {
-      name: "Nhi",
-      greeting: "Gửi Nhi thương mến,",
-      message: "Cảm ơn Nhi vì đã luôn ở bên cạnh, lắng nghe và chia sẻ cùng Tú qua từng giai đoạn của thời sinh viên. Những buổi chuyện trò, những khoảnh khắc vui buồn có Nhi đồng hành đã làm cho những năm tháng thanh xuân của Tú trở nên trọn vẹn và đáng nhớ hơn bao giờ hết.\n\nNgày 28.11 này, Tú rất mong có Nhi ở bên cạnh để cùng Tú ghi lại dấu mốc quan trọng này nhé! ❤️"
-    },
-    "Khánh": {
-      name: "Khánh",
-      greeting: "Gửi Khánh,",
-      message: "Bốn năm đại học trôi qua thật nhanh với biết bao kỷ niệm và thử thách. Cảm ơn Khánh vì đã luôn là một người bạn tuyệt vời, luôn đồng hành và tiếp thêm năng lượng tích cực cho Tú trong suốt chặng đường vừa qua.\n\nNgày tốt nghiệp này sẽ thật thiếu trọn vẹn nếu không có Khánh. Hẹn gặp Khánh vào sáng Thứ 7 ngày 28.11 nhé, tụi mình nhất định phải chụp thật nhiều ảnh đẹp cùng nhau nha!"
-    },
-    "Phát": {
-      name: "Phát",
-      greeting: "Gửi Phát,",
-      message: "Nhìn lại chặng đường 4 năm đại học đã qua, Tú thật sự biết ơn vì luôn có Phát đồng hành và ủng hộ. Cảm ơn những lần hỗ trợ nhiệt tình, những cuộc trò chuyện và sự chân thành mà Phát đã dành cho Tú.\n\nCột mốc tốt nghiệp này là một kỷ niệm vô cùng ý nghĩa của thanh xuân. Tú rất mong được đón Phát đến chung vui và chụp cùng Tú những tấm hình thật đẹp vào ngày 28.11 này nha!"
-    },
-    "Trang": {
-      name: "Trang",
-      greeting: "Gửi Trang yêu quý,",
-      message: "Cảm ơn Trang vì đã là một phần thật dịu dàng và ấm áp trong những năm tháng đại học của Tú. Cảm ơn những sẻ chia, những nụ cười và sự thấu hiểu mà Trang luôn dành cho Tú suốt thời gian qua.\n\nNgày 28.11 là ngày Tú chính thức khép lại một chương rực rỡ và mở ra hành trình mới. Hãy đến chung vui và lưu lại những khoảnh khắc đáng nhớ nhất cùng Tú nha Trang ơi!"
-    },
-    "Duy": {
-      name: "Duy",
-      greeting: "Gửi Duy,",
-      message: "Thấm thoát mà 4 năm đại học đã đến đích rồi. Cảm ơn Duy vì đã luôn ở đó, luôn là người bạn đồng hành đáng tin cậy và chia sẻ cùng Tú qua từng mùa thi, từng bài thuyết trình và những deadline căng thẳng.\n\nNgày 28.11 này là một dấu mốc rất đặc biệt đối với Tú. Tú rất mong Duy sẽ có mặt để cùng Tú ăn mừng và lưu lại những khoảnh khắc thanh xuân thật đáng nhớ này nhé!"
-    },
-    "Thuận": {
-      name: "Thuận",
-      greeting: "Gửi Thuận,",
-      message: "Cảm ơn Thuận vì đã luôn đồng hành, giúp đỡ và mang lại thật nhiều niềm vui trong suốt những năm tháng thanh xuân vừa qua của Tú. Nhờ có những người bạn như Thuận mà chặng đường đại học của Tú đã trở nên vô cùng ý nghĩa và nhiều màu sắc.\n\nSáng ngày 28.11 này, Tú rất vui và hạnh phúc nếu được đón Thuận đến cùng chung vui và chụp thật nhiều bức hình kỷ niệm nha!"
-    }
-  };
-
-  // Đọc query param ?to= hoặc ?guest=
+  // ================= 1. CÁ NHÂN HÓA TIÊU ĐỀ THEO QUERY PARAM =================
   const urlParams = new URLSearchParams(window.location.search);
   const rawGuestParam = urlParams.get("to") || urlParams.get("guest") || urlParams.get("name");
 
-  const greetingEl = document.getElementById("guestGreeting");
-  const messageEl = document.getElementById("guestMessage");
-
   if (rawGuestParam) {
-    const guestParam = rawGuestParam.trim();
-    // Tìm kiếm trong danh sách khách mời (case-insensitive)
-    const foundKey = Object.keys(GUESTS_DATA).find(
-      key => key.toLowerCase() === guestParam.toLowerCase()
-    );
+    const guestName = rawGuestParam.trim();
+    document.title = `${guestName} ơi, cùng Tú nhìn lại hành trình OU 2022–2026 🎓`;
+  }
 
-    if (foundKey && GUESTS_DATA[foundKey]) {
-      const guest = GUESTS_DATA[foundKey];
-      if (greetingEl) greetingEl.textContent = guest.greeting;
-      if (messageEl) messageEl.innerHTML = guest.message.replace(/\n/g, "<br>");
-      document.title = `${guest.name} ơi, Tú tốt nghiệp rồi nè! 🎓`;
+  // ================= 2. BỘ ĐIỀU KHIỂN DẢI PHIM 35MM =================
+  const filmTrack = document.getElementById("filmTrack");
+  const filmViewport = document.getElementById("filmViewport");
+  const btnPrev = document.getElementById("btnFilmPrev");
+  const btnNext = document.getElementById("btnFilmNext");
+  const btnPlay = document.getElementById("btnFilmPlay");
+  const playIcon = document.getElementById("playIcon");
+  const playLabel = document.getElementById("playLabel");
+  const timelineDots = document.querySelectorAll(".timeline-dot");
+
+  const totalFrames = 4;
+  let currentFrame = 0;
+  let autoTimer = null;
+  const slideInterval = 3800; // 3.8 giây mỗi khung hình để người xem kịp đọc chú thích
+
+  // Kiểm tra cài đặt prefers-reduced-motion
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let isPlaying = !prefersReducedMotion;
+
+  // Cập nhật vị trí dải phim
+  function updateFilmPosition(isManual = false) {
+    if (!filmTrack) return;
+
+    // Di chuyển dải phim theo chiều ngang
+    filmTrack.style.transform = `translateX(-${currentFrame * 100}%)`;
+
+    // Cập nhật trạng thái timeline dots
+    timelineDots.forEach((dot, index) => {
+      const isActive = index === currentFrame;
+      dot.classList.toggle("active", isActive);
+      dot.setAttribute("aria-selected", isActive ? "true" : "false");
+    });
+
+    // Cập nhật trạng thái nút chuyển cảnh (disable ở hai đầu nếu cần hoặc xoay vòng)
+    if (btnPrev) btnPrev.style.opacity = currentFrame === 0 ? "0.6" : "1";
+    if (btnNext) btnNext.style.opacity = currentFrame === totalFrames - 1 ? "0.6" : "1";
+
+    // Khi đến phân cảnh cuối cùng (Năm 2026 - Tốt nghiệp)
+    if (currentFrame === totalFrames - 1) {
+      // Dừng tự động phát theo yêu cầu: "Khi kết thúc, dừng tại phân cảnh tốt nghiệp năm 2026"
+      stopAutoPlay();
+      if (playIcon) playIcon.textContent = "↻";
+      if (playLabel) playLabel.textContent = "Xem lại";
+    } else if (isPlaying) {
+      if (playIcon) playIcon.textContent = "⏸";
+      if (playLabel) playLabel.textContent = "Tạm dừng";
     } else {
-      // Khách mời khác không có trong danh sách cố định
-      if (greetingEl) greetingEl.textContent = `Gửi ${guestParam} thương mến,`;
-      if (messageEl) {
-        messageEl.innerHTML = `Có những người không cần đứng trên sân khấu cùng mình, nhưng lại là lý do mình đi được tới đó. Cảm ơn ${guestParam} vì bốn năm thanh xuân vừa qua.<br><br>Ngày 28.11 này, Tú rất mong được đón ${guestParam} đến chung vui và chụp cùng Tú những tấm hình kỷ niệm thật đẹp nha! ❤️`;
-      }
-      document.title = `${guestParam} ơi, Tú tốt nghiệp rồi nè! 🎓`;
+      if (playIcon) playIcon.textContent = "▶";
+      if (playLabel) playLabel.textContent = "Phát tiếp";
     }
   }
 
-  // ================= 2. BỘ ĐẾM NGƯỢC COUNTDOWN TIMER =================
-  // Mục tiêu: 08:00:00 ngày 28 tháng 11 năm 2026 (GMT+7)
-  const targetDate = new Date("2026-11-28T08:00:00+07:00").getTime();
-
-  const daysEl = document.getElementById("cdDays");
-  const hoursEl = document.getElementById("cdHours");
-  const minutesEl = document.getElementById("cdMinutes");
-  const secondsEl = document.getElementById("cdSeconds");
-
-  function updateCountdown() {
-    const now = new Date().getTime();
-    const distance = targetDate - now;
-
-    if (distance <= 0) {
-      if (daysEl) daysEl.textContent = "00";
-      if (hoursEl) hoursEl.textContent = "00";
-      if (minutesEl) minutesEl.textContent = "00";
-      if (secondsEl) secondsEl.textContent = "00";
-      const titleEl = document.querySelector(".countdown-title");
-      if (titleEl) titleEl.innerHTML = "🎉 HÔM NAY LÀ NGÀY TỐT NGHIỆP CỦA TÚ! 🎉";
-      return;
-    }
-
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-    if (daysEl) daysEl.textContent = String(days).padStart(2, "0");
-    if (hoursEl) hoursEl.textContent = String(hours).padStart(2, "0");
-    if (minutesEl) minutesEl.textContent = String(minutes).padStart(2, "0");
-    if (secondsEl) secondsEl.textContent = String(seconds).padStart(2, "0");
-  }
-
-  updateCountdown();
-  setInterval(updateCountdown, 1000);
-
-  // ================= 3. MODAL HƯỚNG DẪN GỬI XE =================
-  const modal = document.getElementById("parkingModal");
-  const btnOpen = document.getElementById("btnParking");
-  const btnClose = document.getElementById("btnCloseParking");
-  const btnOk = document.getElementById("btnOkParking");
-
-  function openParkingModal() {
-    if (modal) {
-      modal.removeAttribute("hidden");
-      document.body.style.overflow = "hidden";
+  // Chuyển sang phân cảnh tiếp theo
+  function nextFrame(isManual = false) {
+    if (currentFrame < totalFrames - 1) {
+      currentFrame++;
+      updateFilmPosition(isManual);
+    } else if (isManual) {
+      // Nếu bấm nút thủ công ở cuối, cho phép quay về đầu
+      currentFrame = 0;
+      updateFilmPosition(true);
+    } else {
+      // Khi tự động chạy đến cuối: Dừng lại ở phân cảnh tốt nghiệp 2026
+      stopAutoPlay();
     }
   }
 
-  function closeParkingModal() {
-    if (modal) {
-      modal.setAttribute("hidden", "");
-      document.body.style.overflow = "";
+  // Chuyển về phân cảnh trước
+  function prevFrame() {
+    if (currentFrame > 0) {
+      currentFrame--;
+      updateFilmPosition(true);
+    } else {
+      currentFrame = totalFrames - 1;
+      updateFilmPosition(true);
     }
   }
 
-  if (btnOpen) btnOpen.addEventListener("click", openParkingModal);
-  if (btnClose) btnClose.addEventListener("click", closeParkingModal);
-  if (btnOk) btnOk.addEventListener("click", closeParkingModal);
+  // Bắt đầu tự động chuyển cảnh
+  function startAutoPlay() {
+    if (prefersReducedMotion) return;
+    stopAutoPlay();
+    isPlaying = true;
+    if (playIcon) playIcon.textContent = "⏸";
+    if (playLabel) playLabel.textContent = "Tạm dừng";
 
-  // Đóng modal khi click vào vùng backdrop bên ngoài
-  if (modal) {
-    modal.addEventListener("click", (e) => {
-      if (e.target === modal) {
-        closeParkingModal();
+    autoTimer = setInterval(() => {
+      nextFrame(false);
+    }, slideInterval);
+  }
+
+  // Tạm dừng tự động chuyển cảnh
+  function stopAutoPlay() {
+    if (autoTimer) {
+      clearInterval(autoTimer);
+      autoTimer = null;
+    }
+    isPlaying = false;
+  }
+
+  // Xử lý nút Phát / Tạm dừng / Xem lại
+  if (btnPlay) {
+    btnPlay.addEventListener("click", () => {
+      if (currentFrame === totalFrames - 1) {
+        // Nếu đang ở phân cảnh 2026 và bấm Xem lại: quay về đầu và bắt đầu phát
+        currentFrame = 0;
+        updateFilmPosition(true);
+        startAutoPlay();
+      } else if (isPlaying) {
+        stopAutoPlay();
+        if (playIcon) playIcon.textContent = "▶";
+        if (playLabel) playLabel.textContent = "Phát tiếp";
+      } else {
+        startAutoPlay();
       }
     });
   }
 
-  // Đóng bằng phím Escape
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && modal && !modal.hasAttribute("hidden")) {
-      closeParkingModal();
-    }
+  // Nút Chuyển cảnh Trước
+  if (btnPrev) {
+    btnPrev.addEventListener("click", () => {
+      stopAutoPlay();
+      prevFrame();
+      if (playIcon && currentFrame < totalFrames - 1) {
+        playIcon.textContent = "▶";
+        if (playLabel) playLabel.textContent = "Phát tiếp";
+      }
+    });
+  }
+
+  // Nút Chuyển cảnh Tiếp theo
+  if (btnNext) {
+    btnNext.addEventListener("click", () => {
+      stopAutoPlay();
+      nextFrame(true);
+      if (playIcon && currentFrame < totalFrames - 1) {
+        playIcon.textContent = "▶";
+        if (playLabel) playLabel.textContent = "Phát tiếp";
+      }
+    });
+  }
+
+  // Bấm vào mốc thời gian Timeline
+  timelineDots.forEach(dot => {
+    dot.addEventListener("click", () => {
+      stopAutoPlay();
+      const targetIndex = parseInt(dot.getAttribute("data-target"), 10);
+      if (!isNaN(targetIndex) && targetIndex >= 0 && targetIndex < totalFrames) {
+        currentFrame = targetIndex;
+        updateFilmPosition(true);
+        if (playIcon && currentFrame < totalFrames - 1) {
+          playIcon.textContent = "▶";
+          if (playLabel) playLabel.textContent = "Phát tiếp";
+        }
+      }
+    });
   });
+
+  // Hỗ trợ phím mũi tên bàn phím khi người dùng focus vào khung phim
+  if (filmViewport) {
+    filmViewport.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        stopAutoPlay();
+        prevFrame();
+      } else if (e.key === "ArrowRight") {
+        e.preventDefault();
+        stopAutoPlay();
+        nextFrame(true);
+      } else if (e.key === " ") {
+        e.preventDefault();
+        if (btnPlay) btnPlay.click();
+      }
+    });
+  }
+
+  // ================= VUỐT CHẠM TRÊN THIẾT BỊ DI ĐỘNG (TOUCH SWIPE) =================
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+  if (filmViewport) {
+    filmViewport.addEventListener("touchstart", (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    filmViewport.addEventListener("touchend", (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    }, { passive: true });
+  }
+
+  function handleSwipe() {
+    const swipeThreshold = 45; // Khoảng cách vuốt tối thiểu
+    const diff = touchEndX - touchStartX;
+
+    if (Math.abs(diff) > swipeThreshold) {
+      stopAutoPlay();
+      if (diff < 0) {
+        // Vuốt sang trái -> Xem ảnh tiếp theo
+        nextFrame(true);
+      } else {
+        // Vuốt sang phải -> Xem ảnh trước
+        prevFrame();
+      }
+      if (playIcon && currentFrame < totalFrames - 1) {
+        playIcon.textContent = "▶";
+        if (playLabel) playLabel.textContent = "Phát tiếp";
+      }
+    }
+  }
+
+  // Khởi chạy dải phim
+  updateFilmPosition();
+  if (isPlaying) {
+    startAutoPlay();
+  }
 });

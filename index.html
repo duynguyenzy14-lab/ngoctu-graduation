@@ -57,131 +57,172 @@
       </div>
     </section>
 
-    <!-- ================= SECTION 02: NẰM BÊN PHẢI (THE DIGITAL INVITATION & DETAILS) ================= -->
-    <section class="section-panel sec-right" id="section02" aria-label="Section 02 - Thư mời & Thông tin buổi lễ">
+    <!-- ================= SECTION 02: NẰM BÊN PHẢI (DẢI PHIM 35MM – HÀNH TRÌNH ĐẠI HỌC 2022–2026) ================= -->
+    <section class="section-panel sec-right" id="section02" aria-label="Section 02 - Dải phim 35mm Hành trình đại học 2022-2026">
       <div class="sec-right-inner">
 
-        <!-- TẤM THIỆP MỜI SCRAPBOOK GIẤY MỸ THUẬT -->
-        <article class="invitation-card" id="invitationCard">
-          
-          <!-- Băng dính washi trên đầu thiệp -->
-          <div class="washi-tape washi-card-top"></div>
-
-          <!-- Nơ trang trí coquette ở giữa đầu thiệp -->
-          <div class="card-bow-container" aria-hidden="true">
-            <img src="./graduation_files/no-3.png" alt="Nơ trang trí" class="card-bow-img">
+        <!-- PHẦN MỞ ĐẦU: TIÊU ĐỀ LỚN & ĐOẠN CHỮ Ý NGHĨA -->
+        <header class="film-header">
+          <div class="film-header-badge">
+            <span class="film-header-icon">🎞️</span>
+            <span>MEMORIES · 2022 – 2026</span>
           </div>
+          <h2 class="film-main-title">BỐN NĂM, THẬT NHIỀU KHOẢNH KHẮC TẠI OU</h2>
+          <p class="film-sub-text">
+            Những năm tháng ấy,<br>
+            mình đã lớn lên như thế.<br>
+            Bốn năm, nhiều câu chuyện và vô số khoảnh khắc mình muốn lưu giữ thật lâu
+          </p>
+        </header>
 
-          <!-- Huy hiệu lời mời -->
-          <div class="card-badge">
-            <span>OFFICIAL INVITATION · CLASS OF 2026</span>
-          </div>
+        <!-- DẢI PHIM 35MM (35MM FILM STRIP CARD) -->
+        <div class="film-strip-card" id="filmStripCard">
 
-          <!-- Lời chào cá nhân hóa (Personalized Greeting) -->
-          <div class="letter-greeting-box">
-            <h2 class="letter-greeting" id="guestGreeting">Gửi bạn thương mến,</h2>
-          </div>
+          <!-- Ruy băng / Washi dán đầu khung phim -->
+          <div class="film-washi-tape" aria-hidden="true"></div>
 
-          <!-- Nội dung tâm sự / lời nhắn mời -->
-          <div class="letter-message-box">
-            <p class="letter-text" id="guestMessage">
-              Có những người không cần đứng trên sân khấu cùng mình, nhưng lại là lý do mình đi được tới đó.
-              Cảm ơn bạn vì bốn năm thanh xuân rực rỡ vừa qua. Ngày 28.11 này, Tú rất mong có bạn ở bên cạnh để cùng Tú ghi lại dấu mốc quan trọng này nhé! ❤️
-            </p>
-          </div>
-
-          <!-- KHUNG THÔNG TIN THỜI GIAN & ĐỊA ĐIỂM (SCRAPBOOK TICKET STYLE) -->
-          <div class="event-details-ticket">
+          <!-- Cuộn dải phim 35mm vintage -->
+          <div class="film-35mm-reel">
             
-            <!-- Hàng 1: Thời gian -->
-            <div class="detail-row">
-              <div class="detail-icon-circle">
-                <span>🗓️</span>
-              </div>
-              <div class="detail-content">
-                <span class="detail-label">Thời gian</span>
-                <p class="detail-val-strong">Sáng Thứ 7, ngày 28 tháng 11 năm 2026</p>
-                <div class="detail-sub-pill">
-                  <span class="pill-dot"></span>
-                  <span>Khung giờ chụp hình cùng Tú: <strong>10:30 – 12:30</strong></span>
-                </div>
+            <!-- Hàng lỗ perforation phía trên + thông số phim vintage -->
+            <div class="film-perforation-bar bar-top">
+              <div class="sprocket-holes"></div>
+              <div class="film-meta-text">
+                <span class="meta-tag">▶ KODAK PORTRA 400</span>
+                <span class="meta-tag">35mm SAFETY FILM</span>
+                <span class="meta-tag">OU · 2022–2026</span>
               </div>
             </div>
 
-            <!-- Đường cắt vé scrapbook -->
-            <div class="ticket-divider" aria-hidden="true">
-              <span class="notch notch-left"></span>
-              <span class="dash-line"></span>
-              <span class="notch notch-right"></span>
+            <!-- Khung chiếu dải phim (Film Viewport) -->
+            <div class="film-viewport" id="filmViewport" tabindex="0" aria-label="Khung cuộn dải phim 35mm">
+              <div class="film-track" id="filmTrack">
+
+                <!-- PHÂN CẢNH 1: NĂM 2022 -->
+                <article class="film-frame" data-index="0" data-year="2022" id="frame-2022">
+                  <div class="frame-edge-label">
+                    <span class="frame-code">▶ 22A</span>
+                    <span class="frame-scene">SCENE 01 / 04</span>
+                  </div>
+                  <div class="frame-photo-box">
+                    <!-- Ảnh năm 2022 (Dễ dàng thay đổi ảnh tại đây) -->
+                    <img src="./graduation_files/photos/lvhq0101-800.jpg" alt="Ngọc Tú - Năm 2022 tại OU" class="film-photo" id="filmImg2022" loading="eager">
+                    <span class="frame-year-badge">2022</span>
+                  </div>
+                  <div class="frame-caption-box">
+                    <h3 class="frame-title">Năm 2022 · Bước khởi đầu</h3>
+                    <p class="frame-desc">Bắt đầu chặng đường mới tại OU – những ngày đầu bỡ ngỡ, ngây ngô và tràn đầy háo hức với giảng đường đại học.</p>
+                  </div>
+                </article>
+
+                <!-- PHÂN CẢNH 2: NĂM 2023 -->
+                <article class="film-frame" data-index="1" data-year="2023" id="frame-2023">
+                  <div class="frame-edge-label">
+                    <span class="frame-code">▶ 23A</span>
+                    <span class="frame-scene">SCENE 02 / 04</span>
+                  </div>
+                  <div class="frame-photo-box">
+                    <!-- Ảnh năm 2023 (Dễ dàng thay đổi ảnh tại đây) -->
+                    <img src="./graduation_files/photos/lvhq0357-800.jpg" alt="Ngọc Tú - Năm 2023 tại OU" class="film-photo" id="filmImg2023" loading="lazy">
+                    <span class="frame-year-badge">2023</span>
+                  </div>
+                  <div class="frame-caption-box">
+                    <h3 class="frame-title">Năm 2023 · Kỷ niệm rực rỡ</h3>
+                    <p class="frame-desc">Hòa mình vào nhịp sống sinh viên – những mùa thi, những người bạn đồng hành và tiếng cười rộn rã nơi sân trường.</p>
+                  </div>
+                </article>
+
+                <!-- PHÂN CẢNH 3: NĂM 2024–2025 -->
+                <article class="film-frame" data-index="2" data-year="2024-2025" id="frame-2024">
+                  <div class="frame-edge-label">
+                    <span class="frame-code">▶ 25B</span>
+                    <span class="frame-scene">SCENE 03 / 04</span>
+                  </div>
+                  <div class="frame-photo-box">
+                    <!-- Ảnh năm 2024–2025 (Dễ dàng thay đổi ảnh tại đây) -->
+                    <img src="./graduation_files/photos/lvhq0556-800.jpg" alt="Ngọc Tú - Năm 2024-2025 tại OU" class="film-photo" id="filmImg2024" loading="lazy">
+                    <span class="frame-year-badge">2024–2025</span>
+                  </div>
+                  <div class="frame-caption-box">
+                    <h3 class="frame-title">Năm 2024–2025 · Trưởng thành</h3>
+                    <p class="frame-desc">Vững vàng qua từng mùa đồ án, thực tập chuyên ngành Quản lý công và những đêm deadline để tôi luyện bản thân.</p>
+                  </div>
+                </article>
+
+                <!-- PHÂN CẢNH 4: NĂM 2026 (TỐT NGHIỆP - KẾT THÚC DẢI PHIM SẼ DỪNG TẠI ĐÂY) -->
+                <article class="film-frame film-frame-final" data-index="3" data-year="2026" id="frame-2026">
+                  <div class="frame-edge-label">
+                    <span class="frame-code">▶ 26A [FIN]</span>
+                    <span class="frame-scene">SCENE 04 / 04 · GRADUATION</span>
+                  </div>
+                  <div class="frame-photo-box">
+                    <!-- Ảnh tốt nghiệp năm 2026 (Dễ dàng thay đổi ảnh tại đây) -->
+                    <img src="./graduation_files/photos/lvhq0003-800.jpg" alt="Ngọc Tú - Tốt nghiệp 2026 tại OU" class="film-photo" id="filmImg2026" loading="lazy">
+                    <span class="frame-year-badge badge-graduation">2026 🎓</span>
+                  </div>
+                  <div class="frame-caption-box">
+                    <h3 class="frame-title">Năm 2026 · Chạm đích rực rỡ</h3>
+                    <p class="frame-desc">Cầm bằng tốt nghiệp trên tay, khép lại 4 năm rực rỡ tại OU và sẵn sàng bước vào một hành trình mới thật tươi sáng!</p>
+                  </div>
+                </article>
+
+              </div>
             </div>
 
-            <!-- Hàng 2: Địa điểm -->
-            <div class="detail-row">
-              <div class="detail-icon-circle">
-                <span>📍</span>
-              </div>
-              <div class="detail-content">
-                <span class="detail-label">Địa điểm tổ chức</span>
-                <p class="detail-val-strong">Trường Đại học Mở TP. Hồ Chí Minh</p>
-                <p class="detail-val-sub">97 Võ Văn Tần, Phường Xuân Hòa (Võ Thị Sáu), Quận 3, TP.HCM</p>
+            <!-- Hàng lỗ perforation phía dưới + thông tin cuộn phim -->
+            <div class="film-perforation-bar bar-bottom">
+              <div class="sprocket-holes"></div>
+              <div class="film-meta-text">
+                <span class="meta-tag">SAFETY FILM</span>
+                <span class="meta-tag">EXPOSURE 04</span>
+                <span class="meta-tag">NGUYỄN NGỌC TÚ · CLASS OF 2026</span>
               </div>
             </div>
 
           </div>
 
-          <!-- BỘ ĐẾM NGƯỢC COUNTDOWN TIMER -->
-          <div class="countdown-section">
-            <p class="countdown-title">
-              <span class="heart-icon">💖</span> CÙNG TÚ ĐẾM NGƯỢC NÀO <span class="heart-icon">💖</span>
-            </p>
-            <div class="countdown-grid" id="countdownGrid">
-              <div class="countdown-item">
-                <span class="countdown-num" id="cdDays">00</span>
-                <span class="countdown-unit">Ngày</span>
-              </div>
-              <span class="countdown-colon">:</span>
-              <div class="countdown-item">
-                <span class="countdown-num" id="cdHours">00</span>
-                <span class="countdown-unit">Giờ</span>
-              </div>
-              <span class="countdown-colon">:</span>
-              <div class="countdown-item">
-                <span class="countdown-num" id="cdMinutes">00</span>
-                <span class="countdown-unit">Phút</span>
-              </div>
-              <span class="countdown-colon">:</span>
-              <div class="countdown-item">
-                <span class="countdown-num" id="cdSeconds">00</span>
-                <span class="countdown-unit">Giây</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- CÁC NÚT HÀNH ĐỘNG TƯƠNG TÁC (DIGITAL ACTIONS) -->
-          <div class="card-actions">
-            <a href="https://maps.app.goo.gl/ZjacVTJBH1mfbgay9" target="_blank" rel="noopener noreferrer" class="btn-action btn-primary">
-              <span class="btn-icon">🗺️</span>
-              <span>Chỉ đường Google Maps</span>
-            </a>
+          <!-- BỘ ĐIỀU KHIỂN DẢI PHIM (CONTROLS & TIMELINE) -->
+          <div class="film-controls-panel">
             
-            <button type="button" class="btn-action btn-secondary" id="btnParking">
-              <span class="btn-icon">🛵</span>
-              <span>Hướng dẫn gửi xe</span>
-            </button>
-            
-            <a href="tel:0376693219" class="btn-action btn-outline">
-              <span class="btn-icon">📞</span>
-              <span>Liên hệ Tú: 0376 693 219</span>
-            </a>
+            <!-- Nút điều hướng & Phát/Dừng -->
+            <div class="film-button-group">
+              <button type="button" class="btn-film-nav" id="btnFilmPrev" aria-label="Phân cảnh trước">
+                <span>◄</span>
+              </button>
+
+              <button type="button" class="btn-film-play" id="btnFilmPlay" aria-label="Phát hoặc tạm dừng dải phim">
+                <span id="playIcon">⏸</span>
+                <span id="playLabel">Tạm dừng</span>
+              </button>
+
+              <button type="button" class="btn-film-nav" id="btnFilmNext" aria-label="Phân cảnh tiếp theo">
+                <span>►</span>
+              </button>
+            </div>
+
+            <!-- Mốc thời gian tương tác (Timeline Indicator) -->
+            <div class="film-timeline" role="tablist" aria-label="Mốc thời gian hành trình">
+              <button type="button" class="timeline-dot active" data-target="0" role="tab" aria-selected="true" id="tab-2022">
+                <span class="dot-indicator"></span>
+                <span class="dot-text">2022</span>
+              </button>
+              <button type="button" class="timeline-dot" data-target="1" role="tab" aria-selected="false" id="tab-2023">
+                <span class="dot-indicator"></span>
+                <span class="dot-text">2023</span>
+              </button>
+              <button type="button" class="timeline-dot" data-target="2" role="tab" aria-selected="false" id="tab-2024">
+                <span class="dot-indicator"></span>
+                <span class="dot-text">2024–2025</span>
+              </button>
+              <button type="button" class="timeline-dot" data-target="3" role="tab" aria-selected="false" id="tab-2026">
+                <span class="dot-indicator"></span>
+                <span class="dot-text">2026 🎓</span>
+              </button>
+            </div>
+
           </div>
 
-          <!-- LỜI KẾT VÀ CHỮ KÝ VIẾT TAY -->
-          <div class="card-signature">
-            <p class="sig-lead">With love & warmest gratitude,</p>
-            <p class="sig-name">Ngọc Tú</p>
-          </div>
-
-        </article>
+        </div>
 
       </div>
     </section>
