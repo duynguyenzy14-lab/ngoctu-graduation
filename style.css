@@ -275,7 +275,7 @@ button, input, select, textarea {
 /* ================= 5. SECTION 02: BÊN PHẢI (DẢI PHIM 35MM – HÀNH TRÌNH ĐẠI HỌC 2022–2026) ================= */
 .sec-right {
   background-color: var(--bg-sec-02);
-  /* Chuyển sắc Hồng kem vintage êm dịu, hài hòa với Section 1 */
+  /* Chuyển sắc Hồng kem vintage êm dịu, hài hòa cân đối với Section 1 */
   background-image: 
     linear-gradient(rgba(240, 175, 195, 0.12) 1px, transparent 1px),
     linear-gradient(90deg, rgba(240, 175, 195, 0.12) 1px, transparent 1px),
@@ -285,18 +285,19 @@ button, input, select, textarea {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  padding: clamp(36px, 4.5vh, 48px) clamp(18px, 2.8vw, 36px) clamp(24px, 3vh, 36px);
+  justify-content: center;
+  padding: clamp(32px, 4vw, 48px) clamp(20px, 3.5vw, 40px);
   z-index: 1;
 }
 
 .sec-right-inner {
   width: 100%;
-  max-width: 500px;
-  margin: auto 0;
+  max-width: 520px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
 }
 
 /* ================= HEADER CỦA DẢI PHIM ================= */
@@ -448,15 +449,41 @@ button, input, select, textarea {
   }
 }
 
-/* Từng khung phim 35mm: thuần ảnh từ bg-pics, không chữ chèn */
+/* Từng khung phim 35mm: thuần ảnh từ bg-pics, chuẩn bố cục ngang / dọc / vuông */
 .film-frame-item {
   flex: 0 0 auto;
-  width: clamp(230px, 25vw, 290px);
-  aspect-ratio: 3 / 2;
+  height: clamp(190px, 24vh, 245px);
   border-radius: 4px;
   overflow: hidden;
   background: #000000;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.42);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 1. Bố cục Ngang (Landscape - tỉ lệ 3:2 chuẩn phim 35mm) */
+.film-frame-item.is-landscape {
+  aspect-ratio: 3 / 2;
+}
+
+/* 1b. Bố cục Ngang rộng (16:9 cho ảnh toàn cảnh như pic-12) */
+.film-frame-item.is-landscape-wide {
+  aspect-ratio: 16 / 9;
+}
+
+/* 2. Bố cục Dọc (Portrait - tỉ lệ 3:4 và 2:3 không bị mất góc hay cắt đầu như pic-06, 11, 14, 19) */
+.film-frame-item.is-portrait {
+  aspect-ratio: 3 / 4;
+}
+
+.film-frame-item.is-portrait-23 {
+  aspect-ratio: 2 / 3;
+}
+
+/* 3. Bố cục Vuông (Square - tỉ lệ 1:1 cho pic-08) */
+.film-frame-item.is-square {
+  aspect-ratio: 1 / 1;
 }
 
 .film-frame-item .film-photo {
