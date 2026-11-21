@@ -10,7 +10,7 @@
   /* Typography - Toàn bộ font chữ trên trang đồng nhất theo Playfair Display */
   --font-main: 'Playfair Display', Georgia, serif;
   --font-editorial: 'Playfair Display', Georgia, serif;
-  --font-handwrite: 'Playfair Display', Georgia, serif;
+  --font-signature: 'Great Vibes', cursive, 'Playfair Display', Georgia, serif;
   --font-film-meta: 'Courier New', Courier, monospace, sans-serif;
 
   /* Bảng màu Pastel Pink & Creamy Scrapbook */
@@ -646,19 +646,26 @@ button, input, select, textarea {
 .letter-content {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
   font-family: var(--font-editorial);
-  font-size: clamp(14px, 3.6vw, 15.5px);
+  font-size: clamp(14px, 3.7vw, 15.5px);
   color: var(--text-dark);
-  line-height: 1.7;
+  line-height: 1.75;
+}
+
+.letter-paragraph {
+  font-size: inherit;
+  line-height: inherit;
 }
 
 .letter-paragraph.highlight-msg {
   font-style: italic;
+  font-size: inherit;
+  line-height: inherit;
   color: #B51E4E;
   background: var(--pink-pastel-light);
-  padding: 10px 14px;
-  border-radius: 8px;
+  padding: 12px 14px;
+  border-radius: 10px;
   border-left: 3px solid var(--pink-accent);
 }
 
@@ -670,17 +677,19 @@ button, input, select, textarea {
 .letter-sign-close {
   font-family: var(--font-editorial);
   font-style: italic;
-  font-size: clamp(12.5px, 3vw, 14px);
+  font-size: clamp(13px, 3.4vw, 14.5px);
   color: var(--text-muted);
   margin-bottom: 2px;
 }
 
 .letter-signature {
-  font-family: var(--font-editorial);
-  font-style: italic;
-  font-size: clamp(21px, 5.5vw, 26px);
-  font-weight: 700;
+  font-family: var(--font-signature);
+  font-style: normal;
+  font-size: clamp(30px, 8vw, 38px);
+  font-weight: 500;
   color: var(--pink-accent);
+  line-height: 1.15;
+  letter-spacing: 0.02em;
 }
 
 /* ================= 9. TRANG 4 (SECTION 04): CHI TIẾT LỄ TỐT NGHIỆP ================= */
