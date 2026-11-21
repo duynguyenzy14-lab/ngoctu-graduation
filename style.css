@@ -923,9 +923,9 @@ button, input, select, textarea {
 
 .rsvp-main-title {
   font-family: var(--font-editorial);
-  font-size: clamp(17px, 4.6vw, 20px);
+  font-size: clamp(18px, 4.8vw, 21px);
   font-weight: 700;
-  color: #2B2125;
+  color: var(--pink-accent);
   letter-spacing: 0.04em;
   margin: 0 0 6px 0;
   line-height: 1.3;
