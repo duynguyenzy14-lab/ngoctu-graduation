@@ -1,8 +1,9 @@
-/**
+﻿/**
  * NGỌC TÚ – GRADUATION INVITATION 2026
- * 1. Tự động phát nhạc nền YouTube (Phùng Khánh Linh - Cảm Ơn Người Đã Thức Cùng Tôi)
- * 2. Hiệu ứng lật sang trang mới như lật sách 3D (Spread 1: Bìa & Dải phim <-> Spread 2: Thư mời & Thông tin)
- * 3. Cá nhân hóa thư mời theo URL query parameter (?to=Nhi, ?to=Khánh, ?to=Trang...)
+ * 1. Multi-page 3D Mobile Book Flip (Page 1: Bìa -> Page 2: Dải phim -> Page 3: Thư mời -> Page 4: Chi tiết)
+ * 2. Cảm ứng vuốt tay (Touch Swipe Left/Right) tối ưu 100% trên điện thoại
+ * 3. Cá nhân hóa lời nhắn cho khách mời (?to=Nhi, ?to=Khánh, ?to=Trang...)
+ * 4. Nhạc nền YouTube tự động phát & tự động mở tiếng khi chạm (Phùng Khánh Linh - Cảm Ơn Người Đã Thức Cùng Tôi)
  */
 
 // ================= DỮ LIỆU CÁ NHÂN HÓA KHÁCH MỜI =================
@@ -33,8 +34,14 @@ const GUEST_DATA = {
   }
 };
 
-// ================= 1. CÁ NHÂN HÓA LỜI NHẮN THEO QUERY PARAM =================
+// ================= KHỞI TẠO DOM CONTENT LOADED =================
 document.addEventListener("DOMContentLoaded", () => {
+  initPersonalizedGreeting();
+  initMobileBookFlip();
+});
+
+// ================= 1. CÁ NHÂN HÓA LỜI NHẮN THEO QUERY PARAM =================
+function initPersonalizedGreeting() {
   const urlParams = new URLSearchParams(window.location.search);
   const rawGuestParam = urlParams.get("to") || urlParams.get("guest") || urlParams.get("name");
 
@@ -58,75 +65,136 @@ document.addEventListener("DOMContentLoaded", () => {
       if (elSalutation) elSalutation.textContent = `Gửi ${guestName} thương mến,`;
     }
   }
+}
 
-  // Khởi tạo hiệu ứng lật trang 3D
-  initBookPageFlip();
-});
+// ================= 2. HỆ THỐNG LẬT SÁCH 3D ĐA TRANG CHO ĐIỆN THOẠI =================
+const PAGE_TITLES = {
+  1: "Trang 1 / 4 · Bìa kỷ niệm",
+  2: "Trang 2 / 4 · Dải phim 35mm",
+  3: "Trang 3 / 4 · Thư mời từ Tú",
+  4: "Trang 4 / 4 · Chi tiết lễ tốt nghiệp"
+};
 
-// ================= 2. HIỆU ỨNG LẬT SANG TRANG MỚI NHƯ LẬT SÁCH (3D BOOK PAGE FLIP) =================
-function initBookPageFlip() {
+let currentPage = 1;
+let isFlipping = false;
+
+function initMobileBookFlip() {
   const bookViewport = document.getElementById("bookViewport");
-  const spread1 = document.getElementById("spread1");
-  const spread2 = document.getElementById("spread2");
-  const btnFlipForward = document.getElementById("btnFlipForward");
-  const cornerPageCurl = document.getElementById("cornerPageCurl");
-  const btnFlipBackward = document.getElementById("btnFlipBackward");
-  const cornerPageCurlBack = document.getElementById("cornerPageCurlBack");
+  const navDots = document.querySelectorAll(".nav-dot");
+  const navPageLabel = document.getElementById("navPageLabel");
 
-  let currentSpread = 1;
-  let isAnimating = false;
-
-  function flipToSpread(target) {
-    if (isAnimating || currentSpread === target || !bookViewport) return;
-    isAnimating = true;
-
-    if (target === 2) {
-      // Lật tiến tới Spread 2 (Thư mời & Chi tiết)
-      bookViewport.classList.remove("is-turning-backward");
-      bookViewport.classList.add("is-turning-forward");
-
-      setTimeout(() => {
-        spread1.classList.remove("is-active");
-        spread2.classList.add("is-active");
-        bookViewport.classList.remove("is-turning-forward");
-        currentSpread = 2;
-        isAnimating = false;
-        if (window.innerWidth < 992) {
-          window.scrollTo({ top: 0, behavior: "smooth" });
-        }
-      }, 700);
-    } else {
-      // Lật quay về Spread 1 (Bìa & Dải phim 35mm)
-      bookViewport.classList.remove("is-turning-forward");
-      bookViewport.classList.add("is-turning-backward");
-
-      setTimeout(() => {
-        spread2.classList.remove("is-active");
-        spread1.classList.add("is-active");
-        bookViewport.classList.remove("is-turning-backward");
-        currentSpread = 1;
-        isAnimating = false;
-        if (window.innerWidth < 992) {
-          window.scrollTo({ top: 0, behavior: "smooth" });
-        }
-      }, 700);
+  function updateNav(page) {
+    navDots.forEach(dot => {
+      const dotPage = parseInt(dot.getAttribute("data-page"), 10);
+      dot.classList.toggle("is-active", dotPage === page);
+    });
+    if (navPageLabel && PAGE_TITLES[page]) {
+      navPageLabel.textContent = PAGE_TITLES[page];
     }
   }
 
-  // Bắt sự kiện click các nút lật trang và góc trang sách
-  if (btnFlipForward) btnFlipForward.addEventListener("click", () => flipToSpread(2));
-  if (cornerPageCurl) cornerPageCurl.addEventListener("click", () => flipToSpread(2));
-  if (btnFlipBackward) btnFlipBackward.addEventListener("click", () => flipToSpread(1));
-  if (cornerPageCurlBack) cornerPageCurlBack.addEventListener("click", () => flipToSpread(1));
+  function flipToPage(targetPage) {
+    if (isFlipping || targetPage === currentPage || targetPage < 1 || targetPage > 4 || !bookViewport) return;
+    isFlipping = true;
 
-  // Hỗ trợ phím mũi tên bàn phím: Mũi tên phải qua trang, Mũi tên trái về trang
+    const fromPageEl = document.getElementById(`page${currentPage}`);
+    const toPageEl = document.getElementById(`page${targetPage}`);
+
+    const isForward = targetPage > currentPage;
+
+    bookViewport.classList.remove("is-turning-forward", "is-turning-backward");
+    bookViewport.classList.add(isForward ? "is-turning-forward" : "is-turning-backward");
+
+    if (fromPageEl) fromPageEl.classList.add("is-turning-out");
+    if (toPageEl) {
+      toPageEl.classList.add("is-turning-in");
+      toPageEl.classList.add("is-active");
+    }
+
+    // Cuộn mượt về đầu trang để xem nội dung trang mới rõ ràng
+    window.scrollTo({ top: 0, behavior: "smooth" });
+
+    setTimeout(() => {
+      if (fromPageEl) {
+        fromPageEl.classList.remove("is-active", "is-turning-out");
+      }
+      if (toPageEl) {
+        toPageEl.classList.remove("is-turning-in");
+      }
+      bookViewport.classList.remove("is-turning-forward", "is-turning-backward");
+
+      currentPage = targetPage;
+      updateNav(currentPage);
+      isFlipping = false;
+    }, 650);
+  }
+
+  // 1. Lắng nghe các nút lật trang
+  document.querySelectorAll("[data-flip-target]").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      const target = parseInt(btn.getAttribute("data-flip-target"), 10);
+      if (!isNaN(target)) {
+        flipToPage(target);
+      }
+    });
+  });
+
+  // 2. Lắng nghe thanh chấm điều hướng (Nav Dots)
+  navDots.forEach(dot => {
+    dot.addEventListener("click", () => {
+      const page = parseInt(dot.getAttribute("data-page"), 10);
+      if (!isNaN(page)) {
+        flipToPage(page);
+      }
+    });
+  });
+
+  // 3. Phím mũi tên bàn phím (Left / Right)
   window.addEventListener("keydown", (e) => {
     if (e.key === "ArrowRight" || e.key === "PageDown") {
-      flipToSpread(2);
+      flipToPage(currentPage + 1);
     } else if (e.key === "ArrowLeft" || e.key === "PageUp") {
-      flipToSpread(1);
+      flipToPage(currentPage - 1);
     }
   });
+
+  // 4. CẢM ỨNG VUỐT TAY (TOUCH SWIPE) TRÊN ĐIỆN THOẠI
+  let touchStartX = 0;
+  let touchStartY = 0;
+  let touchEndX = 0;
+  let touchEndY = 0;
+
+  window.addEventListener("touchstart", (e) => {
+    if (e.touches && e.touches.length > 0) {
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+    }
+  }, { passive: true });
+
+  window.addEventListener("touchend", (e) => {
+    if (e.changedTouches && e.changedTouches.length > 0) {
+      touchEndX = e.changedTouches[0].clientX;
+      touchEndY = e.changedTouches[0].clientY;
+      handleTouchSwipe();
+    }
+  }, { passive: true });
+
+  function handleTouchSwipe() {
+    const deltaX = touchEndX - touchStartX;
+    const deltaY = touchEndY - touchStartY;
+
+    // Chỉ kích hoạt lật trang nếu vuốt ngang rõ rệt (hơn 45px và góc nghiêng nhỏ hơn 30 độ)
+    if (Math.abs(deltaX) > 48 && Math.abs(deltaX) > Math.abs(deltaY) * 1.5) {
+      if (deltaX < 0) {
+        // Vuốt sang trái -> Trang tiếp theo
+        flipToPage(currentPage + 1);
+      } else {
+        // Vuốt sang phải -> Trang trước đó
+        flipToPage(currentPage - 1);
+      }
+    }
+  }
 }
 
 // ================= 3. TRÌNH PHÁT NHẠC NỀN YOUTUBE (TỰ ĐỘNG PHÁT & DỰ PHÒNG CỬ CHỈ) =================
@@ -143,11 +211,11 @@ function hideMusicPrompt() {
 function tryTriggerAudioPlayback() {
   userHasInteracted = true;
   hideMusicPrompt();
-  if (ytPlayer) {
+  if (ytPlayer && typeof ytPlayer.playVideo === "function") {
     try {
       if (typeof ytPlayer.unMute === "function") ytPlayer.unMute();
       if (typeof ytPlayer.setVolume === "function") ytPlayer.setVolume(100);
-      if (typeof ytPlayer.playVideo === "function") ytPlayer.playVideo();
+      ytPlayer.playVideo();
     } catch (e) {
       console.log("Audio play attempt:", e);
     }
@@ -155,18 +223,14 @@ function tryTriggerAudioPlayback() {
 }
 
 // Lắng nghe cử chỉ tương tác sớm ngay từ giây đầu tiên trang web tải
-const earlyEvents = ["click", "touchstart", "touchend", "mousedown", "pointerdown", "scroll", "keydown", "wheel"];
+const earlyEvents = ["click", "touchstart", "touchend", "mousedown", "pointerdown", "scroll", "keydown"];
 function onEarlyGesture() {
   tryTriggerAudioPlayback();
-  earlyEvents.forEach((evt) => {
-    window.removeEventListener(evt, onEarlyGesture, { capture: true, passive: true });
-    document.removeEventListener(evt, onEarlyGesture, { capture: true, passive: true });
-  });
 }
 
 earlyEvents.forEach((evt) => {
-  window.addEventListener(evt, onEarlyGesture, { capture: true, passive: true, once: true });
-  document.addEventListener(evt, onEarlyGesture, { capture: true, passive: true, once: true });
+  window.addEventListener(evt, onEarlyGesture, { capture: true, passive: true });
+  document.addEventListener(evt, onEarlyGesture, { capture: true, passive: true });
 });
 
 // Khởi tạo YouTube Iframe API
@@ -195,21 +259,23 @@ window.onYouTubeIframeAPIReady = function () {
 };
 
 function onPlayerReady(event) {
-  const btnToggle = document.getElementById("btnToggleMusic");
-
-  // 1. Thử tự động phát ngay lập tức
+  // 1. Thử tự động phát có âm thanh
   try {
     event.target.unMute();
     event.target.setVolume(100);
     const p = event.target.playVideo();
     if (p && p.catch) {
       p.catch(() => {
-        console.log("Browser autoplay policy requires initial user gesture.");
+        // Nếu trình duyệt chặn unmuted, phát muted trước để sẵn sàng
+        try {
+          event.target.mute();
+          event.target.playVideo();
+        } catch (e) {}
       });
     }
   } catch (err) {}
 
-  // 2. Nếu người dùng đã click / chạm trước khi player ready, phát ngay!
+  // 2. Nếu người dùng đã chạm trước khi player ready, phát có tiếng ngay!
   if (userHasInteracted) {
     try {
       event.target.unMute();
@@ -219,22 +285,21 @@ function onPlayerReady(event) {
     } catch (e) {}
   }
 
-  // 3. Nút bấm bật / tắt nhạc thủ công trên widget đĩa than
+  // 3. Nút bấm bật/tắt nhạc nổi
+  const btnToggle = document.getElementById("btnToggleMusic");
   if (btnToggle) {
     btnToggle.addEventListener("click", (e) => {
       e.stopPropagation();
       userHasInteracted = true;
       hideMusicPrompt();
-      if (!ytPlayer || !ytPlayer.playVideo) return;
+      if (!ytPlayer) return;
 
       if (isAudioPlaying) {
         ytPlayer.pauseVideo();
       } else {
-        try {
-          ytPlayer.unMute();
-          ytPlayer.setVolume(100);
-          ytPlayer.playVideo();
-        } catch (err) {}
+        ytPlayer.unMute();
+        ytPlayer.setVolume(100);
+        ytPlayer.playVideo();
       }
     });
   }
@@ -245,21 +310,17 @@ function onPlayerStateChange(event) {
   const musicWidget = document.getElementById("musicWidget");
   const stateIcon = document.getElementById("musicStateIcon");
 
-  if (event.data === YT.PlayerState.PLAYING) {
+  // YT.PlayerState.PLAYING === 1
+  if (event.data === 1) {
     isAudioPlaying = true;
     hideMusicPrompt();
     if (btnToggle) btnToggle.classList.add("is-playing");
     if (musicWidget) musicWidget.classList.add("is-playing");
-    if (stateIcon) stateIcon.textContent = "⏸";
-  } else if (event.data === YT.PlayerState.PAUSED || event.data === YT.PlayerState.ENDED) {
+    if (stateIcon) stateIcon.textContent = "❚❚";
+  } else {
     isAudioPlaying = false;
     if (btnToggle) btnToggle.classList.remove("is-playing");
     if (musicWidget) musicWidget.classList.remove("is-playing");
     if (stateIcon) stateIcon.textContent = "▶";
   }
-}
-
-// Nếu YouTube API đã load sẵn từ trước
-if (window.YT && window.YT.Player) {
-  window.onYouTubeIframeAPIReady();
 }

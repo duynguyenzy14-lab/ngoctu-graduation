@@ -1,0 +1,387 @@
+﻿$htmlContent = @'
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Ngọc Tú – Graduation 2026 | Thiệp Mời Tốt Nghiệp</title>
+  <meta name="description" content="Thiệp mời lễ tốt nghiệp của Nguyễn Ngọc Tú – Trường Đại học Mở TP.HCM ngày 28.11.2026. Mời bạn đến chung vui và chụp ảnh cùng Tú!">
+  
+  <meta property="og:title" content="Ngọc Tú tốt nghiệp rồi nè! 🎓✨">
+  <meta property="og:description" content="Sáng Thứ 7, 28.11.2026 tại Trường Đại học Mở TP.HCM. Mời bạn đến chung vui cùng Tú nha!">
+  <meta property="og:image" content="./graduation_files/lvhq0663-portrait.jpg">
+  
+  <!-- Font chữ: Playfair Display (Đồng nhất cho toàn trang) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+  
+  <!-- File CSS giao diện Scrapbook x Editorial x Book Flip Mobile -->
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+  <!-- ================= BỐ CỤC CHÍNH: CUỐN SÁCH THIỆP MỜI TỐT NGHIỆP ĐỊNH DẠNG DỌC ================= -->
+  <main class="invitation-screen" id="invitationScreen">
+    
+    <!-- THANH CHỈ BÁO TRANG (PAGE INDICATOR CHIC DOTS) -->
+    <nav class="book-nav-indicator" aria-label="Điều hướng trang sách">
+      <div class="nav-dots">
+        <button type="button" class="nav-dot is-active" data-page="1" aria-label="Trang 1: Bìa tốt nghiệp">
+          <span class="dot-num">1</span>
+        </button>
+        <button type="button" class="nav-dot" data-page="2" aria-label="Trang 2: Dải phim 35mm">
+          <span class="dot-num">2</span>
+        </button>
+        <button type="button" class="nav-dot" data-page="3" aria-label="Trang 3: Thư mời">
+          <span class="dot-num">3</span>
+        </button>
+        <button type="button" class="nav-dot" data-page="4" aria-label="Trang 4: Chi tiết lễ">
+          <span class="dot-num">4</span>
+        </button>
+      </div>
+      <span class="nav-page-label" id="navPageLabel">Trang 1 / 4 · Bìa kỷ niệm</span>
+    </nav>
+
+    <!-- KHUNG CUỐN SÁCH 3D (BOOK VIEWPORT) -->
+    <div class="book-viewport" id="bookViewport">
+      
+      <!-- ================= TRANG 1: SECTION 01 - BÌA POLAROID & PERSONAL NAMEPLATE ================= -->
+      <article class="book-page page-1 is-active" id="page1" aria-label="Trang 1 - Bìa tốt nghiệp">
+        <div class="page-card-dashed">
+          
+          <!-- 1. ẢNH CHÂN DUNG POLAROID LỚN (VIỀN TRẮNG CHỨA DÒNG SCRIPT) -->
+          <div class="polaroid-wrapper">
+            <div class="polaroid-inner">
+              <div class="photo-container">
+                <img src="./graduation_files/lvhq0663-portrait.jpg" alt="Nguyễn Ngọc Tú - Graduation 2026" class="polaroid-photo" loading="eager">
+              </div>
+              <!-- Dòng chữ script nằm trong viền trắng chân ảnh Polaroid -->
+              <div class="polaroid-caption">
+                <p class="polaroid-caption-text">A little moment to remember ♡</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. KHỐI PERSONAL NAMEPLATE CHUẨN THEO THIẾT KẾ MẪU -->
+          <div class="personal-nameplate">
+            <!-- Dòng chữ The Graduation Day of in nghiêng -->
+            <p class="nameplate-subhead">The Graduation Day of</p>
+
+            <!-- Tên chính: NGUYỄN NGỌC TÚ – font serif, kích thước lớn, nổi bật nhất -->
+            <h1 class="nameplate-fullname">NGUYỄN NGỌC TÚ</h1>
+
+            <!-- Chuyên ngành: QUẢN LÝ CÔNG – chữ in hoa, nhỏ hơn tên -->
+            <p class="nameplate-major">QUẢN LÝ CÔNG</p>
+          </div>
+
+          <!-- NÚT LẬT SANG TRANG 2: HÀNH TRÌNH OU -->
+          <div class="page-action-row">
+            <button type="button" class="btn-flip-page btn-next" data-flip-target="2" aria-label="Lật sang trang dải phim 35mm">
+              <span class="flip-btn-text">Xem hành trình 4 năm</span>
+              <span class="flip-btn-icon" aria-hidden="true">🎞️ ➔</span>
+            </button>
+          </div>
+
+          <!-- GÓC LẬT TRANG SÁCH 3D (PAGE CURL) -->
+          <div class="corner-page-curl" data-flip-target="2" title="Chạm để lật sang trang sau" aria-label="Chạm để lật sang trang sau">
+            <div class="curl-fold"></div>
+            <span class="curl-hint">Lật trang ➔</span>
+          </div>
+
+        </div>
+      </article>
+
+      <!-- ================= TRANG 2: SECTION 02 - DẢI PHIM 35MM HÀNH TRÌNH ĐẠI HỌC ================= -->
+      <article class="book-page page-2" id="page2" aria-label="Trang 2 - Dải phim 35mm hành trình đại học">
+        <div class="page-card-dashed">
+          
+          <!-- PHẦN MỞ ĐẦU: TIÊU ĐỀ LỚN & ĐOẠN CHỮ Ý NGHĨA -->
+          <header class="film-header">
+            <div class="film-header-badge">
+              <span class="film-header-icon">🎞️</span>
+              <span>MEMORIES · 2022 – 2026</span>
+            </div>
+            <h2 class="film-main-title">BỐN NĂM, THẬT NHIỀU KHOẢNH KHẮC TẠI OU</h2>
+            <p class="film-sub-text">
+              Những năm tháng ấy, mình đã lớn lên như thế.<br>
+              Bốn năm, nhiều câu chuyện và vô số ký ức mình muốn lưu giữ thật lâu
+            </p>
+          </header>
+
+          <!-- DẢI PHIM 35MM TỰ ĐỘNG CHẠY NGANG (CHUẨN BỐ CỤC NGANG / DỌC / VUÔNG) -->
+          <div class="film-strip-card" id="filmStripCard">
+            <!-- Ruy băng / Washi dán đầu khung phim -->
+            <div class="film-washi-tape" aria-hidden="true"></div>
+
+            <!-- Cuộn dải phim 35mm vintage tự động chạy ngang -->
+            <div class="film-35mm-reel">
+              <!-- Hàng lỗ perforation phía trên + thông số phim vintage -->
+              <div class="film-perforation-bar bar-top">
+                <div class="sprocket-holes"></div>
+                <div class="film-meta-text">
+                  <span class="meta-tag">▶ QUẢN LÝ CÔNG</span>
+                  <span class="meta-tag">GRADUATION</span>
+                  <span class="meta-tag">OU · 2022–2026</span>
+                </div>
+              </div>
+
+              <!-- Khung chiếu dải phim (Chạy ngang tự động, chuẩn tỷ lệ từng bức ảnh) -->
+              <div class="film-marquee-viewport" id="filmMarqueeViewport">
+                <div class="film-marquee-track" id="filmMarqueeTrack">
+                  <!-- TẬP ẢNH TỪ BG-PICS (PHÂN ĐỊNH RÕ BỐ CỤC NGANG / DỌC / VUÔNG) -->
+                  <div class="film-frame-item is-landscape"><img src="./graduation_files/bg-pics/pic-01.jpg" alt="Khoảnh khắc OU" class="film-photo" loading="eager"></div>
+                  <div class="film-frame-item is-landscape"><img src="./graduation_files/bg-pics/pic-02.jpg" alt="Khoảnh khắc OU" class="film-photo" loading="eager"></div>
+                  <div class="film-frame-item is-landscape"><img src="./graduation_files/bg-pics/pic-03.jpg" alt="Khoảnh khắc OU" class="film-photo" loading="lazy"></div>
+                  <div class="film-frame-item is-landscape"><img src="./graduation_files/bg-pics/pic-04.jpg" alt="Khoảnh khắc OU" class="film-photo" loading="lazy"></div>
+                  <div class="film-frame-item is-landscape"><img src="./graduation_files/bg-pics/pic-05.jpg" alt="Khoảnh khắc OU" class="film-photo" loading="lazy"></div>
+                  <div class="film-frame-item is-portrait"><img src="./graduation_files/bg-pics/pic-06.jpg" alt="Khoảnh khắc OU" class="film-photo" loading="lazy"></div>
+                  <div class="film-frame-item is-square"><img src="./graduation_files/bg-pics/pic-08.jpg" alt="Khoảnh khắc OU" class="film-photo" loading="lazy"></div>
+                  <div class="film-frame-item is-landscape"><img src="./graduation_files/bg-pics/pic-09.jpg" alt="Khoảnh khắc OU" class="film-photo" loading="lazy"></div>
+                  <div class="film-frame-item is-landscape"><img src="./graduation_files/bg-pics/pic-10.jpg" alt="Khoảnh khắc OU" class="film-photo" loading="lazy"></div>
+                  <div class="film-frame-item is-portrait is-portrait-23"><img src="./graduation_files/bg-pics/pic-11.jpg" alt="Khoảnh khắc OU" class="film-photo" loading="lazy"></div>
+                  <div class="film-frame-item is-landscape is-landscape-wide"><img src="./graduation_files/bg-pics/pic-12.jpg" alt="Khoảnh khắc OU" class="film-photo" loading="lazy"></div>
+                  <div class="film-frame-item is-landscape"><img src="./graduation_files/bg-pics/pic-13.jpg" alt="Khoảnh khắc OU" class="film-photo" loading="lazy"></div>
+                  <div class="film-frame-item is-portrait"><img src="./graduation_files/bg-pics/pic-14.jpg" alt="Khoảnh khắc OU" class="film-photo" loading="lazy"></div>
+                  <div class="film-frame-item is-landscape"><img src="./graduation_files/bg-pics/pic-15.jpg" alt="Khoảnh khắc OU" class="film-photo" loading="lazy"></div>
+                  <div class="film-frame-item is-landscape"><img src="./graduation_files/bg-pics/pic-16.jpg" alt="Khoảnh khắc OU" class="film-photo" loading="lazy"></div>
+                  <div class="film-frame-item is-landscape"><img src="./graduation_files/bg-pics/pic-17.jpg" alt="Khoảnh khắc OU" class="film-photo" loading="lazy"></div>
+                  <div class="film-frame-item is-landscape"><img src="./graduation_files/bg-pics/pic-18.jpg" alt="Khoảnh khắc OU" class="film-photo" loading="lazy"></div>
+                  <div class="film-frame-item is-portrait"><img src="./graduation_files/bg-pics/pic-19.jpg" alt="Khoảnh khắc OU" class="film-photo" loading="lazy"></div>
+                  <div class="film-frame-item is-landscape"><img src="./graduation_files/bg-pics/pic-20.jpg" alt="Khoảnh khắc OU" class="film-photo" loading="lazy"></div>
+                  <div class="film-frame-item is-landscape"><img src="./graduation_files/bg-pics/pic-21.jpg" alt="Khoảnh khắc OU" class="film-photo" loading="lazy"></div>
+
+                  <!-- BẢN SAO TIẾP NỐI ĐỂ CUỘN LIỀN MẠCH VÔ TẬN -->
+                  <div class="film-frame-item is-landscape" aria-hidden="true"><img src="./graduation_files/bg-pics/pic-01.jpg" alt="" class="film-photo" loading="lazy"></div>
+                  <div class="film-frame-item is-landscape" aria-hidden="true"><img src="./graduation_files/bg-pics/pic-02.jpg" alt="" class="film-photo" loading="lazy"></div>
+                  <div class="film-frame-item is-landscape" aria-hidden="true"><img src="./graduation_files/bg-pics/pic-03.jpg" alt="" class="film-photo" loading="lazy"></div>
+                  <div class="film-frame-item is-landscape" aria-hidden="true"><img src="./graduation_files/bg-pics/pic-04.jpg" alt="" class="film-photo" loading="lazy"></div>
+                  <div class="film-frame-item is-landscape" aria-hidden="true"><img src="./graduation_files/bg-pics/pic-05.jpg" alt="" class="film-photo" loading="lazy"></div>
+                  <div class="film-frame-item is-portrait" aria-hidden="true"><img src="./graduation_files/bg-pics/pic-06.jpg" alt="" class="film-photo" loading="lazy"></div>
+                  <div class="film-frame-item is-square" aria-hidden="true"><img src="./graduation_files/bg-pics/pic-08.jpg" alt="" class="film-photo" loading="lazy"></div>
+                  <div class="film-frame-item is-landscape" aria-hidden="true"><img src="./graduation_files/bg-pics/pic-09.jpg" alt="" class="film-photo" loading="lazy"></div>
+                  <div class="film-frame-item is-landscape" aria-hidden="true"><img src="./graduation_files/bg-pics/pic-10.jpg" alt="" class="film-photo" loading="lazy"></div>
+                  <div class="film-frame-item is-portrait is-portrait-23" aria-hidden="true"><img src="./graduation_files/bg-pics/pic-11.jpg" alt="" class="film-photo" loading="lazy"></div>
+                  <div class="film-frame-item is-landscape is-landscape-wide" aria-hidden="true"><img src="./graduation_files/bg-pics/pic-12.jpg" alt="" class="film-photo" loading="lazy"></div>
+                  <div class="film-frame-item is-landscape" aria-hidden="true"><img src="./graduation_files/bg-pics/pic-13.jpg" alt="" class="film-photo" loading="lazy"></div>
+                  <div class="film-frame-item is-portrait" aria-hidden="true"><img src="./graduation_files/bg-pics/pic-14.jpg" alt="" class="film-photo" loading="lazy"></div>
+                  <div class="film-frame-item is-landscape" aria-hidden="true"><img src="./graduation_files/bg-pics/pic-15.jpg" alt="" class="film-photo" loading="lazy"></div>
+                  <div class="film-frame-item is-landscape" aria-hidden="true"><img src="./graduation_files/bg-pics/pic-16.jpg" alt="" class="film-photo" loading="lazy"></div>
+                  <div class="film-frame-item is-landscape" aria-hidden="true"><img src="./graduation_files/bg-pics/pic-17.jpg" alt="" class="film-photo" loading="lazy"></div>
+                  <div class="film-frame-item is-landscape" aria-hidden="true"><img src="./graduation_files/bg-pics/pic-18.jpg" alt="" class="film-photo" loading="lazy"></div>
+                  <div class="film-frame-item is-portrait" aria-hidden="true"><img src="./graduation_files/bg-pics/pic-19.jpg" alt="" class="film-photo" loading="lazy"></div>
+                  <div class="film-frame-item is-landscape" aria-hidden="true"><img src="./graduation_files/bg-pics/pic-20.jpg" alt="" class="film-photo" loading="lazy"></div>
+                  <div class="film-frame-item is-landscape" aria-hidden="true"><img src="./graduation_files/bg-pics/pic-21.jpg" alt="" class="film-photo" loading="lazy"></div>
+                </div>
+              </div>
+
+              <!-- Hàng lỗ perforation phía dưới + thông số phim vintage -->
+              <div class="film-perforation-bar bar-bottom">
+                <div class="sprocket-holes"></div>
+                <div class="film-meta-text">
+                  <span class="meta-tag">QUẢN LÝ CÔNG</span>
+                  <span class="meta-tag">NGUYỄN NGỌC TÚ · OU GRADUATION</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- NÚT ĐIỀU HƯỚNG TRANG 2 -->
+          <div class="page-action-row dual-action">
+            <button type="button" class="btn-flip-page btn-prev" data-flip-target="1" aria-label="Quay lại trang bìa">
+              <span class="flip-btn-icon" aria-hidden="true">◀</span>
+              <span class="flip-btn-text">Trang bìa</span>
+            </button>
+            <button type="button" class="btn-flip-page btn-next" data-flip-target="3" aria-label="Lật sang trang thư mời">
+              <span class="flip-btn-text">Đọc thư mời</span>
+              <span class="flip-btn-icon" aria-hidden="true">✉️ ➔</span>
+            </button>
+          </div>
+
+          <!-- GÓC LẬT TRANG SÁCH 3D -->
+          <div class="corner-page-curl" data-flip-target="3" title="Chạm để lật sang trang sau">
+            <div class="curl-fold"></div>
+            <span class="curl-hint">Lật trang ➔</span>
+          </div>
+
+        </div>
+      </article>
+
+      <!-- ================= TRANG 3: SECTION 03 - THƯ MỜI THÂN THƯƠNG TỪ TÚ ================= -->
+      <article class="book-page page-3" id="page3" aria-label="Trang 3 - Thư mời thân thương">
+        <div class="page-card-dashed">
+          
+          <div class="letter-scrapbook-card">
+            <!-- Băng dính washi dán phong thư -->
+            <div class="letter-washi" aria-hidden="true"></div>
+
+            <!-- Con dấu sáp niêm phong thư vintage -->
+            <div class="wax-seal-stamp" aria-hidden="true">
+              <div class="wax-seal-inner">
+                <span class="seal-school">OU</span>
+                <span class="seal-year">2026</span>
+              </div>
+            </div>
+
+            <div class="letter-header">
+              <p class="letter-place-date">TP. Hồ Chí Minh, ngày 28 tháng 11 năm 2026</p>
+              <h2 class="letter-salutation" id="letterSalutation">Gửi Bạn thương mến,</h2>
+            </div>
+
+            <div class="letter-content" id="letterContent">
+              <p class="letter-paragraph">
+                Có những người không cần đứng trên sân khấu cùng mình, nhưng lại là lý do mình đi được tới đó.
+              </p>
+              <p class="letter-paragraph">
+                Bạn là một trong những người ấy. Cảm ơn bạn vì đã luôn đồng hành, sẻ chia và mang đến thật nhiều năng lượng tích cực trong suốt bốn năm đại học vừa qua của Tú.
+              </p>
+              <p class="letter-paragraph highlight-msg">
+                Sáng Thứ 7 ngày 28.11 này là dấu mốc quan trọng khép lại một thanh xuân rực rỡ và mở ra chặng đường mới. Tú rất mong có bạn đến cùng chung vui và chụp thật nhiều bức hình kỷ niệm nhé! ♡
+              </p>
+            </div>
+
+            <div class="letter-footer">
+              <p class="letter-sign-close">Thương mến & Biết ơn,</p>
+              <p class="letter-signature">Ngọc Tú ♡</p>
+            </div>
+          </div>
+
+          <!-- NÚT ĐIỀU HƯỚNG TRANG 3 -->
+          <div class="page-action-row dual-action">
+            <button type="button" class="btn-flip-page btn-prev" data-flip-target="2" aria-label="Quay lại dải phim">
+              <span class="flip-btn-icon" aria-hidden="true">◀</span>
+              <span class="flip-btn-text">Dải phim</span>
+            </button>
+            <button type="button" class="btn-flip-page btn-next" data-flip-target="4" aria-label="Lật sang trang chi tiết lễ">
+              <span class="flip-btn-text">Chi tiết buổi lễ</span>
+              <span class="flip-btn-icon" aria-hidden="true">🎓 ➔</span>
+            </button>
+          </div>
+
+          <!-- GÓC LẬT TRANG SÁCH 3D -->
+          <div class="corner-page-curl" data-flip-target="4" title="Chạm để lật sang trang sau">
+            <div class="curl-fold"></div>
+            <span class="curl-hint">Lật trang ➔</span>
+          </div>
+
+        </div>
+      </article>
+
+      <!-- ================= TRANG 4: SECTION 04 - CHI TIẾT LỄ TỐT NGHIỆP & ĐỊA ĐIỂM ================= -->
+      <article class="book-page page-4" id="page4" aria-label="Trang 4 - Chi tiết lễ tốt nghiệp">
+        <div class="page-card-dashed">
+          
+          <header class="details-header">
+            <div class="details-badge">
+              <span>🎓 INVITATION & CEREMONY</span>
+            </div>
+            <h2 class="details-main-title">LỄ TỐT NGHIỆP CỬ NHÂN 2026</h2>
+            <p class="details-sub-tag">QUẢN LÝ CÔNG · TRƯỜNG ĐẠI HỌC MỞ TP. HỒ CHÍ MINH</p>
+          </header>
+
+          <div class="ceremony-info-card">
+            <div class="info-item-row">
+              <span class="info-row-icon">🗓️</span>
+              <div class="info-row-text">
+                <span class="info-row-label">Thời gian tổ chức</span>
+                <span class="info-row-value">Sáng Thứ 7, ngày 28 tháng 11 năm 2026</span>
+              </div>
+            </div>
+
+            <div class="info-item-row highlight-box">
+              <span class="info-row-icon">📸</span>
+              <div class="info-row-text">
+                <span class="info-row-label">Khung giờ chụp ảnh đẹp cùng Tú:</span>
+                <span class="info-row-value photo-time">10:30 – 12:30 trưa</span>
+                <span class="info-row-desc">Lên đồ xinh để tụi mình cùng lưu lại những chiếc moment đáng nhớ nha!</span>
+              </div>
+            </div>
+
+            <div class="info-item-row">
+              <span class="info-row-icon">📍</span>
+              <div class="info-row-text">
+                <span class="info-row-label">Địa điểm tổ chức</span>
+                <span class="info-row-value">Trường Đại học Mở TP. Hồ Chí Minh</span>
+                <span class="info-row-desc">Số 97 Võ Văn Tần, Phường Võ Thị Sáu, Quận 3, TP.HCM</span>
+              </div>
+            </div>
+
+            <div class="info-item-row">
+              <span class="info-row-icon">🛵</span>
+              <div class="info-row-text">
+                <span class="info-row-label">Địa điểm gửi xe gợi ý:</span>
+                <ul class="parking-list">
+                  <li>1. Bãi giữ xe trường OU (Số 97 Võ Văn Tần)</li>
+                  <li>2. Du lịch Hòa Bình (Số 60 Võ Văn Tần)</li>
+                  <li>3. Báo Người Lao Động (Số 123 Võ Văn Tần)</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Nút mở Google Maps chỉ đường 1 chạm -->
+            <div class="details-action-wrap">
+              <a href="https://maps.app.goo.gl/ZjacVTJBH1mfbgay9" target="_blank" rel="noopener noreferrer" class="btn-maps-action">
+                <span>📍 Mở Google Maps chỉ đường</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- NÚT ĐIỀU HƯỚNG TRANG 4 -->
+          <div class="page-action-row dual-action">
+            <button type="button" class="btn-flip-page btn-prev" data-flip-target="3" aria-label="Quay lại thư mời">
+              <span class="flip-btn-icon" aria-hidden="true">◀</span>
+              <span class="flip-btn-text">Đọc lại thư</span>
+            </button>
+            <button type="button" class="btn-flip-page btn-next" data-flip-target="1" aria-label="Quay về trang bìa">
+              <span class="flip-btn-text">Về trang bìa</span>
+              <span class="flip-btn-icon" aria-hidden="true">🌸 ➔</span>
+            </button>
+          </div>
+
+          <!-- GÓC LẬT TRANG QUAY VỀ TRANG BÌA -->
+          <div class="corner-page-curl curl-left-bottom" data-flip-target="1" title="Chạm để về trang bìa">
+            <div class="curl-fold curl-fold-left"></div>
+            <span class="curl-hint">◀ Trang bìa</span>
+          </div>
+
+        </div>
+      </article>
+
+    </div>
+
+  </main>
+
+  <!-- ================= WIDGET NHẠC NỀN COQUETTE: CẢM ƠN NGƯỜI ĐÃ THỨC CÙNG TÔI (PHÙNG KHÁNH LINH) ================= -->
+  <aside class="music-floating-widget" id="musicWidget">
+    <div class="music-autoplay-prompt" id="musicPrompt" aria-hidden="true">
+      <span>🎵 Chạm để bật nhạc nền nha ♡</span>
+    </div>
+    <button type="button" class="btn-music-toggle" id="btnToggleMusic" aria-label="Bật hoặc tạm dừng bài hát Cảm Ơn Người Đã Thức Cùng Tôi">
+      <div class="vinyl-record" id="vinylRecord" aria-hidden="true">
+        <div class="vinyl-core"></div>
+      </div>
+      <div class="music-details">
+        <span class="music-tag">🎵 NHẠC NỀN</span>
+        <span class="music-title">Cảm Ơn Người Đã Thức Cùng Tôi</span>
+        <span class="music-artist">Phùng Khánh Linh</span>
+      </div>
+      <div class="music-state-icon" id="musicStateIcon">▶</div>
+    </button>
+  </aside>
+
+  <!-- Khung phát YouTube Player tự động trong viewport để đáp ứng chính sách Autoplay -->
+  <div id="ytMusicPlayerContainer" style="position:fixed;bottom:20px;right:20px;width:200px;height:200px;opacity:0.001;pointer-events:none;z-index:-1;" aria-hidden="true">
+    <div id="ytMusicPlayer"></div>
+  </div>
+
+  <!-- Thư viện YouTube IFrame API -->
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <!-- Script xử lý nhạc nền, lật trang sách và tương tác mobile -->
+  <script src="./script.js"></script>
+</body>
+</html>
+'@
+
+$outPath = "$PSScriptRoot\..\index.html"
+[System.IO.File]::WriteAllText($outPath, $htmlContent, [System.Text.Encoding]::UTF8)
+Write-Host "Wrote updated 4-page mobile book index.html successfully!"
