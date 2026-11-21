@@ -624,7 +624,7 @@ button, input, select, textarea {
 
 .letter-header {
   margin-bottom: 16px;
-  padding-right: 50px;
+  width: 100%;
 }
 
 .letter-place-date {
