@@ -1333,3 +1333,250 @@ button, input, select, textarea {
   line-height: 1.55;
   margin: 0;
 }
+
+
+/* ================= 13. MODAL QUẢN TRỊ BÍ MẬT DÀNH RIÊNG CHO NGỌC TÚ ================= */
+.admin-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(30, 15, 22, 0.65);
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+.admin-modal-card {
+  background: #FFFFFF;
+  border-radius: 16px;
+  max-width: 390px;
+  width: 100%;
+  max-height: 82vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.28);
+  border: 1px solid rgba(232, 39, 94, 0.2);
+}
+
+.admin-modal-header {
+  padding: 13px 16px;
+  background: #FFF0F6;
+  border-bottom: 1px solid rgba(232, 39, 94, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.admin-modal-title {
+  font-family: var(--font-editorial);
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #B51E4E;
+  margin: 0;
+}
+
+.btn-close-admin {
+  background: none;
+  border: none;
+  font-size: 24px;
+  line-height: 1;
+  color: #8A6572;
+  cursor: pointer;
+  padding: 0;
+}
+
+.admin-screen {
+  padding: 16px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.admin-desc {
+  font-family: var(--font-editorial);
+  font-size: 13px;
+  color: #4A3A40;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.pin-input-wrap {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.admin-input,
+.admin-textarea {
+  font-family: var(--font-editorial);
+  font-size: 13.5px;
+  padding: 9px 12px;
+  border: 1.5px solid rgba(232, 39, 94, 0.25);
+  border-radius: 8px;
+  background: #FFF9FB;
+  width: 100%;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.admin-input:focus,
+.admin-textarea:focus {
+  border-color: var(--pink-accent);
+  background: #FFFFFF;
+}
+
+.btn-admin-primary {
+  padding: 9px 16px;
+  background: linear-gradient(135deg, #FF6B93 0%, #E8275E 100%);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 8px;
+  font-family: var(--font-editorial);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.admin-error-text {
+  font-family: var(--font-editorial);
+  font-size: 12.5px;
+  color: #D4144B;
+  margin: 0;
+}
+
+.admin-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 8px;
+  border-bottom: 1px dashed rgba(232, 39, 94, 0.2);
+}
+
+.admin-stat-text {
+  font-family: var(--font-editorial);
+  font-size: 13px;
+  font-weight: 700;
+  color: #B51E4E;
+}
+
+.admin-bar-btns {
+  display: flex;
+  gap: 6px;
+}
+
+.btn-admin-add {
+  padding: 6px 11px;
+  background: #FFF0F6;
+  border: 1px solid rgba(232, 39, 94, 0.3);
+  color: #B51E4E;
+  border-radius: 6px;
+  font-family: var(--font-editorial);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-admin-pin-change {
+  padding: 6px 9px;
+  background: #F5F5F5;
+  border: 1px solid #DDD;
+  color: #555;
+  border-radius: 6px;
+  font-family: var(--font-editorial);
+  font-size: 11.5px;
+  cursor: pointer;
+}
+
+.admin-sub-card {
+  background: #FFF5F8;
+  border: 1px solid rgba(232, 39, 94, 0.2);
+  border-radius: 10px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.admin-sub-title {
+  font-family: var(--font-editorial);
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #B51E4E;
+  margin: 0;
+}
+
+.admin-form-btns {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.btn-admin-cancel {
+  padding: 8px 14px;
+  background: #EEEEEE;
+  border: none;
+  border-radius: 8px;
+  font-family: var(--font-editorial);
+  font-size: 12.5px;
+  cursor: pointer;
+}
+
+.admin-wishes-manager {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 280px;
+  overflow-y: auto;
+  padding-right: 2px;
+}
+
+.admin-wish-card {
+  background: #FFF9FB;
+  border: 1px solid rgba(232, 39, 94, 0.15);
+  border-radius: 8px;
+  padding: 8px 10px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.admin-wish-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+
+.admin-wish-name {
+  font-family: var(--font-editorial);
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #2B2125;
+}
+
+.admin-wish-msg {
+  font-family: var(--font-editorial);
+  font-size: 12px;
+  color: #5A4A52;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.btn-admin-delete {
+  padding: 4px 8px;
+  background: #FFF0F2;
+  border: 1px solid #F5A8B8;
+  color: #D4144B;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  flex-shrink: 0;
+}

@@ -46,6 +46,7 @@ let flipToPageFn = null;
 
 // ================= KHỞI TẠO DOM CONTENT LOADED =================
 document.addEventListener("DOMContentLoaded", () => {
+  initAdminPanel();
   initPersonalizedGreeting();
   initMobileBookFlip();
   initWishesBoard();
@@ -270,6 +271,12 @@ function isContentInappropriate(text) {
 
 // ================= 4. QUẢN LÝ SỔ LƯU BÚT ĐỒNG BỘ ĐÁM MÂY (CLOUD SYNC) & TỰ ĐỘNG CUỘN DỌC =================
 const STORAGE_KEY = "ngoctu_graduation_wishes_v2";
+
+// 1. LINK KẾT NỐI EMAIL & GOOGLE SHEET (NẾU TÚ DÙNG GOOGLE APPS SCRIPT):
+// Dán link Web App của Tú vào đây để website đọc trực tiếp từ kho lưu trữ Google của Tú
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwfNa0q0it9_dpMmG14P-sG2362WEEu-2IC7RLFW7LWqC8d5jWI-k966lWVkwa0xoNn/exec"; 
+
+// 2. MÁY CHỦ ĐỒNG BỘ TRỰC TUYẾN TỰ ĐỘNG (HOẠT ĐỘNG 24/7 SẴN SÀNG):
 const CLOUD_GUESTBOOK_API = "https://api.restful-api.dev/objects/ff808181a09d98f701a1fe4fe584112c";
 
 function getStoredWishes() {
@@ -288,18 +295,23 @@ function getStoredWishes() {
 }
 
 async function fetchCloudWishes() {
+  const apiUrl = GOOGLE_SCRIPT_URL || CLOUD_GUESTBOOK_API;
   try {
-    const res = await fetch(CLOUD_GUESTBOOK_API);
+    const res = await fetch(apiUrl);
     if (res.ok) {
       const data = await res.json();
-      if (data && data.data && Array.isArray(data.data.wishes)) {
-        const cloudWishes = data.data.wishes.filter(w => !isContentInappropriate(w.name + " " + w.message));
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(cloudWishes));
-        renderWishesList(cloudWishes);
+      let rawList = [];
+      if (Array.isArray(data)) {
+        rawList = data;
+      } else if (data && data.data && Array.isArray(data.data.wishes)) {
+        rawList = data.data.wishes;
       }
+      const cloudWishes = rawList.filter(w => !isContentInappropriate(w.name + " " + w.message));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(cloudWishes));
+      renderWishesList(cloudWishes);
     }
   } catch (err) {
-    console.warn("Không thể tải lời chúc từ đám mây (dùng cache local):", err);
+    console.warn("Không thể tải lời chúc từ máy chủ:", err);
   }
 }
 
@@ -531,4 +543,213 @@ function initRsvpForm() {
       }
     }, 700);
   });
+}
+
+// ================= 6. HỆ THỐNG BẢO MẬT & QUẢN TRỊ BÍ MẬT DÀNH RIÊNG CHO NGỌC TÚ =================
+const ADMIN_PIN_KEY = "ngoctu_admin_pin";
+const DEFAULT_PIN = "2811"; // Mã PIN mặc định: ngày 28.11 của Tú
+
+function getAdminPin() {
+  return localStorage.getItem(ADMIN_PIN_KEY) || DEFAULT_PIN;
+}
+
+function initAdminPanel() {
+  const triggerBtn = document.getElementById("wishesSecretTrigger");
+  const modalOverlay = document.getElementById("adminModalOverlay");
+  const btnClose = document.getElementById("btnCloseAdmin");
+  const btnVerify = document.getElementById("btnVerifyPin");
+  const pinInput = document.getElementById("adminPinInput");
+  const pinError = document.getElementById("adminPinError");
+
+  const pinScreen = document.getElementById("adminPinScreen");
+  const dashScreen = document.getElementById("adminDashboardScreen");
+
+  const btnOpenAdd = document.getElementById("btnOpenAddWish");
+  const addForm = document.getElementById("adminAddWishForm");
+  const btnSaveWish = document.getElementById("btnSaveNewWish");
+  const btnCancelAdd = document.getElementById("btnCancelAddWish");
+  const btnChangePin = document.getElementById("btnChangePin");
+
+  // 1. Chạm 3 lần vào icon 💌 để mở Bảng Quản Trị Bí Mật
+  let tapCount = 0;
+  let tapTimer = null;
+  if (triggerBtn) {
+    triggerBtn.style.cursor = "pointer";
+    triggerBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      tapCount++;
+      if (tapCount === 1) {
+        tapTimer = setTimeout(() => { tapCount = 0; }, 900);
+      } else if (tapCount >= 3) {
+        clearTimeout(tapTimer);
+        tapCount = 0;
+        openAdminModal();
+      }
+    });
+  }
+
+  function openAdminModal() {
+    if (!modalOverlay) return;
+    modalOverlay.hidden = false;
+    pinScreen.hidden = false;
+    dashScreen.hidden = true;
+    if (pinError) pinError.hidden = true;
+    if (pinInput) {
+      pinInput.value = "";
+      setTimeout(() => pinInput.focus(), 150);
+    }
+  }
+
+  function closeAdminModal() {
+    if (modalOverlay) modalOverlay.hidden = true;
+  }
+
+  if (btnClose) btnClose.addEventListener("click", closeAdminModal);
+  if (modalOverlay) {
+    modalOverlay.addEventListener("click", (e) => {
+      if (e.target === modalOverlay) closeAdminModal();
+    });
+  }
+
+  // 2. Xác thực mã PIN
+  if (btnVerify && pinInput) {
+    btnVerify.addEventListener("click", verifyPin);
+    pinInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") verifyPin();
+    });
+  }
+
+  function verifyPin() {
+    const entered = pinInput.value.trim();
+    if (entered === getAdminPin()) {
+      if (pinError) pinError.hidden = true;
+      pinScreen.hidden = true;
+      dashScreen.hidden = false;
+      renderAdminWishes();
+    } else {
+      if (pinError) pinError.hidden = false;
+      pinInput.value = "";
+      pinInput.focus();
+    }
+  }
+
+  // 3. Render danh sách lời chúc trong Admin Dashboard
+  function renderAdminWishes() {
+    const listContainer = document.getElementById("adminWishesManager");
+    const countEl = document.getElementById("adminWishesCount");
+    const wishes = getStoredWishes();
+
+    if (countEl) countEl.textContent = `${wishes.length} lời chúc hiện tại`;
+    if (!listContainer) return;
+
+    if (wishes.length === 0) {
+      listContainer.innerHTML = '<p class="admin-desc" style="text-align:center; padding:12px;">Chưa có lời chúc nào trong danh sách.</p>';
+      return;
+    }
+
+    listContainer.innerHTML = wishes.map((w, idx) => `
+      <div class="admin-wish-card">
+        <div class="admin-wish-info">
+          <span class="admin-wish-name">✨ ${escapeHtml(w.name)}</span>
+          <p class="admin-wish-msg">“${escapeHtml(w.message)}”</p>
+        </div>
+        <button type="button" class="btn-admin-delete" data-del-idx="${idx}">🗑️ Xóa</button>
+      </div>
+    `).join("");
+
+    listContainer.querySelectorAll("[data-del-idx]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const idx = parseInt(btn.getAttribute("data-del-idx"), 10);
+        if (!isNaN(idx) && confirm(`Xóa lời chúc của "${wishes[idx].name}" khỏi website?`)) {
+          wishes.splice(idx, 1);
+          saveAndSyncWishes(wishes);
+          renderAdminWishes();
+          renderWishesList(wishes);
+        }
+      });
+    });
+  }
+
+  // 4. Thêm lời chúc thủ công của Tú
+  if (btnOpenAdd && addForm) {
+    btnOpenAdd.addEventListener("click", () => {
+      addForm.hidden = false;
+      document.getElementById("adminNewName")?.focus();
+    });
+  }
+  if (btnCancelAdd && addForm) {
+    btnCancelAdd.addEventListener("click", () => {
+      addForm.hidden = true;
+    });
+  }
+  if (btnSaveWish) {
+    btnSaveWish.addEventListener("click", () => {
+      const nameInput = document.getElementById("adminNewName");
+      const msgInput = document.getElementById("adminNewMsg");
+      const name = nameInput ? nameInput.value.trim() : "";
+      const msg = msgInput ? msgInput.value.trim() : "";
+
+      if (!name || !msg) {
+        alert("Vui lòng nhập đầy đủ tên và lời chúc nha Tú!");
+        return;
+      }
+
+      const newWish = {
+        name: name,
+        attending: "Sẽ đến nhaa!",
+        message: msg,
+        time: "Vừa xong",
+        isNew: true
+      };
+
+      let wishes = getStoredWishes();
+      wishes = [newWish, ...wishes];
+      saveAndSyncWishes(wishes);
+      renderAdminWishes();
+      renderWishesList(wishes);
+
+      if (nameInput) nameInput.value = "";
+      if (msgInput) msgInput.value = "";
+      if (addForm) addForm.hidden = true;
+    });
+  }
+
+  // 5. Đổi mã PIN bí mật
+  if (btnChangePin) {
+    btnChangePin.addEventListener("click", () => {
+      const newPin = prompt("Nhập mã PIN mới của bạn (4-6 ký tự):", getAdminPin());
+      if (newPin && newPin.trim().length >= 4) {
+        localStorage.setItem(ADMIN_PIN_KEY, newPin.trim());
+        alert(`Đã đổi mã PIN thành công! Mã PIN mới của bạn là: ${newPin.trim()}`);
+      }
+    });
+  }
+}
+
+// Hàm lưu và đồng bộ danh sách đã kiểm duyệt lên Đám mây
+async function saveAndSyncWishes(wishes) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(wishes));
+  } catch (e) {
+    console.error("Lỗi lưu local:", e);
+  }
+
+  try {
+    const cleanList = wishes.map(w => ({
+      name: w.name,
+      attending: w.attending || "Sẽ đến nhaa!",
+      message: w.message,
+      time: w.time || "28/11/2026"
+    }));
+    await fetch(CLOUD_GUESTBOOK_API, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: "Ngoctu Graduation Guestbook 2026",
+        data: { wishes: cleanList }
+      })
+    });
+  } catch (err) {
+    console.warn("Lỗi đồng bộ đám mây:", err);
+  }
 }

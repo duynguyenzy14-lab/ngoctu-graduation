@@ -407,10 +407,7 @@
 
           <!-- KHUNG LƯU GIỮ LỜI CHÚC CỦA MỌI NGƯỜI (WISHES GUESTBOOK) -->
           <div class="wishes-board-card">
-            <div class="wishes-board-header">
-              <span class="wishes-icon">💌</span>
-              <span class="wishes-title">Lời chúc từ những người thương</span>
-            </div>
+            <div class="wishes-board-header" id="wishesBoardHeader"><span class="wishes-icon" id="wishesSecretTrigger" title="Nhấn 3 lần để mở quản lý bí mật">💌</span><span class="wishes-title">Lời chúc từ những người thương</span></div>
             <div class="wishes-marquee-viewport" id="wishesViewport">
               <div class="wishes-list" id="wishesList">
                 <!-- Render động từ JavaScript -->
@@ -439,5 +436,53 @@
 
   <!-- Script xử lý lật trang sách và tương tác mobile -->
   <script src="./script.js"></script>
+
+  <!-- ================= BẢNG QUẢN TRỊ BÍ MẬT DÀNH RIÊNG CHO NGỌC TÚ (CHỐNG HATERS) ================= -->
+  <div class="admin-modal-overlay" id="adminModalOverlay" hidden>
+    <div class="admin-modal-card">
+      <div class="admin-modal-header">
+        <h3 class="admin-modal-title">🔐 Quản trị Sổ lưu bút (Ngọc Tú)</h3>
+        <button type="button" class="btn-close-admin" id="btnCloseAdmin" aria-label="Đóng">&times;</button>
+      </div>
+
+      <!-- Màn hình 1: Nhập mã PIN bảo mật -->
+      <div id="adminPinScreen" class="admin-screen">
+        <p class="admin-desc">Nhập mã PIN bí mật của bạn để quản lý lời chúc (chỉ mình bạn có quyền sửa/xóa):</p>
+        <div class="pin-input-wrap">
+          <input type="password" id="adminPinInput" class="admin-input" maxlength="8" placeholder="Mã PIN (mặc định: 2811)">
+          <button type="button" class="btn-admin-primary" id="btnVerifyPin">Mở khóa</button>
+        </div>
+        <p class="admin-error-text" id="adminPinError" hidden>Mã PIN không đúng, vui lòng thử lại!</p>
+      </div>
+
+      <!-- Màn hình 2: Bảng điều khiển quản lý lời chúc -->
+      <div id="adminDashboardScreen" class="admin-screen" hidden>
+        <div class="admin-top-bar">
+          <span class="admin-stat-text" id="adminWishesCount">0 lời chúc</span>
+          <div class="admin-bar-btns">
+            <button type="button" class="btn-admin-add" id="btnOpenAddWish">+ Thêm lời chúc</button>
+            <button type="button" class="btn-admin-pin-change" id="btnChangePin">Đổi PIN</button>
+          </div>
+        </div>
+
+        <!-- Form thêm lời chúc thủ công của Tú -->
+        <div id="adminAddWishForm" class="admin-sub-card" hidden>
+          <p class="admin-sub-title">Thêm lời chúc mới:</p>
+          <input type="text" id="adminNewName" class="admin-input" placeholder="Tên người chúc...">
+          <textarea id="adminNewMsg" class="admin-textarea" rows="2" placeholder="Nội dung lời chúc..."></textarea>
+          <div class="admin-form-btns">
+            <button type="button" class="btn-admin-primary" id="btnSaveNewWish">Lưu lời chúc</button>
+            <button type="button" class="btn-admin-cancel" id="btnCancelAddWish">Hủy</button>
+          </div>
+        </div>
+
+        <!-- Danh sách quản lý lời chúc (kèm nút xóa) -->
+        <div class="admin-wishes-manager" id="adminWishesManager">
+          <!-- Render danh sách lời chúc kèm nút xóa/ẩn -->
+        </div>
+      </div>
+
+    </div>
+  </div>
 </body>
 </html>
