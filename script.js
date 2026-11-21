@@ -1,9 +1,9 @@
 ﻿/**
  * NGỌC TÚ – GRADUATION INVITATION 2026
  * 1. Multi-page 3D Mobile Book Flip (Page 1: Bìa -> Page 2: Dải phim -> Page 3: Thư mời -> Page 4: Chi tiết)
- * 2. Cảm ứng vuốt tay (Touch Swipe Left/Right) tối ưu 100% trên điện thoại
+ * 2. Cảm ứng vuốt tay (Touch Swipe Left/Right) & nút điều hướng lật trang tối ưu 100% trên điện thoại
  * 3. Cá nhân hóa lời nhắn cho khách mời (?to=Nhi, ?to=Khánh, ?to=Trang...)
- * 4. Nhạc nền YouTube tự động phát & tự động mở tiếng khi chạm (Phùng Khánh Linh - Cảm Ơn Người Đã Thức Cùng Tôi)
+ * 4. Nhạc nền web tự động phát (Bài hát: "Cảm Ơn Người Đã Thức Cùng Tôi" - Phùng Khánh Linh) & Nút bật/tắt âm thanh tinh tế
  */
 
 // ================= DỮ LIỆU CÁ NHÂN HÓA KHÁCH MỜI =================
@@ -38,6 +38,7 @@ const GUEST_DATA = {
 document.addEventListener("DOMContentLoaded", () => {
   initPersonalizedGreeting();
   initMobileBookFlip();
+  initSoundControls();
 });
 
 // ================= 1. CÁ NHÂN HÓA LỜI NHẮN THEO QUERY PARAM =================
@@ -68,30 +69,11 @@ function initPersonalizedGreeting() {
 }
 
 // ================= 2. HỆ THỐNG LẬT SÁCH 3D ĐA TRANG CHO ĐIỆN THOẠI =================
-const PAGE_TITLES = {
-  1: "Trang 1 / 4 · Bìa kỷ niệm",
-  2: "Trang 2 / 4 · Dải phim 35mm",
-  3: "Trang 3 / 4 · Thư mời từ Tú",
-  4: "Trang 4 / 4 · Chi tiết lễ tốt nghiệp"
-};
-
 let currentPage = 1;
 let isFlipping = false;
 
 function initMobileBookFlip() {
   const bookViewport = document.getElementById("bookViewport");
-  const navDots = document.querySelectorAll(".nav-dot");
-  const navPageLabel = document.getElementById("navPageLabel");
-
-  function updateNav(page) {
-    navDots.forEach(dot => {
-      const dotPage = parseInt(dot.getAttribute("data-page"), 10);
-      dot.classList.toggle("is-active", dotPage === page);
-    });
-    if (navPageLabel && PAGE_TITLES[page]) {
-      navPageLabel.textContent = PAGE_TITLES[page];
-    }
-  }
 
   function flipToPage(targetPage) {
     if (isFlipping || targetPage === currentPage || targetPage < 1 || targetPage > 4 || !bookViewport) return;
@@ -124,7 +106,6 @@ function initMobileBookFlip() {
       bookViewport.classList.remove("is-turning-forward", "is-turning-backward");
 
       currentPage = targetPage;
-      updateNav(currentPage);
       isFlipping = false;
     }, 650);
   }
@@ -140,17 +121,7 @@ function initMobileBookFlip() {
     });
   });
 
-  // 2. Lắng nghe thanh chấm điều hướng (Nav Dots)
-  navDots.forEach(dot => {
-    dot.addEventListener("click", () => {
-      const page = parseInt(dot.getAttribute("data-page"), 10);
-      if (!isNaN(page)) {
-        flipToPage(page);
-      }
-    });
-  });
-
-  // 3. Phím mũi tên bàn phím (Left / Right)
+  // 2. Phím mũi tên bàn phím (Left / Right)
   window.addEventListener("keydown", (e) => {
     if (e.key === "ArrowRight" || e.key === "PageDown") {
       flipToPage(currentPage + 1);
@@ -159,7 +130,7 @@ function initMobileBookFlip() {
     }
   });
 
-  // 4. CẢM ỨNG VUỐT TAY (TOUCH SWIPE) TRÊN ĐIỆN THOẠI
+  // 3. CẢM ỨNG VUỐT TAY (TOUCH SWIPE) TRÊN ĐIỆN THOẠI
   let touchStartX = 0;
   let touchStartY = 0;
   let touchEndX = 0;
@@ -184,7 +155,7 @@ function initMobileBookFlip() {
     const deltaX = touchEndX - touchStartX;
     const deltaY = touchEndY - touchStartY;
 
-    // Chỉ kích hoạt lật trang nếu vuốt ngang rõ rệt (hơn 45px và góc nghiêng nhỏ hơn 30 độ)
+    // Chỉ kích hoạt lật trang nếu vuốt ngang rõ rệt (hơn 48px và góc nghiêng nhỏ hơn 30 độ)
     if (Math.abs(deltaX) > 48 && Math.abs(deltaX) > Math.abs(deltaY) * 1.5) {
       if (deltaX < 0) {
         // Vuốt sang trái -> Trang tiếp theo
@@ -197,41 +168,117 @@ function initMobileBookFlip() {
   }
 }
 
-// ================= 3. TRÌNH PHÁT NHẠC NỀN YOUTUBE (TỰ ĐỘNG PHÁT & DỰ PHÒNG CỬ CHỈ) =================
-// Bài hát: Cảm Ơn Người Đã Thức Cùng Tôi - Phùng Khánh Linh (Video ID: J3IRYx3PzzM)
+// ================= 3. TRÌNH PHÁT NHẠC NỀN WEB (TỰ ĐỘNG BẬT SẴN & NÚT ÂM THANH GÓC PHẢI) =================
+// Bài hát: Cảm Ơn Người Đã Thức Cùng Tôi - Phùng Khánh Linh (YouTube ID: J3IRYx3PzzM)
 let ytPlayer = null;
 let isAudioPlaying = false;
-let userHasInteracted = false;
+let userHasUnmuted = false;
 
-function hideMusicPrompt() {
-  const prompt = document.getElementById("musicPrompt");
-  if (prompt) prompt.classList.add("is-hidden");
+function updateSoundUI(playing) {
+  isAudioPlaying = playing;
+  const btnSound = document.getElementById("btnSoundControl");
+  const soundIcon = document.getElementById("soundIcon");
+
+  if (btnSound && soundIcon) {
+    if (playing) {
+      soundIcon.textContent = "🔊";
+      btnSound.classList.remove("is-muted");
+      btnSound.classList.add("is-playing");
+      btnSound.setAttribute("aria-label", "Tắt âm thanh");
+    } else {
+      soundIcon.textContent = "🔇";
+      btnSound.classList.add("is-muted");
+      btnSound.classList.remove("is-playing");
+      btnSound.setAttribute("aria-label", "Bật âm thanh");
+    }
+  }
 }
 
-function tryTriggerAudioPlayback() {
-  userHasInteracted = true;
-  hideMusicPrompt();
+// Kích hoạt âm thanh phát ngay khi người dùng chạm màn hình lần đầu tiên
+function triggerAudioPlayback() {
+  if (userHasUnmuted) return;
+  userHasUnmuted = true;
+
+  // 1. YouTube Iframe Player
   if (ytPlayer && typeof ytPlayer.playVideo === "function") {
     try {
       if (typeof ytPlayer.unMute === "function") ytPlayer.unMute();
       if (typeof ytPlayer.setVolume === "function") ytPlayer.setVolume(100);
       ytPlayer.playVideo();
+      updateSoundUI(true);
     } catch (e) {
-      console.log("Audio play attempt:", e);
+      console.log("YouTube audio unmute attempt:", e);
     }
+  }
+
+  // 2. HTML5 Audio (dự phòng)
+  const bgAudio = document.getElementById("bgAudio");
+  if (bgAudio) {
+    try {
+      bgAudio.muted = false;
+      const playPromise = bgAudio.play();
+      if (playPromise !== undefined) {
+        playPromise.then(() => updateSoundUI(true)).catch(() => {});
+      }
+    } catch (e) {}
   }
 }
 
-// Lắng nghe cử chỉ tương tác sớm ngay từ giây đầu tiên trang web tải
+// Lắng nghe cử chỉ tương tác đầu tiên để mở âm thanh ngay lập tức
 const earlyEvents = ["click", "touchstart", "touchend", "mousedown", "pointerdown", "scroll", "keydown"];
 function onEarlyGesture() {
-  tryTriggerAudioPlayback();
+  triggerAudioPlayback();
+  // Sau khi kích hoạt thành công, gỡ bỏ listeners cử chỉ đầu
+  earlyEvents.forEach(evt => {
+    window.removeEventListener(evt, onEarlyGesture, { capture: true });
+    document.removeEventListener(evt, onEarlyGesture, { capture: true });
+  });
 }
 
-earlyEvents.forEach((evt) => {
+earlyEvents.forEach(evt => {
   window.addEventListener(evt, onEarlyGesture, { capture: true, passive: true });
   document.addEventListener(evt, onEarlyGesture, { capture: true, passive: true });
 });
+
+// Khởi tạo nút bấm điều khiển âm thanh tinh tế góc trên phải
+function initSoundControls() {
+  const btnSound = document.getElementById("btnSoundControl");
+  if (!btnSound) return;
+
+  btnSound.addEventListener("click", (e) => {
+    e.stopPropagation();
+    userHasUnmuted = true;
+
+    const bgAudio = document.getElementById("bgAudio");
+
+    if (isAudioPlaying) {
+      // Đang phát -> Tắt tiếng / Tạm dừng
+      if (ytPlayer && typeof ytPlayer.pauseVideo === "function") {
+        try { ytPlayer.pauseVideo(); } catch (err) {}
+      }
+      if (bgAudio) {
+        try { bgAudio.pause(); } catch (err) {}
+      }
+      updateSoundUI(false);
+    } else {
+      // Đang tắt -> Bật tiếng
+      if (ytPlayer && typeof ytPlayer.playVideo === "function") {
+        try {
+          if (typeof ytPlayer.unMute === "function") ytPlayer.unMute();
+          if (typeof ytPlayer.setVolume === "function") ytPlayer.setVolume(100);
+          ytPlayer.playVideo();
+        } catch (err) {}
+      }
+      if (bgAudio) {
+        try {
+          bgAudio.muted = false;
+          bgAudio.play().catch(() => {});
+        } catch (err) {}
+      }
+      updateSoundUI(true);
+    }
+  });
+}
 
 // Khởi tạo YouTube Iframe API
 window.onYouTubeIframeAPIReady = function () {
@@ -259,14 +306,14 @@ window.onYouTubeIframeAPIReady = function () {
 };
 
 function onPlayerReady(event) {
-  // 1. Thử tự động phát có âm thanh
+  // Thử tự động phát có tiếng ngay khi player sẵn sàng
   try {
     event.target.unMute();
     event.target.setVolume(100);
     const p = event.target.playVideo();
     if (p && p.catch) {
       p.catch(() => {
-        // Nếu trình duyệt chặn unmuted, phát muted trước để sẵn sàng
+        // Nếu trình duyệt chặn unmuted, phát muted trước để sẵn sàng un-mute
         try {
           event.target.mute();
           event.target.playVideo();
@@ -275,52 +322,24 @@ function onPlayerReady(event) {
     }
   } catch (err) {}
 
-  // 2. Nếu người dùng đã chạm trước khi player ready, phát có tiếng ngay!
-  if (userHasInteracted) {
+  // Nếu người dùng đã chạm trước khi player ready
+  if (userHasUnmuted) {
     try {
       event.target.unMute();
       event.target.setVolume(100);
       event.target.playVideo();
-      hideMusicPrompt();
+      updateSoundUI(true);
     } catch (e) {}
-  }
-
-  // 3. Nút bấm bật/tắt nhạc nổi
-  const btnToggle = document.getElementById("btnToggleMusic");
-  if (btnToggle) {
-    btnToggle.addEventListener("click", (e) => {
-      e.stopPropagation();
-      userHasInteracted = true;
-      hideMusicPrompt();
-      if (!ytPlayer) return;
-
-      if (isAudioPlaying) {
-        ytPlayer.pauseVideo();
-      } else {
-        ytPlayer.unMute();
-        ytPlayer.setVolume(100);
-        ytPlayer.playVideo();
-      }
-    });
   }
 }
 
 function onPlayerStateChange(event) {
-  const btnToggle = document.getElementById("btnToggleMusic");
-  const musicWidget = document.getElementById("musicWidget");
-  const stateIcon = document.getElementById("musicStateIcon");
-
   // YT.PlayerState.PLAYING === 1
   if (event.data === 1) {
-    isAudioPlaying = true;
-    hideMusicPrompt();
-    if (btnToggle) btnToggle.classList.add("is-playing");
-    if (musicWidget) musicWidget.classList.add("is-playing");
-    if (stateIcon) stateIcon.textContent = "❚❚";
-  } else {
-    isAudioPlaying = false;
-    if (btnToggle) btnToggle.classList.remove("is-playing");
-    if (musicWidget) musicWidget.classList.remove("is-playing");
-    if (stateIcon) stateIcon.textContent = "▶";
+    updateSoundUI(true);
+  } else if (event.data === 2 || event.data === 0) {
+    // PAUSED === 2, ENDED === 0
+    if (!userHasUnmuted) return;
+    updateSoundUI(false);
   }
 }

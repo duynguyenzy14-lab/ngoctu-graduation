@@ -8,39 +8,25 @@
   
   <meta property="og:title" content="Ngọc Tú tốt nghiệp rồi nè! 🎓✨">
   <meta property="og:description" content="Sáng Thứ 7, 28.11.2026 tại Trường Đại học Mở TP.HCM. Mời bạn đến chung vui cùng Tú nha!">
-  <meta property="og:image" content="./graduation_files/lvhq0663-portrait.jpg">
+  <meta property="og:image" content="./graduation_files/tu-polaroid-centered.jpg">
   
   <!-- Font chữ: Playfair Display (Đồng nhất cho toàn trang) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
   
-  <!-- File CSS giao diện Scrapbook x Editorial x Book Flip Mobile -->
+  <!-- File CSS giao diện Scrapbook x Editorial x Mobile Book Flip -->
   <link rel="stylesheet" href="./style.css">
 </head>
 <body>
 
+  <!-- ================= NÚT BẬT / TẮT ÂM THANH TINH TẾ GÓC PHẢI ================= -->
+  <button type="button" class="btn-sound-control" id="btnSoundControl" aria-label="Bật hoặc tắt âm thanh nền">
+    <span class="sound-icon" id="soundIcon">🔊</span>
+  </button>
+
   <!-- ================= BỐ CỤC CHÍNH: CUỐN SÁCH THIỆP MỜI TỐT NGHIỆP ĐỊNH DẠNG DỌC ================= -->
   <main class="invitation-screen" id="invitationScreen">
-    
-    <!-- THANH CHỈ BÁO TRANG (PAGE INDICATOR CHIC DOTS) -->
-    <nav class="book-nav-indicator" aria-label="Điều hướng trang sách">
-      <div class="nav-dots">
-        <button type="button" class="nav-dot is-active" data-page="1" aria-label="Trang 1: Bìa tốt nghiệp">
-          <span class="dot-num">1</span>
-        </button>
-        <button type="button" class="nav-dot" data-page="2" aria-label="Trang 2: Dải phim 35mm">
-          <span class="dot-num">2</span>
-        </button>
-        <button type="button" class="nav-dot" data-page="3" aria-label="Trang 3: Thư mời">
-          <span class="dot-num">3</span>
-        </button>
-        <button type="button" class="nav-dot" data-page="4" aria-label="Trang 4: Chi tiết lễ">
-          <span class="dot-num">4</span>
-        </button>
-      </div>
-      <span class="nav-page-label" id="navPageLabel">Trang 1 / 4 · Bìa kỷ niệm</span>
-    </nav>
 
     <!-- KHUNG CUỐN SÁCH 3D (BOOK VIEWPORT) -->
     <div class="book-viewport" id="bookViewport">
@@ -49,29 +35,29 @@
       <article class="book-page page-1 is-active" id="page1" aria-label="Trang 1 - Bìa tốt nghiệp">
         <div class="page-card-dashed">
           
-          <!-- 1. ẢNH CHÂN DUNG POLAROID LỚN (VIỀN TRẮNG CHỨA DÒNG SCRIPT) -->
+          <!-- 1. KHỐI PERSONAL NAMEPLATE (DỜI LÊN TRÊN ẢNH POLAROID THEO YÊU CẦU) -->
+          <div class="personal-nameplate">
+            <!-- Dòng chữ The Graduation Day of in nghiêng -->
+            <p class="nameplate-subhead">The Graduation Day of</p>
+
+            <!-- Tên chính: NGUYỄN NGỌC TÚ – font serif sang trọng, nổi bật -->
+            <h1 class="nameplate-fullname">NGUYỄN NGỌC TÚ</h1>
+
+            <!-- Chuyên ngành: QUẢN LÝ CÔNG – chữ in hoa thanh lịch -->
+            <p class="nameplate-major">QUẢN LÝ CÔNG</p>
+          </div>
+
+          <!-- 2. ẢNH CHÂN DUNG POLAROID LỚN (ĐÃ CĂN CHỈNH GIỮA KHUNG, KHÔNG BỊ CẮT ĐẦU) -->
           <div class="polaroid-wrapper">
             <div class="polaroid-inner">
               <div class="photo-container">
-                <img src="./graduation_files/lvhq0663-portrait.jpg" alt="Nguyễn Ngọc Tú - Graduation 2026" class="polaroid-photo" loading="eager">
+                <img src="./graduation_files/tu-polaroid-centered.jpg" alt="Nguyễn Ngọc Tú - Graduation 2026" class="polaroid-photo" loading="eager">
               </div>
               <!-- Dòng chữ script nằm trong viền trắng chân ảnh Polaroid -->
               <div class="polaroid-caption">
                 <p class="polaroid-caption-text">A little moment to remember ♡</p>
               </div>
             </div>
-          </div>
-
-          <!-- 2. KHỐI PERSONAL NAMEPLATE CHUẨN THEO THIẾT KẾ MẪU -->
-          <div class="personal-nameplate">
-            <!-- Dòng chữ The Graduation Day of in nghiêng -->
-            <p class="nameplate-subhead">The Graduation Day of</p>
-
-            <!-- Tên chính: NGUYỄN NGỌC TÚ – font serif, kích thước lớn, nổi bật nhất -->
-            <h1 class="nameplate-fullname">NGUYỄN NGỌC TÚ</h1>
-
-            <!-- Chuyên ngành: QUẢN LÝ CÔNG – chữ in hoa, nhỏ hơn tên -->
-            <p class="nameplate-major">QUẢN LÝ CÔNG</p>
           </div>
 
           <!-- NÚT LẬT SANG TRANG 2: HÀNH TRÌNH OU -->
@@ -350,32 +336,18 @@
 
   </main>
 
-  <!-- ================= WIDGET NHẠC NỀN COQUETTE: CẢM ƠN NGƯỜI ĐÃ THỨC CÙNG TÔI (PHÙNG KHÁNH LINH) ================= -->
-  <aside class="music-floating-widget" id="musicWidget">
-    <div class="music-autoplay-prompt" id="musicPrompt" aria-hidden="true">
-      <span>🎵 Chạm để bật nhạc nền nha ♡</span>
-    </div>
-    <button type="button" class="btn-music-toggle" id="btnToggleMusic" aria-label="Bật hoặc tạm dừng bài hát Cảm Ơn Người Đã Thức Cùng Tôi">
-      <div class="vinyl-record" id="vinylRecord" aria-hidden="true">
-        <div class="vinyl-core"></div>
-      </div>
-      <div class="music-details">
-        <span class="music-tag">🎵 NHẠC NỀN</span>
-        <span class="music-title">Cảm Ơn Người Đã Thức Cùng Tôi</span>
-        <span class="music-artist">Phùng Khánh Linh</span>
-      </div>
-      <div class="music-state-icon" id="musicStateIcon">▶</div>
-    </button>
-  </aside>
+  <!-- ================= ÂM THANH NỀN WEB (TỰ ĐỘNG BẬT SẴN) ================= -->
+  <!-- 1. Trình phát Audio chuẩn của Web -->
+  <audio id="bgAudio" src="./graduation_files/music.mp3" preload="auto" loop playsinline></audio>
 
-  <!-- Khung phát YouTube Player tự động trong viewport để đáp ứng chính sách Autoplay -->
-  <div id="ytMusicPlayerContainer" style="position:fixed;bottom:20px;right:20px;width:200px;height:200px;opacity:0.001;pointer-events:none;z-index:-1;" aria-hidden="true">
+  <!-- 2. Trình phát âm thanh nền dự phòng tự động chạy qua YouTube (J3IRYx3PzzM - Phùng Khánh Linh) -->
+  <div id="ytMusicPlayerContainer" style="position:fixed;bottom:10px;right:10px;width:10px;height:10px;opacity:0.001;pointer-events:none;z-index:-1;" aria-hidden="true">
     <div id="ytMusicPlayer"></div>
   </div>
 
   <!-- Thư viện YouTube IFrame API -->
   <script src="https://www.youtube.com/iframe_api"></script>
-  <!-- Script xử lý nhạc nền, lật trang sách và tương tác mobile -->
+  <!-- Script xử lý nhạc nền tự động, lật trang sách và tương tác mobile -->
   <script src="./script.js"></script>
 </body>
 </html>
