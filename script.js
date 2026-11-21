@@ -280,7 +280,7 @@ const STORAGE_KEY = "ngoctu_graduation_wishes_v2";
 
 // 1. LINK KẾT NỐI EMAIL & GOOGLE SHEET (NẾU TÚ DÙNG GOOGLE APPS SCRIPT):
 // Dán link Web App của Tú vào đây để website đọc trực tiếp từ kho lưu trữ Google của Tú
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwfNa0q0it9_dpMmG14P-sG2362WEEu-2IC7RLFW7LWqC8d5jWI-k966lWVkwa0xoNn/exec"; 
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw-BeyhWxYMYdnd6j22soAq4o6TzAy1dOPmNCa58x1Ad7ERZG2sPTPyBJtbYb7fOqve/exec"; 
 
 // 2. MÁY CHỦ ĐỒNG BỘ TRỰC TUYẾN TỰ ĐỘNG (HOẠT ĐỘNG 24/7 SẴN SÀNG):
 const CLOUD_GUESTBOOK_API = "https://api.restful-api.dev/objects/ff808181a09d98f701a1fe4fe584112c";
