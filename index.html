@@ -20,11 +20,6 @@
 </head>
 <body>
 
-  <!-- ================= NÚT BẬT / TẮT ÂM THANH TINH TẾ GÓC PHẢI ================= -->
-  <button type="button" class="btn-sound-control" id="btnSoundControl" aria-label="Bật hoặc tắt âm thanh nền">
-    <span class="sound-icon" id="soundIcon">🔊</span>
-  </button>
-
   <!-- ================= BỐ CỤC CHÍNH: CUỐN SÁCH THIỆP MỜI TỐT NGHIỆP ĐỊNH DẠNG DỌC ================= -->
   <main class="invitation-screen" id="invitationScreen">
 
@@ -81,16 +76,15 @@
       <article class="book-page page-2" id="page2" aria-label="Trang 2 - Dải phim 35mm hành trình đại học">
         <div class="page-card-dashed">
           
-          <!-- PHẦN MỞ ĐẦU: TIÊU ĐỀ LỚN & ĐOẠN CHỮ Ý NGHĨA -->
+          <!-- PHẦN MỞ ĐẦU: BADGE & ĐOẠN CHỮ Ý NGHĨA -->
           <header class="film-header">
             <div class="film-header-badge">
               <span class="film-header-icon">🎞️</span>
-              <span>MEMORIES · 2022 – 2026</span>
+              <span class="badge-text"><span class="badge-text-part">MEMORIES</span> <span class="badge-sep">·</span> <span class="badge-text-part">2022 – 2026</span></span>
             </div>
-            <h2 class="film-main-title">BỐN NĂM, THẬT NHIỀU KHOẢNH KHẮC TẠI OU</h2>
             <p class="film-sub-text">
               Những năm tháng ấy, mình đã lớn lên như thế.<br>
-              Bốn năm, nhiều câu chuyện và vô số ký ức mình muốn lưu giữ thật lâu
+              Bốn năm, nhiều câu chuyện và vô số ký ức mình muốn lưu giữ thật lâu ♡
             </p>
           </header>
 
@@ -165,7 +159,7 @@
                 <div class="sprocket-holes"></div>
                 <div class="film-meta-text">
                   <span class="meta-tag">QUẢN LÝ CÔNG</span>
-                  <span class="meta-tag">NGUYỄN NGỌC TÚ · OU GRADUATION</span>
+                  <span class="meta-tag">NGUYỄN NGỌC TÚ · GRADUATION</span>
                 </div>
               </div>
             </div>
@@ -336,18 +330,7 @@
 
   </main>
 
-  <!-- ================= ÂM THANH NỀN WEB (TỰ ĐỘNG BẬT SẴN) ================= -->
-  <!-- 1. Trình phát Audio chuẩn của Web -->
-  <audio id="bgAudio" src="./graduation_files/music.mp3" preload="auto" loop playsinline></audio>
-
-  <!-- 2. Trình phát âm thanh nền dự phòng tự động chạy qua YouTube (J3IRYx3PzzM - Phùng Khánh Linh) -->
-  <div id="ytMusicPlayerContainer" style="position:fixed;bottom:10px;right:10px;width:10px;height:10px;opacity:0.001;pointer-events:none;z-index:-1;" aria-hidden="true">
-    <div id="ytMusicPlayer"></div>
-  </div>
-
-  <!-- Thư viện YouTube IFrame API -->
-  <script src="https://www.youtube.com/iframe_api"></script>
-  <!-- Script xử lý nhạc nền tự động, lật trang sách và tương tác mobile -->
+  <!-- Script xử lý lật trang sách và tương tác mobile -->
   <script src="./script.js"></script>
 </body>
 </html>
