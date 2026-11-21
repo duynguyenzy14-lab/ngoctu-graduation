@@ -152,16 +152,23 @@ function initMobileBookFlip() {
     }
   });
 
+  // 4. CẢM ỨNG VUỐT TAY (SWIPE) TRÊN ĐIỆN THOẠI
   let touchStartX = 0;
   let touchStartY = 0;
   let touchEndX = 0;
   let touchEndY = 0;
+  let touchMoved = false;
 
   window.addEventListener("touchstart", (e) => {
+    touchMoved = false;
     if (e.touches && e.touches.length > 0) {
       touchStartX = e.touches[0].clientX;
       touchStartY = e.touches[0].clientY;
     }
+  }, { passive: true });
+
+  window.addEventListener("touchmove", () => {
+    touchMoved = true;
   }, { passive: true });
 
   window.addEventListener("touchend", (e) => {
@@ -184,6 +191,31 @@ function initMobileBookFlip() {
       }
     }
   }
+
+  // 5. CHẠM VÀO NỬA TRÁI / PHẢI MÀN HÌNH ĐỂ LẬT TRANG (TAP LEFT TO PREV / TAP RIGHT TO NEXT)
+  window.addEventListener("click", (e) => {
+    // Không lật trang nếu đang thao tác trên form, nút bấm, link hoặc ô nhập liệu
+    if (e.target.closest("input, textarea, button, a, label, select, .film-strip-card, .wishes-list")) {
+      return;
+    }
+
+    // Bỏ qua nếu vừa thực hiện thao tác vuốt tay (drag / swipe)
+    if (touchMoved) {
+      touchMoved = false;
+      return;
+    }
+
+    const clickX = e.clientX;
+    const screenWidth = window.innerWidth;
+
+    if (clickX >= screenWidth / 2) {
+      // Chạm nửa màn hình bên phải -> Lật sang trang tiếp theo
+      flipToPage(currentPage + 1);
+    } else {
+      // Chạm nửa màn hình bên trái -> Lật ngược lại trang trước
+      flipToPage(currentPage - 1);
+    }
+  });
 }
 
 // ================= 3. BỘ LỌC ẢO NỘI DUNG TIÊU CỰC & CHỐNG HATERS (MULTI-LAYER ANTI-HATER SHIELD) =================
