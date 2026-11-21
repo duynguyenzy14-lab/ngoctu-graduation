@@ -12,27 +12,27 @@
 const GUEST_DATA = {
   "Nhi": {
     salutation: "Gửi Nhi thương mến,",
-    message: "Cảm ơn Nhi vì đã luôn ở bên cạnh, lắng nghe và chia sẻ cùng Tú qua từng giai đoạn của thời sinh viên. Những buổi chuyện trò, những khoảnh khắc vui buồn có Nhi đồng hành đã làm cho những năm tháng thanh xuân của Tú trở nên trọn vẹn và đáng nhớ hơn bao giờ hết.\n\nSáng Thứ Bảy, ngày 28.11, mình sẽ chính thức khép lại hành trình 4 năm tại OU. Ngọc Tú rất mong được gặp mọi người, cùng chung vui và lưu lại thật nhiều khoảnh khắc đáng nhớ nhé! ♡"
+    message: "Cảm ơn Nhi vì đã luôn ở bên cạnh, lắng nghe và chia sẻ cùng Tú qua từng giai đoạn của thời sinh viên. Những buổi chuyện trò, những khoảnh khắc vui buồn có Nhi đồng hành đã làm cho những năm tháng thanh xuân của Tú trở nên trọn vẹn và đáng nhớ hơn bao giờ hết.\n\nSáng Thứ Bảy, ngày 28.11, mình sẽ chính thức khép lại hành trình 4 năm tại OU. Ngọc Tú rất mong được gặp mọi người, cùng chung vui và lưu lại thật nhiều khoảnh khắc đáng nhớ nhé ♡"
   },
   "Khánh": {
     salutation: "Gửi Khánh thương mến,",
-    message: "Bốn năm đại học trôi qua thật nhanh với biết bao kỷ niệm và thử thách. Cảm ơn Khánh vì đã luôn là một người bạn tuyệt vời, luôn đồng hành và tiếp thêm năng lượng tích cực cho Tú trong suốt chặng đường vừa qua.\n\nSáng Thứ Bảy, ngày 28.11, mình sẽ chính thức khép lại hành trình 4 năm tại OU. Ngọc Tú rất mong được gặp mọi người, cùng chung vui và lưu lại thật nhiều khoảnh khắc đáng nhớ nhé! ♡"
+    message: "Bốn năm đại học trôi qua thật nhanh với biết bao kỷ niệm và thử thách. Cảm ơn Khánh vì đã luôn là một người bạn tuyệt vời, luôn đồng hành và tiếp thêm năng lượng tích cực cho Tú trong suốt chặng đường vừa qua.\n\nSáng Thứ Bảy, ngày 28.11, mình sẽ chính thức khép lại hành trình 4 năm tại OU. Ngọc Tú rất mong được gặp mọi người, cùng chung vui và lưu lại thật nhiều khoảnh khắc đáng nhớ nhé ♡"
   },
   "Phát": {
     salutation: "Gửi Phát thương mến,",
-    message: "Nhìn lại chặng đường 4 năm đại học đã qua, Tú thật sự biết ơn vì luôn có Phát đồng hành và ủng hộ. Cảm ơn những lần hỗ trợ nhiệt tình, những cuộc trò chuyện và sự chân thành mà Phát đã dành cho Tú.\n\nSáng Thứ Bảy, ngày 28.11, mình sẽ chính thức khép lại hành trình 4 năm tại OU. Ngọc Tú rất mong được gặp mọi người, cùng chung vui và lưu lại thật nhiều khoảnh khắc đáng nhớ nhé! ♡"
+    message: "Nhìn lại chặng đường 4 năm đại học đã qua, Tú thật sự biết ơn vì luôn có Phát đồng hành và ủng hộ. Cảm ơn những lần hỗ trợ nhiệt tình, những cuộc trò chuyện và sự chân thành mà Phát đã dành cho Tú.\n\nSáng Thứ Bảy, ngày 28.11, mình sẽ chính thức khép lại hành trình 4 năm tại OU. Ngọc Tú rất mong được gặp mọi người, cùng chung vui và lưu lại thật nhiều khoảnh khắc đáng nhớ nhé ♡"
   },
   "Trang": {
     salutation: "Gửi Trang yêu quý,",
-    message: "Cảm ơn Trang vì đã là một phần thật dịu dàng và ấm áp trong những năm tháng đại học của Tú. Cảm ơn những sẻ chia, những nụ cười và sự thấu hiểu mà Trang luôn dành cho Tú suốt thời gian qua.\n\nSáng Thứ Bảy, ngày 28.11, mình sẽ chính thức khép lại hành trình 4 năm tại OU. Ngọc Tú rất mong được gặp mọi người, cùng chung vui và lưu lại thật nhiều khoảnh khắc đáng nhớ nhé! ♡"
+    message: "Cảm ơn Trang vì đã là một phần thật dịu dàng và ấm áp trong những năm tháng đại học của Tú. Cảm ơn những sẻ chia, những nụ cười và sự thấu hiểu mà Trang luôn dành cho Tú suốt thời gian qua.\n\nSáng Thứ Bảy, ngày 28.11, mình sẽ chính thức khép lại hành trình 4 năm tại OU. Ngọc Tú rất mong được gặp mọi người, cùng chung vui và lưu lại thật nhiều khoảnh khắc đáng nhớ nhé ♡"
   },
   "Duy": {
     salutation: "Gửi Duy thương mến,",
-    message: "Thấm thoát mà 4 năm đại học đã đến đích rồi. Cảm ơn Duy vì đã luôn ở đó, luôn là người bạn đồng hành đáng tin cậy và chia sẻ cùng Tú qua từng mùa thi, từng bài thuyết trình và những deadline căng thẳng.\n\nSáng Thứ Bảy, ngày 28.11, mình sẽ chính thức khép lại hành trình 4 năm tại OU. Ngọc Tú rất mong được gặp mọi người, cùng chung vui và lưu lại thật nhiều khoảnh khắc đáng nhớ nhé! ♡"
+    message: "Thấm thoát mà 4 năm đại học đã đến đích rồi. Cảm ơn Duy vì đã luôn ở đó, luôn là người bạn đồng hành đáng tin cậy và chia sẻ cùng Tú qua từng mùa thi, từng bài thuyết trình và những deadline căng thẳng.\n\nSáng Thứ Bảy, ngày 28.11, mình sẽ chính thức khép lại hành trình 4 năm tại OU. Ngọc Tú rất mong được gặp mọi người, cùng chung vui và lưu lại thật nhiều khoảnh khắc đáng nhớ nhé ♡"
   },
   "Thuận": {
     salutation: "Gửi Thuận thương mến,",
-    message: "Cảm ơn Thuận vì đã luôn đồng hành, giúp đỡ và mang lại thật nhiều niềm vui trong suốt những năm tháng thanh xuân vừa qua của Tú. Nhờ có những người bạn như Thuận mà chặng đường đại học của Tú đã trở nên vô cùng ý nghĩa và nhiều màu sắc.\n\nSáng Thứ Bảy, ngày 28.11, mình sẽ chính thức khép lại hành trình 4 năm tại OU. Ngọc Tú rất mong được gặp mọi người, cùng chung vui và lưu lại thật nhiều khoảnh khắc đáng nhớ nhé! ♡"
+    message: "Cảm ơn Thuận vì đã luôn đồng hành, giúp đỡ và mang lại thật nhiều niềm vui trong suốt những năm tháng thanh xuân vừa qua của Tú. Nhờ có những người bạn như Thuận mà chặng đường đại học của Tú đã trở nên vô cùng ý nghĩa và nhiều màu sắc.\n\nSáng Thứ Bảy, ngày 28.11, mình sẽ chính thức khép lại hành trình 4 năm tại OU. Ngọc Tú rất mong được gặp mọi người, cùng chung vui và lưu lại thật nhiều khoảnh khắc đáng nhớ nhé ♡"
   }
 };
 
@@ -186,21 +186,27 @@ function initMobileBookFlip() {
   }
 }
 
-// ================= 3. BỘ LỌC ẢO NỘI DUNG TIÊU CỰC / THÔ TỤC =================
+// ================= 3. BỘ LỌC ẢO NỘI DUNG TIÊU CỰC & CHỐNG HATERS (MULTI-LAYER ANTI-HATER SHIELD) =================
 function isContentInappropriate(text) {
   if (!text) return false;
+
+  // 1. Chuẩn hóa chuỗi (bỏ dấu tiếng Việt, viết thường)
   const raw = text.toLowerCase();
   const normalized = raw
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
     .replace(/[đĐ]/g, "d");
 
+  // Xóa các ký tự phân tách haters hay cố tình chèn (ví dụ: d.m, d_m, d-m, c.h.o, v.c.l)
+  const collapsed = normalized.replace(/[\s\.\-_,\*#@!~;:+=\/\\|]+/g, "");
+
+  // 2. Danh sách mẫu regex từ ngữ tiêu cực, thô tục, chửi bới, trù dập
   const toxicPatterns = [
-    /\b(dm|dcm|đm|đcm|vcl|vkl|vl|cl|cc|clm|đụ|địt|dit|lồn|lon|cặc|cac|buồi|buoi|dái|dai|đéo|deo)\b/i,
-    /\b(chó|cho|súc vật|suc vat|khốn nạn|khon nan|óc chó|oc cho)\b/i,
-    /\b(đồ ngu|ngu ngốc|ngu dốt|thằng ngu|con ngu|đần|dan don|hãm|ham lol|ham lon)\b/i,
-    /\b(cút|cut di|thần kinh|than kinh|rác rưởi|rac ruoi|xấu xí|chết đi|chet)\b/i,
-    /\b(fuck|shit|bitch|asshole|cunt|dick|pussy|idiot|stupid)\b/i
+    /\b(dm|dcm|dkm|đm|đcm|đkm|vcl|vkl|vl|cl|cc|clm|đụ|địt|dit|lồn|lon|cặc|cac|buồi|buoi|dái|dai|đéo|deo|me may|ba may|con me)\b/i,
+    /\b(chó|cho|súc vật|suc vat|khốn nạn|khon nan|óc chó|oc cho|đồ điên|do dien|thần kinh|than kinh)\b/i,
+    /\b(đồ ngu|ngu ngốc|ngu dốt|thằng ngu|con ngu|đần|dan don|hãm|ham lol|ham lon|chết|chet di|bien di|cút|cut di)\b/i,
+    /\b(rác rưởi|rac ruoi|xấu xí|xau xi|mặt dày|mat day|vô duyên|vo duyen|đĩ|di thap|cave|pho)\b/i,
+    /\b(fuck|shit|bitch|asshole|cunt|dick|pussy|idiot|stupid|bastard)\b/i
   ];
 
   for (const pattern of toxicPatterns) {
@@ -208,6 +214,23 @@ function isContentInappropriate(text) {
       return true;
     }
   }
+
+  // 3. Quét các từ khóa bị nén (chống chiêu lách luật haters chèn dấu chấm/khoảng trắng)
+  const collapsedKeywords = [
+    "dm", "dcm", "dkm", "vcl", "vkl", "clm", "ditme", "duma", "du ma", "lonme",
+    "buoi", "cac", "cho", "sucvat", "khonnan", "occho", "dongu", "cutdi", "biendi"
+  ];
+  for (const kw of collapsedKeywords) {
+    if (collapsed.includes(kw)) {
+      return true;
+    }
+  }
+
+  // 4. Chặn spam ký tự vô nghĩa lặp lại quá 5 lần (ví dụ: aaaaaaa, ???????, !!!!!!!)
+  if (/(.)\1{5,}/.test(raw)) {
+    return true;
+  }
+
   return false;
 }
 
