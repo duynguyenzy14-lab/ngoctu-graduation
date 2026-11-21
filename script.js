@@ -229,16 +229,18 @@ function isContentInappropriate(text) {
     .replace(/[\u0300-\u036f]/g, "")
     .replace(/[đĐ]/g, "d");
 
-  // Xóa các ký tự phân tách haters hay cố tình chèn (ví dụ: d.m, d_m, d-m, c.h.o, v.c.l)
+  // Xóa ký tự phân tách haters hay cố tình chèn (ví dụ: d.m, d_m, d-m)
   const collapsed = normalized.replace(/[\s\.\-_,\*#@!~;:+=\/\\|]+/g, "");
 
-  // 2. Danh sách mẫu regex từ ngữ tiêu cực, thô tục, chửi bới, trù dập
+  // 2. Danh sách mẫu regex từ ngữ tiêu cực, thô tục, chửi bới cụ thể
+  // LƯU Ý: Tuyệt đối không chặn các từ bình thường như "cho", "các", "buổi", "lớn", "dài"
   const toxicPatterns = [
-    /\b(dm|dcm|dkm|đm|đcm|đkm|vcl|vkl|vl|cl|cc|clm|đụ|địt|dit|lồn|lon|cặc|cac|buồi|buoi|dái|dai|đéo|deo|me may|ba may|con me)\b/i,
-    /\b(chó|cho|súc vật|suc vat|khốn nạn|khon nan|óc chó|oc cho|đồ điên|do dien|thần kinh|than kinh)\b/i,
-    /\b(đồ ngu|ngu ngốc|ngu dốt|thằng ngu|con ngu|đần|dan don|hãm|ham lol|ham lon|chết|chet di|bien di|cút|cut di)\b/i,
-    /\b(rác rưởi|rac ruoi|xấu xí|xau xi|mặt dày|mat day|vô duyên|vo duyen|đĩ|di thap|cave|pho)\b/i,
-    /\b(fuck|shit|bitch|asshole|cunt|dick|pussy|idiot|stupid|bastard)\b/i
+    /\b(dm|dcm|dkm|đm|đcm|đkm|vcl|vkl|clm|đụ|địt|lồn|cặc|buồi|đéo)\b/i,
+    /\b(con cho|do cho|thang cho|oc cho|cho de|cho chet|bon cho|con chó|đồ chó|thằng chó|óc chó|chó đẻ|chó chết|bọn chó)\b/i,
+    /\b(do ngu|thang ngu|con ngu|ngu ngoc|ngu dot|dan don|đồ ngu|thằng ngu|con ngu|ngu ngốc|ngu dốt|đần độn)\b/i,
+    /\b(suc vat|khon nan|rac ruoi|bien di|cut di|súc vật|khốn nạn|rác rưởi|biến đi|cút đi|chet di|chết đi)\b/i,
+    /\b(con di|cave|gai bao|con đĩ)\b/i,
+    /\b(fuck|shit|bitch|asshole|cunt|bastard)\b/i
   ];
 
   for (const pattern of toxicPatterns) {
@@ -247,10 +249,10 @@ function isContentInappropriate(text) {
     }
   }
 
-  // 3. Quét các từ khóa bị nén (chống chiêu lách luật haters chèn dấu chấm/khoảng trắng)
+  // 3. Quét các từ khóa bị nén (chỉ các từ chửi đặc trưng, KHÔNG bao gồm từ thường)
   const collapsedKeywords = [
-    "dm", "dcm", "dkm", "vcl", "vkl", "clm", "ditme", "duma", "du ma", "lonme",
-    "buoi", "cac", "cho", "sucvat", "khonnan", "occho", "dongu", "cutdi", "biendi"
+    "ditme", "duma", "lonme", "sucvat", "khonnan", "occho", "dongu", "cutdi", "biendi",
+    "dcm", "dkm", "vcl", "vkl", "clm", "chetme"
   ];
   for (const kw of collapsedKeywords) {
     if (collapsed.includes(kw)) {
@@ -258,16 +260,17 @@ function isContentInappropriate(text) {
     }
   }
 
-  // 4. Chặn spam ký tự vô nghĩa lặp lại quá 5 lần (ví dụ: aaaaaaa, ???????, !!!!!!!)
-  if (/(.)\1{5,}/.test(raw)) {
+  // 4. Chặn spam ký tự lặp vô nghĩa (ví dụ: aaaaaaa, ???????)
+  if (/(.)\1{6,}/.test(raw)) {
     return true;
   }
 
   return false;
 }
 
-// ================= 4. QUẢN LÝ SỔ LƯU BÚT & TỰ ĐỘNG CUỘN DỌC =================
+// ================= 4. QUẢN LÝ SỔ LƯU BÚT ĐỒNG BỘ ĐÁM MÂY (CLOUD SYNC) & TỰ ĐỘNG CUỘN DỌC =================
 const STORAGE_KEY = "ngoctu_graduation_wishes_v2";
+const CLOUD_GUESTBOOK_API = "https://api.restful-api.dev/objects/ff808181a09d98f701a1fe4fe584112c";
 
 function getStoredWishes() {
   try {
@@ -282,6 +285,22 @@ function getStoredWishes() {
     console.error("Lỗi đọc lời chúc:", e);
   }
   return DEFAULT_WISHES;
+}
+
+async function fetchCloudWishes() {
+  try {
+    const res = await fetch(CLOUD_GUESTBOOK_API);
+    if (res.ok) {
+      const data = await res.json();
+      if (data && data.data && Array.isArray(data.data.wishes)) {
+        const cloudWishes = data.data.wishes.filter(w => !isContentInappropriate(w.name + " " + w.message));
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(cloudWishes));
+        renderWishesList(cloudWishes);
+      }
+    }
+  } catch (err) {
+    console.warn("Không thể tải lời chúc từ đám mây (dùng cache local):", err);
+  }
 }
 
 function renderWishesList(wishes) {
@@ -347,11 +366,16 @@ function renderWishesList(wishes) {
 }
 
 function initWishesBoard() {
+  // 1. Hiển thị tức thì từ cache cục bộ (zero lag)
   const wishes = getStoredWishes();
   renderWishesList(wishes);
+
+  // 2. Tự động đồng bộ từ Đám mây để ai mở link cũng thấy
+  fetchCloudWishes();
 }
 
-function addNewWish(newWish) {
+async function addNewWish(newWish) {
+  // 1. Hiển thị ngay lên màn hình cho người gửi
   let wishes = getStoredWishes();
   wishes = [newWish, ...wishes];
   try {
@@ -360,6 +384,32 @@ function addNewWish(newWish) {
     console.error("Lỗi lưu lời chúc:", e);
   }
   renderWishesList(wishes);
+
+  // 2. Gửi đồng bộ lên Đám mây công khai để TẤT CẢ mọi người mở link đều thấy
+  try {
+    const res = await fetch(CLOUD_GUESTBOOK_API);
+    if (res.ok) {
+      const currentObj = await res.json();
+      const currentWishes = (currentObj.data && Array.isArray(currentObj.data.wishes)) ? currentObj.data.wishes : [];
+      const cleanWish = {
+        name: newWish.name,
+        attending: newWish.attending,
+        message: newWish.message,
+        time: "Vừa xong"
+      };
+      const updatedList = [cleanWish, ...currentWishes.filter(w => !isContentInappropriate(w.name + " " + w.message))];
+      await fetch(CLOUD_GUESTBOOK_API, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: "Ngoctu Graduation Guestbook 2026",
+          data: { wishes: updatedList }
+        })
+      });
+    }
+  } catch (cloudErr) {
+    console.warn("Lỗi đồng bộ đám mây:", cloudErr);
+  }
 }
 
 function escapeHtml(str) {
@@ -448,7 +498,7 @@ function initRsvpForm() {
       emailStatusNote = "[Bị bộ lọc chặn hiển thị trên web do chứa từ nhạy cảm]";
     }
 
-    fetch("https://formsubmit.co/ajax/ngoctung2188@gmail.com", {
+    fetch("https://formsubmit.co/ajax/ngoctung2188@gmail.com.vn", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -456,11 +506,16 @@ function initRsvpForm() {
       },
       body: JSON.stringify({
         _subject: `[RSVP Tốt Nghiệp] ${name} vừa gửi xác nhận tham dự!`,
+        _cc: "ngoctung2188@gmail.com",
+        _captcha: "false",
+        _template: "table",
         "Tên khách mời": name,
         "Tham dự lễ": attendingText,
         "Lời chúc gửi Tú": userWishText,
         "Trạng thái hiển thị": emailStatusNote
       })
+    }).then(res => {
+      console.log("FormSubmit response status:", res.status);
     }).catch(err => {
       console.warn("Gửi email background:", err);
     });
