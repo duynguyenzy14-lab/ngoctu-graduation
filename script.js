@@ -301,23 +301,48 @@ function getStoredWishes() {
 }
 
 async function fetchCloudWishes() {
-  const apiUrl = GOOGLE_SCRIPT_URL || CLOUD_GUESTBOOK_API;
-  try {
-    const res = await fetch(apiUrl);
-    if (res.ok) {
-      const data = await res.json();
-      let rawList = [];
-      if (Array.isArray(data)) {
-        rawList = data;
-      } else if (data && data.data && Array.isArray(data.data.wishes)) {
-        rawList = data.data.wishes;
+  let loadedWishes = null;
+
+  // 1. Thử đọc từ Google Sheet của Tú trước (nếu link Google Apps Script đã mở quyền công khai)
+  if (GOOGLE_SCRIPT_URL) {
+    try {
+      const res = await fetch(GOOGLE_SCRIPT_URL);
+      if (res.ok) {
+        const data = await res.json();
+        if (Array.isArray(data) && data.length > 0) {
+          loadedWishes = data;
+        }
       }
-      const cloudWishes = rawList.filter(w => !isContentInappropriate(w.name + " " + w.message));
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(cloudWishes));
-      renderWishesList(cloudWishes);
+    } catch (gErr) {
+      console.warn("Chưa đọc được Google Sheet (chuyển sang Cloud API dự phòng):", gErr);
     }
-  } catch (err) {
-    console.warn("Không thể tải lời chúc từ máy chủ:", err);
+  }
+
+  // 2. Tự động đọc từ Cloud Guestbook API trực tuyến 24/7 (luôn hoạt động ổn định)
+  if (!loadedWishes && CLOUD_GUESTBOOK_API) {
+    try {
+      const res = await fetch(CLOUD_GUESTBOOK_API);
+      if (res.ok) {
+        const data = await res.json();
+        if (data && data.data && Array.isArray(data.data.wishes)) {
+          loadedWishes = data.data.wishes;
+        } else if (Array.isArray(data)) {
+          loadedWishes = data;
+        }
+      }
+    } catch (cErr) {
+      console.warn("Lỗi tải từ Cloud Guestbook API:", cErr);
+    }
+  }
+
+  // 3. Nếu tải thành công từ máy chủ: lưu vào cache và hiển thị lên web
+  if (loadedWishes && Array.isArray(loadedWishes)) {
+    const cloudWishes = loadedWishes.filter(w => !isContentInappropriate(w.name + " " + w.message));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(cloudWishes));
+    renderWishesList(cloudWishes);
+  } else {
+    // Dùng danh sách đã lưu ở local
+    renderWishesList(getStoredWishes());
   }
 }
 
@@ -428,6 +453,24 @@ async function addNewWish(newWish) {
   } catch (cloudErr) {
     console.warn("Lỗi đồng bộ đám mây:", cloudErr);
   }
+
+  // 3. Gửi đồng bộ vào Google Sheet của Tú (nếu có GOOGLE_SCRIPT_URL)
+  if (GOOGLE_SCRIPT_URL) {
+    try {
+      fetch(GOOGLE_SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify({
+          name: newWish.name,
+          attending: newWish.attending || "Sẽ đến nhaa!",
+          message: newWish.message
+        })
+      }).catch(gErr => console.warn("Lỗi gửi Google Sheet:", gErr));
+    } catch (postErr) {
+      console.warn("Lỗi POST Google Script:", postErr);
+    }
+  }
 }
 
 function escapeHtml(str) {
@@ -516,6 +559,31 @@ function initRsvpForm() {
       emailStatusNote = "[Bị bộ lọc chặn hiển thị trên web do chứa từ nhạy cảm]";
     }
 
+    // 1. Gửi đồng bộ vào Google Sheet của Tú (nếu có GOOGLE_SCRIPT_URL)
+    if (GOOGLE_SCRIPT_URL) {
+      try {
+        fetch(GOOGLE_SCRIPT_URL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: {
+            "Content-Type": "text/plain;charset=utf-8"
+          },
+          body: JSON.stringify({
+            name: name,
+            attending: attendingText,
+            message: userWishText,
+            isPublic: isPublicWanted ? "Hiển thị" : "Ẩn",
+            status: emailStatusNote
+          })
+        }).catch(err => {
+          console.warn("Gửi Google Sheet background:", err);
+        });
+      } catch (sheetErr) {
+        console.warn("Lỗi gọi Google Sheet:", sheetErr);
+      }
+    }
+
+    // 2. Gửi email thông báo về Gmail của Tú
     fetch("https://formsubmit.co/ajax/ngoctung2188@gmail.com.vn", {
       method: "POST",
       headers: {
