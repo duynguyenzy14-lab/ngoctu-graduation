@@ -358,6 +358,15 @@
                 <textarea id="guestMsgInput" name="message" class="form-textarea" rows="3" placeholder="Gửi lời thương thương đến Ngọc Tú nha..."></textarea>
               </div>
 
+              <!-- Tùy chọn cho phép hiển thị lên Sổ lưu bút (mặc định đã chọn) -->
+              <div class="form-group checkbox-opt-group">
+                <label class="custom-checkbox-label">
+                  <input type="checkbox" id="publicWishCheckbox" name="isPublic" checked>
+                  <span class="custom-checkbox-ui"></span>
+                  <span class="custom-checkbox-text">Hiển thị lời chúc này lên Sổ lưu bút 🌸</span>
+                </label>
+              </div>
+
               <div class="form-submit-wrap">
                 <button type="submit" class="btn-submit-rsvp" id="btnSubmitRsvp">
                   <span>Gửi xác nhận cho Tú 💌</span>
@@ -388,13 +397,11 @@
         <div class="page-card-dashed">
           
           <header class="farewell-header">
-            <div class="farewell-badge">
-              <span>🌸 DẤU MỐC THANH XUÂN</span>
-            </div>
             <h2 class="farewell-main-title">Hẹn gặp người thương</h2>
             <p class="farewell-date">28/11/2026</p>
             <p class="farewell-sub-text">
-              Cảm ơn bạn đã luôn là một phần thật đẹp trong thanh xuân của Tú ♡
+              Cảm ơn bạn đã luôn là một phần thật đẹp<br>
+              trong thanh xuân của Ngọc Tú ♡
             </p>
           </header>
 
@@ -404,8 +411,10 @@
               <span class="wishes-icon">💌</span>
               <span class="wishes-title">Lời chúc từ những người thương</span>
             </div>
-            <div class="wishes-list" id="wishesList">
-              <!-- Render động từ JavaScript -->
+            <div class="wishes-marquee-viewport" id="wishesViewport">
+              <div class="wishes-list" id="wishesList">
+                <!-- Render động từ JavaScript -->
+              </div>
             </div>
           </div>
 

@@ -1,16 +1,11 @@
 ﻿/**
  * NGỌC TÚ – GRADUATION INVITATION 2026
  * 1. Multi-page 3D Mobile Book Flip (Page 1 -> 6)
- *    Page 1: Bìa Polaroid
- *    Page 2: Dải phim xen kẽ 35mm
- *    Page 3: Thư mời thân thương
- *    Page 4: Chi tiết lễ tốt nghiệp
- *    Page 5: Xác nhận tham dự (RSVP)
- *    Page 6: Hẹn gặp người thương & Sổ lưu bút (Wishes Board)
  * 2. Cảm ứng vuốt tay (Touch Swipe Left/Right) & nút điều hướng lật trang
  * 3. Chạm vào bìa để lật trang
  * 4. Cá nhân hóa lời nhắn khách mời (?to=Nhi, ?to=Khánh...)
- * 5. Tự động lưu & hiển thị lời chúc của bạn bè lên Sổ lưu bút
+ * 5. Sổ lưu bút tự động cuộn dọc (Vertical Marquee)
+ * 6. Bộ lọc ảo nội dung tiêu cực / thô tục & tùy chọn ẩn/hiện lời chúc
  */
 
 // ================= DỮ LIỆU CÁ NHÂN HÓA KHÁCH MỜI =================
@@ -41,33 +36,8 @@ const GUEST_DATA = {
   }
 };
 
-// ================= DỮ LIỆU LỜI CHÚC MẪU BAN ĐẦU CHO SỔ LƯU BÚT =================
-const DEFAULT_WISHES = [
-  {
-    name: "Nhi",
-    attending: "Sẽ đến nhaa! 💖",
-    message: "Chúc mừng tân cử nhân xinh đẹp của tui! Chúc Tú chặng đường mới luôn rực rỡ và hạnh phúc nha 🎓✨",
-    time: "20/11/2026"
-  },
-  {
-    name: "Khánh",
-    attending: "Sẽ đến nhaa! 💖",
-    message: "Bốn năm đại học thật nhiều kỷ niệm. Hẹn gặp Tú vào sáng 28.11 nha, nhất định phải chụp 1000 tấm ảnh! 📸",
-    time: "19/11/2026"
-  },
-  {
-    name: "Trang",
-    attending: "Sẽ đến nhaa! 💖",
-    message: "Tự hào về Tú lắm luôn. Ngày tốt nghiệp thật toả sáng nha cô gái của tụi mình ♡",
-    time: "18/11/2026"
-  },
-  {
-    name: "Duy",
-    attending: "Sẽ đến nhaa! 💖",
-    message: "Chúc mừng Ngọc Tú đã về đích xuất sắc! Chúc bạn tương lai thênh thang rộng mở nhé 🎉",
-    time: "17/11/2026"
-  }
-];
+// Không có lời chúc mẫu ban đầu (xóa hết theo yêu cầu của Tú)
+const DEFAULT_WISHES = [];
 
 // Biến điều hướng toàn cục
 let currentPage = 1;
@@ -107,7 +77,6 @@ function initPersonalizedGreeting() {
       if (elSalutation) elSalutation.textContent = `Gửi ${guestName} thương mến,`;
     }
 
-    // Tự động điền tên vào Form RSVP
     const guestInput = document.getElementById("guestNameInput");
     if (guestInput && !guestInput.value) {
       guestInput.value = guestName;
@@ -155,7 +124,6 @@ function initMobileBookFlip() {
 
   flipToPageFn = flipToPage;
 
-  // 1. Lắng nghe các nút lật trang
   document.querySelectorAll("[data-flip-target]").forEach(btn => {
     btn.addEventListener("click", (e) => {
       e.preventDefault();
@@ -167,7 +135,6 @@ function initMobileBookFlip() {
     });
   });
 
-  // 2. Chạm vào bìa Trang 1 để lật sang Trang 2
   const page1Card = document.querySelector("#page1 .page-card-dashed");
   if (page1Card) {
     page1Card.addEventListener("click", (e) => {
@@ -177,7 +144,6 @@ function initMobileBookFlip() {
     });
   }
 
-  // 3. Phím mũi tên bàn phím
   window.addEventListener("keydown", (e) => {
     if (e.key === "ArrowRight" || e.key === "PageDown") {
       flipToPage(currentPage + 1);
@@ -186,7 +152,6 @@ function initMobileBookFlip() {
     }
   });
 
-  // 4. Cảm ứng vuốt tay trên điện thoại
   let touchStartX = 0;
   let touchStartY = 0;
   let touchEndX = 0;
@@ -221,14 +186,41 @@ function initMobileBookFlip() {
   }
 }
 
-// ================= 3. QUẢN LÝ SỔ LƯU BÚT (WISHES BOARD) =================
+// ================= 3. BỘ LỌC ẢO NỘI DUNG TIÊU CỰC / THÔ TỤC =================
+function isContentInappropriate(text) {
+  if (!text) return false;
+  const raw = text.toLowerCase();
+  const normalized = raw
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[đĐ]/g, "d");
+
+  const toxicPatterns = [
+    /\b(dm|dcm|đm|đcm|vcl|vkl|vl|cl|cc|clm|đụ|địt|dit|lồn|lon|cặc|cac|buồi|buoi|dái|dai|đéo|deo)\b/i,
+    /\b(chó|cho|súc vật|suc vat|khốn nạn|khon nan|óc chó|oc cho)\b/i,
+    /\b(đồ ngu|ngu ngốc|ngu dốt|thằng ngu|con ngu|đần|dan don|hãm|ham lol|ham lon)\b/i,
+    /\b(cút|cut di|thần kinh|than kinh|rác rưởi|rac ruoi|xấu xí|chết đi|chet)\b/i,
+    /\b(fuck|shit|bitch|asshole|cunt|dick|pussy|idiot|stupid)\b/i
+  ];
+
+  for (const pattern of toxicPatterns) {
+    if (pattern.test(raw) || pattern.test(normalized)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+// ================= 4. QUẢN LÝ SỔ LƯU BÚT & TỰ ĐỘNG CUỘN DỌC =================
+const STORAGE_KEY = "ngoctu_graduation_wishes_v2";
+
 function getStoredWishes() {
   try {
-    const raw = localStorage.getItem("ngoctu_graduation_wishes");
+    const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) {
       const parsed = JSON.parse(raw);
-      if (Array.isArray(parsed) && parsed.length > 0) {
-        return parsed;
+      if (Array.isArray(parsed)) {
+        return parsed.filter(w => !isContentInappropriate(w.name + " " + w.message));
       }
     }
   } catch (e) {
@@ -241,10 +233,24 @@ function renderWishesList(wishes) {
   const container = document.getElementById("wishesList");
   if (!container) return;
 
-  container.innerHTML = wishes.map((item, idx) => {
-    const isNewClass = item.isNew ? "is-new" : "";
-    return `
-      <div class="wish-item ${isNewClass}">
+  // Nếu chưa có lời chúc nào: hiển thị ô trống dịu dàng
+  if (!wishes || wishes.length === 0) {
+    container.classList.remove("is-scrolling");
+    container.innerHTML = `
+      <div class="wishes-empty-state">
+        <span class="empty-icon">💌</span>
+        <p class="empty-text">Chưa có lời chúc nào nè.<br>Hãy là người đầu tiên gửi lời chúc đến Ngọc Tú nhé! ♡</p>
+      </div>
+    `;
+    return;
+  }
+
+  // Nếu chỉ có 1 lời chúc: hiển thị tĩnh không cần cuộn
+  if (wishes.length === 1) {
+    container.classList.remove("is-scrolling");
+    const item = wishes[0];
+    container.innerHTML = `
+      <div class="wish-item ${item.isNew ? 'is-new' : ''}">
         <div class="wish-meta">
           <span class="wish-author">✨ ${escapeHtml(item.name)}</span>
           <span class="wish-tag">${escapeHtml(item.attending || "Sẽ đến nhaa! 💖")}</span>
@@ -252,7 +258,37 @@ function renderWishesList(wishes) {
         <p class="wish-content">“${escapeHtml(item.message)}”</p>
       </div>
     `;
-  }).join("");
+    return;
+  }
+
+  // Nếu có từ 2 lời chúc trở lên: tự động cuộn dọc (Vertical Marquee)
+  const itemsHtml = wishes.map((item) => `
+    <div class="wish-item ${item.isNew ? 'is-new' : ''}">
+      <div class="wish-meta">
+        <span class="wish-author">✨ ${escapeHtml(item.name)}</span>
+        <span class="wish-tag">${escapeHtml(item.attending || "Sẽ đến nhaa! 💖")}</span>
+      </div>
+      <p class="wish-content">“${escapeHtml(item.message)}”</p>
+    </div>
+  `).join("");
+
+  // Bản sao nối tiếp để cuộn dọc liền mạch vô tận
+  const dupHtml = wishes.map((item) => `
+    <div class="wish-item" aria-hidden="true">
+      <div class="wish-meta">
+        <span class="wish-author">✨ ${escapeHtml(item.name)}</span>
+        <span class="wish-tag">${escapeHtml(item.attending || "Sẽ đến nhaa! 💖")}</span>
+      </div>
+      <p class="wish-content">“${escapeHtml(item.message)}”</p>
+    </div>
+  `).join("");
+
+  container.innerHTML = itemsHtml + dupHtml;
+  container.classList.add("is-scrolling");
+
+  // Điều chỉnh tốc độ cuộn mượt mà theo số lượng lời chúc
+  const scrollDuration = Math.max(14, wishes.length * 6);
+  container.style.animationDuration = `${scrollDuration}s`;
 }
 
 function initWishesBoard() {
@@ -264,7 +300,7 @@ function addNewWish(newWish) {
   let wishes = getStoredWishes();
   wishes = [newWish, ...wishes];
   try {
-    localStorage.setItem("ngoctu_graduation_wishes", JSON.stringify(wishes));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(wishes));
   } catch (e) {
     console.error("Lỗi lưu lời chúc:", e);
   }
@@ -281,14 +317,13 @@ function escapeHtml(str) {
     .replace(/'/g, "&#039;");
 }
 
-// ================= 4. XỬ LÝ FORM XÁC NHẬN THAM DỰ (RSVP) =================
+// ================= 5. XỬ LÝ FORM XÁC NHẬN THAM DỰ (RSVP) =================
 function initRsvpForm() {
   const rsvpForm = document.getElementById("rsvpForm");
   const radioInputs = document.querySelectorAll('input[name="attending"]');
   const btnSubmit = document.getElementById("btnSubmitRsvp");
   const statusMsg = document.getElementById("rsvpStatusMsg");
 
-  // Radio button visual feedback
   radioInputs.forEach(radio => {
     radio.addEventListener("change", () => {
       document.querySelectorAll(".radio-card").forEach(c => c.classList.remove("is-selected"));
@@ -324,14 +359,23 @@ function initRsvpForm() {
 
     const userWishText = message || "Hẹn gặp Ngọc Tú vào ngày tốt nghiệp 28.11 nhé! 🎓✨";
 
-    // 1. Lưu và cập nhật vào Sổ lưu bút ngay lập tức
-    addNewWish({
-      name: name,
-      attending: attendingText,
-      message: userWishText,
-      time: "Vừa xong",
-      isNew: true
-    });
+    // Kiểm tra checkbox tùy chọn hiển thị công khai lên sổ lưu bút
+    const publicCheckbox = document.getElementById("publicWishCheckbox");
+    const isPublicWanted = publicCheckbox ? publicCheckbox.checked : true;
+
+    // Kiểm tra bộ lọc nội dung tiêu cực
+    const isNegative = isContentInappropriate(name + " " + userWishText);
+
+    // Chỉ hiển thị lên Sổ lưu bút nếu khách đồng ý VÀ nội dung tích cực
+    if (isPublicWanted && !isNegative) {
+      addNewWish({
+        name: name,
+        attending: attendingText,
+        message: userWishText,
+        time: "Vừa xong",
+        isNew: true
+      });
+    }
 
     if (btnSubmit) {
       btnSubmit.disabled = true;
@@ -343,7 +387,12 @@ function initRsvpForm() {
       statusMsg.innerHTML = `Cảm ơn <strong>${escapeHtml(name)}</strong> thật nhiều! Đang mở trang lời chúc... ♡`;
     }
 
-    // 2. Gửi ngầm về Email FormSubmit
+    // Gửi email về hộp thư riêng của Ngọc Tú (FormSubmit)
+    let emailStatusNote = isPublicWanted ? "[Hiển thị công khai]" : "[Khách chọn gửi riêng tư, không hiện lên web]";
+    if (isNegative) {
+      emailStatusNote = "[Bị bộ lọc chặn hiển thị trên web do chứa từ nhạy cảm]";
+    }
+
     fetch("https://formsubmit.co/ajax/ngoctung2188@gmail.com", {
       method: "POST",
       headers: {
@@ -354,13 +403,14 @@ function initRsvpForm() {
         _subject: `[RSVP Tốt Nghiệp] ${name} vừa gửi xác nhận tham dự!`,
         "Tên khách mời": name,
         "Tham dự lễ": attendingText,
-        "Lời chúc gửi Tú": userWishText
+        "Lời chúc gửi Tú": userWishText,
+        "Trạng thái hiển thị": emailStatusNote
       })
     }).catch(err => {
       console.warn("Gửi email background:", err);
     });
 
-    // 3. Tự động chuyển lật sang Slide 6 (Hẹn gặp người thương - 28/11/2026)
+    // Tự động chuyển lật sang Slide 6 (Hẹn gặp người thương - 28/11/2026)
     setTimeout(() => {
       if (btnSubmit) {
         btnSubmit.disabled = false;
