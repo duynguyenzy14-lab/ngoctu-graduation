@@ -1,10 +1,16 @@
 ﻿/**
  * NGỌC TÚ – GRADUATION INVITATION 2026
- * 1. Multi-page 3D Mobile Book Flip (Page 1: Bìa -> Page 2: Dải phim -> Page 3: Thư mời -> Page 4: Chi tiết -> Page 5: RSVP)
- * 2. Cảm ứng vuốt tay (Touch Swipe Left/Right) & nút điều hướng lật trang tối ưu 100% trên điện thoại
- * 3. Nhấn vào bìa/thẻ để chuyển trang mượt mà
- * 4. Cá nhân hóa lời nhắn cho khách mời (?to=Nhi, ?to=Khánh, ?to=Trang...) & auto-fill RSVP
- * 5. Gửi xác nhận tham dự (RSVP Form)
+ * 1. Multi-page 3D Mobile Book Flip (Page 1 -> 6)
+ *    Page 1: Bìa Polaroid
+ *    Page 2: Dải phim xen kẽ 35mm
+ *    Page 3: Thư mời thân thương
+ *    Page 4: Chi tiết lễ tốt nghiệp
+ *    Page 5: Xác nhận tham dự (RSVP)
+ *    Page 6: Hẹn gặp người thương & Sổ lưu bút (Wishes Board)
+ * 2. Cảm ứng vuốt tay (Touch Swipe Left/Right) & nút điều hướng lật trang
+ * 3. Chạm vào bìa để lật trang
+ * 4. Cá nhân hóa lời nhắn khách mời (?to=Nhi, ?to=Khánh...)
+ * 5. Tự động lưu & hiển thị lời chúc của bạn bè lên Sổ lưu bút
  */
 
 // ================= DỮ LIỆU CÁ NHÂN HÓA KHÁCH MỜI =================
@@ -35,10 +41,44 @@ const GUEST_DATA = {
   }
 };
 
+// ================= DỮ LIỆU LỜI CHÚC MẪU BAN ĐẦU CHO SỔ LƯU BÚT =================
+const DEFAULT_WISHES = [
+  {
+    name: "Nhi",
+    attending: "Sẽ đến nhaa! 💖",
+    message: "Chúc mừng tân cử nhân xinh đẹp của tui! Chúc Tú chặng đường mới luôn rực rỡ và hạnh phúc nha 🎓✨",
+    time: "20/11/2026"
+  },
+  {
+    name: "Khánh",
+    attending: "Sẽ đến nhaa! 💖",
+    message: "Bốn năm đại học thật nhiều kỷ niệm. Hẹn gặp Tú vào sáng 28.11 nha, nhất định phải chụp 1000 tấm ảnh! 📸",
+    time: "19/11/2026"
+  },
+  {
+    name: "Trang",
+    attending: "Sẽ đến nhaa! 💖",
+    message: "Tự hào về Tú lắm luôn. Ngày tốt nghiệp thật toả sáng nha cô gái của tụi mình ♡",
+    time: "18/11/2026"
+  },
+  {
+    name: "Duy",
+    attending: "Sẽ đến nhaa! 💖",
+    message: "Chúc mừng Ngọc Tú đã về đích xuất sắc! Chúc bạn tương lai thênh thang rộng mở nhé 🎉",
+    time: "17/11/2026"
+  }
+];
+
+// Biến điều hướng toàn cục
+let currentPage = 1;
+let isFlipping = false;
+let flipToPageFn = null;
+
 // ================= KHỞI TẠO DOM CONTENT LOADED =================
 document.addEventListener("DOMContentLoaded", () => {
   initPersonalizedGreeting();
   initMobileBookFlip();
+  initWishesBoard();
   initRsvpForm();
 });
 
@@ -67,7 +107,7 @@ function initPersonalizedGreeting() {
       if (elSalutation) elSalutation.textContent = `Gửi ${guestName} thương mến,`;
     }
 
-    // Auto-fill guest name into RSVP Form if present
+    // Tự động điền tên vào Form RSVP
     const guestInput = document.getElementById("guestNameInput");
     if (guestInput && !guestInput.value) {
       guestInput.value = guestName;
@@ -75,15 +115,12 @@ function initPersonalizedGreeting() {
   }
 }
 
-// ================= 2. HỆ THỐNG LẬT SÁCH 3D ĐA TRANG CHO ĐIỆN THOẠI =================
-let currentPage = 1;
-let isFlipping = false;
-
+// ================= 2. HỆ THỐNG LẬT SÁCH 3D ĐA TRANG (1 -> 6) =================
 function initMobileBookFlip() {
   const bookViewport = document.getElementById("bookViewport");
 
   function flipToPage(targetPage) {
-    if (isFlipping || targetPage === currentPage || targetPage < 1 || targetPage > 5 || !bookViewport) return;
+    if (isFlipping || targetPage === currentPage || targetPage < 1 || targetPage > 6 || !bookViewport) return;
     isFlipping = true;
 
     const fromPageEl = document.getElementById(`page${currentPage}`);
@@ -100,7 +137,6 @@ function initMobileBookFlip() {
       toPageEl.classList.add("is-active");
     }
 
-    // Cuộn mượt về đầu trang để xem nội dung trang mới rõ ràng
     window.scrollTo({ top: 0, behavior: "smooth" });
 
     setTimeout(() => {
@@ -117,6 +153,8 @@ function initMobileBookFlip() {
     }, 650);
   }
 
+  flipToPageFn = flipToPage;
+
   // 1. Lắng nghe các nút lật trang
   document.querySelectorAll("[data-flip-target]").forEach(btn => {
     btn.addEventListener("click", (e) => {
@@ -129,7 +167,7 @@ function initMobileBookFlip() {
     });
   });
 
-  // 2. Nhấn vào bìa Trang 1 hoặc vùng hành động để lật sang Trang 2
+  // 2. Chạm vào bìa Trang 1 để lật sang Trang 2
   const page1Card = document.querySelector("#page1 .page-card-dashed");
   if (page1Card) {
     page1Card.addEventListener("click", (e) => {
@@ -139,7 +177,7 @@ function initMobileBookFlip() {
     });
   }
 
-  // 3. Phím mũi tên bàn phím (Left / Right)
+  // 3. Phím mũi tên bàn phím
   window.addEventListener("keydown", (e) => {
     if (e.key === "ArrowRight" || e.key === "PageDown") {
       flipToPage(currentPage + 1);
@@ -148,7 +186,7 @@ function initMobileBookFlip() {
     }
   });
 
-  // 4. CẢM ỨNG VUỐT TAY (TOUCH SWIPE) TRÊN ĐIỆN THOẠI
+  // 4. Cảm ứng vuốt tay trên điện thoại
   let touchStartX = 0;
   let touchStartY = 0;
   let touchEndX = 0;
@@ -173,20 +211,77 @@ function initMobileBookFlip() {
     const deltaX = touchEndX - touchStartX;
     const deltaY = touchEndY - touchStartY;
 
-    // Chỉ kích hoạt lật trang nếu vuốt ngang rõ rệt (hơn 48px và góc nghiêng nhỏ hơn 30 độ)
     if (Math.abs(deltaX) > 48 && Math.abs(deltaX) > Math.abs(deltaY) * 1.5) {
       if (deltaX < 0) {
-        // Vuốt sang trái -> Trang tiếp theo
         flipToPage(currentPage + 1);
       } else {
-        // Vuốt sang phải -> Trang trước đó
         flipToPage(currentPage - 1);
       }
     }
   }
 }
 
-// ================= 3. XỬ LÝ FORM XÁC NHẬN THAM DỰ (RSVP) =================
+// ================= 3. QUẢN LÝ SỔ LƯU BÚT (WISHES BOARD) =================
+function getStoredWishes() {
+  try {
+    const raw = localStorage.getItem("ngoctu_graduation_wishes");
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        return parsed;
+      }
+    }
+  } catch (e) {
+    console.error("Lỗi đọc lời chúc:", e);
+  }
+  return DEFAULT_WISHES;
+}
+
+function renderWishesList(wishes) {
+  const container = document.getElementById("wishesList");
+  if (!container) return;
+
+  container.innerHTML = wishes.map((item, idx) => {
+    const isNewClass = item.isNew ? "is-new" : "";
+    return `
+      <div class="wish-item ${isNewClass}">
+        <div class="wish-meta">
+          <span class="wish-author">✨ ${escapeHtml(item.name)}</span>
+          <span class="wish-tag">${escapeHtml(item.attending || "Sẽ đến nhaa! 💖")}</span>
+        </div>
+        <p class="wish-content">“${escapeHtml(item.message)}”</p>
+      </div>
+    `;
+  }).join("");
+}
+
+function initWishesBoard() {
+  const wishes = getStoredWishes();
+  renderWishesList(wishes);
+}
+
+function addNewWish(newWish) {
+  let wishes = getStoredWishes();
+  wishes = [newWish, ...wishes];
+  try {
+    localStorage.setItem("ngoctu_graduation_wishes", JSON.stringify(wishes));
+  } catch (e) {
+    console.error("Lỗi lưu lời chúc:", e);
+  }
+  renderWishesList(wishes);
+}
+
+function escapeHtml(str) {
+  if (!str) return "";
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+// ================= 4. XỬ LÝ FORM XÁC NHẬN THAM DỰ (RSVP) =================
 function initRsvpForm() {
   const rsvpForm = document.getElementById("rsvpForm");
   const radioInputs = document.querySelectorAll('input[name="attending"]');
@@ -227,52 +322,53 @@ function initRsvpForm() {
     const msgInput = document.getElementById("guestMsgInput");
     const message = msgInput ? msgInput.value.trim() : "";
 
+    const userWishText = message || "Hẹn gặp Ngọc Tú vào ngày tốt nghiệp 28.11 nhé! 🎓✨";
+
+    // 1. Lưu và cập nhật vào Sổ lưu bút ngay lập tức
+    addNewWish({
+      name: name,
+      attending: attendingText,
+      message: userWishText,
+      time: "Vừa xong",
+      isNew: true
+    });
+
     if (btnSubmit) {
       btnSubmit.disabled = true;
       btnSubmit.innerHTML = '<span>Đang gửi xác nhận... ⏳</span>';
     }
     if (statusMsg) {
-      statusMsg.hidden = true;
+      statusMsg.hidden = false;
+      statusMsg.className = "rsvp-status-msg is-success";
+      statusMsg.innerHTML = `Cảm ơn <strong>${escapeHtml(name)}</strong> thật nhiều! Đang mở trang lời chúc... ♡`;
     }
 
-    try {
-      const response = await fetch("https://formsubmit.co/ajax/ngoctung2188@gmail.com", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json"
-        },
-        body: JSON.stringify({
-          _subject: `[RSVP Tốt Nghiệp] ${name} vừa gửi xác nhận tham dự!`,
-          "Tên khách mời": name,
-          "Tham dự lễ": attendingText,
-          "Lời chúc gửi Tú": message || "(Không có lời nhắn riêng)"
-        })
-      });
+    // 2. Gửi ngầm về Email FormSubmit
+    fetch("https://formsubmit.co/ajax/ngoctung2188@gmail.com", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({
+        _subject: `[RSVP Tốt Nghiệp] ${name} vừa gửi xác nhận tham dự!`,
+        "Tên khách mời": name,
+        "Tham dự lễ": attendingText,
+        "Lời chúc gửi Tú": userWishText
+      })
+    }).catch(err => {
+      console.warn("Gửi email background:", err);
+    });
 
-      if (response.ok) {
-        if (statusMsg) {
-          statusMsg.hidden = false;
-          statusMsg.className = "rsvp-status-msg is-success";
-          statusMsg.innerHTML = `Cảm ơn <strong>${name}</strong> thật nhiều! Tú đã nhận được phản hồi rồi nha ♡`;
-        }
-        if (btnSubmit) {
-          btnSubmit.innerHTML = '<span>Đã gửi thành công! ✨</span>';
-        }
-      } else {
-        throw new Error("Gửi không thành công");
-      }
-    } catch (err) {
-      // Fallback thân thiện
-      if (statusMsg) {
-        statusMsg.hidden = false;
-        statusMsg.className = "rsvp-status-msg is-success";
-        statusMsg.innerHTML = `Cảm ơn <strong>${name}</strong> thật nhiều! Phản hồi của bạn đã được ghi nhận ♡`;
-      }
+    // 3. Tự động chuyển lật sang Slide 6 (Hẹn gặp người thương - 28/11/2026)
+    setTimeout(() => {
       if (btnSubmit) {
         btnSubmit.disabled = false;
-        btnSubmit.innerHTML = '<span>Gửi lại xác nhận 💌</span>';
+        btnSubmit.innerHTML = '<span>Gửi xác nhận cho Tú 💌</span>';
       }
-    }
+      if (flipToPageFn) {
+        flipToPageFn(6);
+      }
+    }, 700);
   });
 }

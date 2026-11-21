@@ -1,0 +1,444 @@
+# scratch/build_clean_index_v6.py
+import re
+
+bg_pics = [
+    ("pic-01.jpg", "is-landscape", "Khoảnh khắc OU"),
+    ("pic-02.jpg", "is-landscape", "Khoảnh khắc OU"),
+    ("pic-03.jpg", "is-landscape", "Khoảnh khắc OU"),
+    ("pic-04.jpg", "is-landscape", "Khoảnh khắc OU"),
+    ("pic-05.jpg", "is-landscape", "Khoảnh khắc OU"),
+    ("pic-06.jpg", "is-portrait", "Khoảnh khắc OU"),
+    ("pic-08.jpg", "is-square", "Khoảnh khắc OU"),
+    ("pic-09.jpg", "is-landscape", "Khoảnh khắc OU"),
+    ("pic-10.jpg", "is-landscape", "Khoảnh khắc OU"),
+    ("pic-11.jpg", "is-portrait is-portrait-23", "Khoảnh khắc OU"),
+    ("pic-12.jpg", "is-landscape is-landscape-wide", "Khoảnh khắc OU"),
+    ("pic-13.jpg", "is-landscape", "Khoảnh khắc OU"),
+    ("pic-14.jpg", "is-portrait", "Khoảnh khắc OU"),
+    ("pic-15.jpg", "is-landscape", "Khoảnh khắc OU"),
+    ("pic-16.jpg", "is-landscape", "Khoảnh khắc OU"),
+    ("pic-17.jpg", "is-landscape", "Khoảnh khắc OU"),
+    ("pic-18.jpg", "is-landscape", "Khoảnh khắc OU"),
+    ("pic-19.jpg", "is-portrait", "Khoảnh khắc OU"),
+    ("pic-20.jpg", "is-landscape", "Khoảnh khắc OU"),
+    ("pic-21.jpg", "is-landscape", "Khoảnh khắc OU")
+]
+
+pre_grad = [
+    ("lvhq0003-800.jpg", "is-landscape", "Kỷ yếu tốt nghiệp"),
+    ("lvhq0066-800.jpg", "is-landscape", "Kỷ yếu tốt nghiệp"),
+    ("lvhq0101-800.jpg", "is-portrait", "Kỷ yếu tốt nghiệp"),
+    ("lvhq0321-800.jpg", "is-portrait", "Kỷ yếu tốt nghiệp"),
+    ("lvhq0336-800.jpg", "is-landscape", "Kỷ yếu tốt nghiệp"),
+    ("lvhq0357-800.jpg", "is-landscape", "Kỷ yếu tốt nghiệp"),
+    ("lvhq0513-800.jpg", "is-portrait", "Kỷ yếu tốt nghiệp"),
+    ("lvhq0556-800.jpg", "is-portrait", "Kỷ yếu tốt nghiệp"),
+    ("lvhq0638-800.jpg", "is-portrait", "Kỷ yếu tốt nghiệp"),
+    ("lvhq0655-800.jpg", "is-portrait", "Kỷ yếu tốt nghiệp"),
+    ("lvhq0660-800.jpg", "is-portrait", "Kỷ yếu tốt nghiệp"),
+    ("lvhq0673-800.jpg", "is-landscape", "Kỷ yếu tốt nghiệp"),
+    ("lvhq0783-800.jpg", "is-landscape", "Kỷ yếu tốt nghiệp"),
+    ("lvhq0799-800.jpg", "is-portrait", "Kỷ yếu tốt nghiệp"),
+    ("lvhq9982-800.jpg", "is-landscape", "Kỷ yếu tốt nghiệp"),
+    ("lvhq9987-800.jpg", "is-portrait", "Kỷ yếu tốt nghiệp")
+]
+
+# Interleave the 2 folders:
+interleaved = []
+bg_i = 0
+pg_i = 0
+
+while bg_i < len(bg_pics) or pg_i < len(pre_grad):
+    if bg_i < len(bg_pics):
+        f, cls, alt = bg_pics[bg_i]
+        interleaved.append((f"./graduation_files/bg-pics/{f}", cls, alt))
+        bg_i += 1
+    # distribute extra 4 bg pics evenly
+    if bg_i in (5, 10, 15, 20) and bg_i < len(bg_pics):
+        f, cls, alt = bg_pics[bg_i]
+        interleaved.append((f"./graduation_files/bg-pics/{f}", cls, alt))
+        bg_i += 1
+    if pg_i < len(pre_grad):
+        f, cls, alt = pre_grad[pg_i]
+        interleaved.append((f"./graduation_files/photos/{f}", cls, alt))
+        pg_i += 1
+
+film_items_html = []
+for idx, (path, cls, alt) in enumerate(interleaved):
+    loading = "eager" if idx < 3 else "lazy"
+    film_items_html.append(f'                  <div class="film-frame-item {cls}"><img src="{path}" alt="{alt}" class="film-photo" loading="{loading}"></div>')
+
+film_items_dup_html = []
+for path, cls, alt in interleaved:
+    film_items_dup_html.append(f'                  <div class="film-frame-item {cls}" aria-hidden="true"><img src="{path}" alt="" class="film-photo" loading="lazy"></div>')
+
+film_track_content = "\n".join(film_items_html) + "\n                  <!-- BẢN SAO TIẾP NỐI ĐỂ CUỘN LIỀN MẠCH VÔ TẬN -->\n" + "\n".join(film_items_dup_html)
+
+full_html = f'''<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Ngọc Tú – Graduation 2026 | Thiệp Mời Tốt Nghiệp</title>
+  <meta name="description" content="Thiệp mời lễ tốt nghiệp của Nguyễn Ngọc Tú – Trường Đại học Mở TP.HCM ngày 28.11.2026. Mời bạn đến chung vui và chụp ảnh cùng Tú!">
+  
+  <meta property="og:title" content="Ngọc Tú tốt nghiệp rồi nè! 🎓✨">
+  <meta property="og:description" content="Sáng Thứ Bảy, 28.11.2026 tại Trường Đại học Mở TP.HCM. Mời bạn đến chung vui cùng Tú nha!">
+  <meta property="og:image" content="./graduation_files/tu-polaroid-centered.jpg?v=rot90">
+  
+  <!-- Font chữ: Playfair Display & Great Vibes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+  
+  <!-- File CSS giao diện Scrapbook x Editorial x Mobile Book Flip -->
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+  <!-- ================= BỐ CỤC CHÍNH: CUỐN SÁCH THIỆP MỜI TỐT NGHIỆP ĐỊNH DẠNG DỌC ================= -->
+  <main class="invitation-screen" id="invitationScreen">
+
+    <!-- KHUNG CUỐN SÁCH 3D (BOOK VIEWPORT) -->
+    <div class="book-viewport" id="bookViewport">
+      
+      <!-- ================= TRANG 1: SECTION 01 - BÌA POLAROID & PERSONAL NAMEPLATE ================= -->
+      <article class="book-page page-1 is-active" id="page1" aria-label="Trang 1 - Bìa tốt nghiệp">
+        <div class="page-card-dashed">
+          
+          <!-- 1. KHỐI PERSONAL NAMEPLATE (DỜI LÊN TRÊN ẢNH POLAROID) -->
+          <div class="personal-nameplate">
+            <p class="nameplate-subhead">The Graduation Day of</p>
+            <h1 class="nameplate-fullname">NGUYỄN NGỌC TÚ</h1>
+            <p class="nameplate-major">QUẢN LÝ CÔNG</p>
+          </div>
+
+          <!-- 2. ẢNH CHÂN DUNG POLAROID LỚN (XOAY 90 ĐỘ ĐỨNG THẲNG, CĂN GIỮA KHUNG) -->
+          <div class="polaroid-wrapper">
+            <div class="polaroid-inner">
+              <div class="photo-container">
+                <img src="./graduation_files/tu-polaroid-centered.jpg?v=rot90" alt="Nguyễn Ngọc Tú - Graduation 2026" class="polaroid-photo" loading="eager">
+              </div>
+              <div class="polaroid-caption">
+                <p class="polaroid-caption-text">A little moment to remember ♡</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- NÚT LẬT SANG TRANG 2: HÀNH TRÌNH OU -->
+          <div class="page-action-row">
+            <button type="button" class="btn-flip-page btn-next" data-flip-target="2" aria-label="Lật sang trang dải phim 35mm">
+              <span class="flip-btn-text">Lật sang trang nha</span>
+              <span class="flip-btn-icon" aria-hidden="true">➔</span>
+            </button>
+          </div>
+
+        </div>
+      </article>
+
+      <!-- ================= TRANG 2: SECTION 02 - DẢI PHIM 35MM HÀNH TRÌNH ĐẠI HỌC ================= -->
+      <article class="book-page page-2" id="page2" aria-label="Trang 2 - Dải phim 35mm hành trình đại học">
+        <div class="page-card-dashed">
+          
+          <!-- PHẦN MỞ ĐẦU: BADGE & ĐOẠN CHỮ Ý NGHĨA -->
+          <header class="film-header">
+            <div class="film-header-badge">
+              <span class="film-header-icon">🎞️</span>
+              <span class="badge-text"><span class="badge-text-part">MEMORIES</span> <span class="badge-sep">·</span> <span class="badge-text-part">2022 – 2026</span></span>
+            </div>
+            <p class="film-sub-text">
+              Những năm tháng ấy, mình đã lớn lên như thế.<br>
+              Bốn năm, nhiều câu chuyện và vô số ký ức mình muốn lưu giữ thật lâu ♡
+            </p>
+          </header>
+
+          <!-- DẢI PHIM 35MM TỰ ĐỘNG CHẠY NGANG (BG-PICS XEN KẼ PRE-GRADUATION PHOTOS) -->
+          <div class="film-strip-card" id="filmStripCard">
+            <div class="film-washi-tape" aria-hidden="true"></div>
+
+            <div class="film-35mm-reel">
+              <!-- Hàng lỗ perforation phía trên + thông số phim vintage -->
+              <div class="film-perforation-bar bar-top">
+                <div class="sprocket-holes"></div>
+                <div class="film-meta-text">
+                  <span class="meta-tag">▶ QUẢN LÝ CÔNG</span>
+                  <span class="meta-tag">GRADUATION</span>
+                  <span class="meta-tag">OU · 2022–2026</span>
+                </div>
+              </div>
+
+              <!-- Khung chiếu dải phim -->
+              <div class="film-marquee-viewport" id="filmMarqueeViewport">
+                <div class="film-marquee-track" id="filmMarqueeTrack">
+{film_track_content}
+                </div>
+              </div>
+
+              <!-- Hàng lỗ perforation phía dưới + thông số phim vintage -->
+              <div class="film-perforation-bar bar-bottom">
+                <div class="sprocket-holes"></div>
+                <div class="film-meta-text">
+                  <span class="meta-tag">QUẢN LÝ CÔNG</span>
+                  <span class="meta-tag">NGUYỄN NGỌC TÚ · GRADUATION</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- NÚT ĐIỀU HƯỚNG TRANG 2 -->
+          <div class="page-action-row dual-action">
+            <button type="button" class="btn-flip-page btn-prev" data-flip-target="1" aria-label="Quay lại trang trước">
+              <span class="flip-btn-icon" aria-hidden="true">◀</span>
+              <span class="flip-btn-text">Trang trước</span>
+            </button>
+            <button type="button" class="btn-flip-page btn-next" data-flip-target="3" aria-label="Lật sang trang tiếp theo">
+              <span class="flip-btn-text">Trang tiếp theo</span>
+              <span class="flip-btn-icon" aria-hidden="true">➔</span>
+            </button>
+          </div>
+
+        </div>
+      </article>
+
+      <!-- ================= TRANG 3: SECTION 03 - THƯ MỜI THÂN THƯƠNG TỪ TÚ ================= -->
+      <article class="book-page page-3" id="page3" aria-label="Trang 3 - Thư mời thân thương">
+        <div class="page-card-dashed">
+          
+          <div class="letter-scrapbook-card">
+            <div class="letter-header">
+              <p class="letter-place-date">TP. Hồ Chí Minh, ngày 28 tháng 11 năm 2026</p>
+              <h2 class="letter-salutation" id="letterSalutation">Gửi những người thương,</h2>
+            </div>
+
+            <div class="letter-content" id="letterContent">
+              <p class="letter-paragraph">
+                Có những người không cần đứng trên sân khấu cùng mình, nhưng lại là lý do mình đi được tới đó.
+              </p>
+              <p class="letter-paragraph">
+                Cảm ơn mọi người đã đồng hành cùng Ngọc Tú, để những năm tháng thanh xuân này trở thành một dấu mốc thật đẹp và đáng nhớ. Mỗi người, mỗi mảnh ghép, mỗi kỷ niệm đều đã góp phần tạo nên một hành trình thật đáng nhớ tại OU.
+              </p>
+              <p class="letter-paragraph highlight-msg">
+                Sáng Thứ Bảy, ngày 28.11, mình sẽ chính thức khép lại hành trình 4 năm tại OU. Ngọc Tú rất mong được gặp mọi người, cùng chung vui và lưu lại thật nhiều khoảnh khắc đáng nhớ nhé! ♡
+              </p>
+            </div>
+
+            <div class="letter-footer">
+              <p class="letter-sign-close">Thân thương,</p>
+              <p class="letter-signature">Ngọc Tú</p>
+            </div>
+          </div>
+
+          <!-- NÚT ĐIỀU HƯỚNG TRANG 3 -->
+          <div class="page-action-row dual-action">
+            <button type="button" class="btn-flip-page btn-prev" data-flip-target="2" aria-label="Quay lại trang trước">
+              <span class="flip-btn-icon" aria-hidden="true">◀</span>
+              <span class="flip-btn-text">Trang trước</span>
+            </button>
+            <button type="button" class="btn-flip-page btn-next" data-flip-target="4" aria-label="Lật sang trang tiếp theo">
+              <span class="flip-btn-text">Trang tiếp theo</span>
+              <span class="flip-btn-icon" aria-hidden="true">➔</span>
+            </button>
+          </div>
+
+        </div>
+      </article>
+
+      <!-- ================= TRANG 4: SECTION 04 - CHI TIẾT LỄ TỐT NGHIỆP & ĐỊA ĐIỂM ================= -->
+      <article class="book-page page-4" id="page4" aria-label="Trang 4 - Chi tiết lễ tốt nghiệp">
+        <div class="page-card-dashed">
+          
+          <header class="details-header">
+            <div class="details-badge">
+              <span>🌸 Thân mời người thương</span>
+            </div>
+            <h2 class="details-main-title">LỄ TỐT NGHIỆP ĐẠI HỌC 2026</h2>
+          </header>
+
+          <div class="ceremony-info-card">
+            <div class="info-item-row">
+              <span class="info-row-icon">🗓️</span>
+              <div class="info-row-text">
+                <span class="info-row-label">Thời gian tổ chức</span>
+                <span class="info-row-value">Sáng Thứ Bảy, ngày 28 tháng 11 năm 2026</span>
+              </div>
+            </div>
+
+            <div class="info-item-row highlight-box">
+              <span class="info-row-icon">📸</span>
+              <div class="info-row-text">
+                <span class="info-row-label">Khung giờ đón tiếp người thương</span>
+                <span class="info-row-value photo-time">11:00 - 12h:30</span>
+                <span class="info-row-desc">Lên đồ xinh để tụi mình cùng lưu lại những chiếc moment đáng nhớ nha!</span>
+              </div>
+            </div>
+
+            <div class="info-item-row">
+              <span class="info-row-icon">📍</span>
+              <div class="info-row-text">
+                <span class="info-row-label">Địa điểm tổ chức</span>
+                <span class="info-row-value">Trường Đại học Mở TP. Hồ Chí Minh</span>
+                <span class="info-row-desc">Số 97 Võ Văn Tần, Phường Xuân Hòa, TP. Hồ Chí Minh</span>
+              </div>
+            </div>
+
+            <div class="info-item-row">
+              <span class="info-row-icon">🛵</span>
+              <div class="info-row-text">
+                <span class="info-row-label">Địa điểm gửi xe gợi ý:</span>
+                <ul class="parking-list">
+                  <li>1. Bãi giữ xe trường OU (Số 97 Võ Văn Tần)</li>
+                  <li>2. Du lịch Hòa Bình (Số 60 Võ Văn Tần)</li>
+                  <li>3. Báo Người Lao Động (Số 123 Võ Văn Tần)</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Nút Xác nhận tham dự lật sang trang kế tiếp (Trang 5) -->
+            <div class="details-action-wrap">
+              <button type="button" class="btn-maps-action btn-next" data-flip-target="5" aria-label="Chuyển sang trang xác nhận tham dự">
+                <span>💌 Xác nhận tham dự ➔</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- NÚT ĐIỀU HƯỚNG TRANG 4 -->
+          <div class="page-action-row dual-action">
+            <button type="button" class="btn-flip-page btn-prev" data-flip-target="3" aria-label="Quay lại trang trước">
+              <span class="flip-btn-icon" aria-hidden="true">◀</span>
+              <span class="flip-btn-text">Trang trước</span>
+            </button>
+            <button type="button" class="btn-flip-page btn-next" data-flip-target="5" aria-label="Lật sang trang tiếp theo">
+              <span class="flip-btn-text">Trang tiếp theo</span>
+              <span class="flip-btn-icon" aria-hidden="true">➔</span>
+            </button>
+          </div>
+
+        </div>
+      </article>
+
+      <!-- ================= TRANG 5: SECTION 05 - XÁC NHẬN THAM DỰ (RSVP) ================= -->
+      <article class="book-page page-5" id="page5" aria-label="Trang 5 - Xác nhận tham dự">
+        <div class="page-card-dashed">
+          
+          <header class="rsvp-header">
+            <div class="rsvp-badge">
+              <span>💌 RSVP</span>
+            </div>
+            <h2 class="rsvp-main-title">XÁC NHẬN THAM DỰ</h2>
+            <p class="rsvp-sub-text">
+              Điền một chút thông tin để Ngọc Tú đón tiếp thật chu đáo nha ♡
+            </p>
+          </header>
+
+          <div class="rsvp-card">
+            <form id="rsvpForm" class="rsvp-form" novalidate>
+              <div class="form-group">
+                <label class="form-label" for="guestNameInput">Tên của bạn:</label>
+                <input type="text" id="guestNameInput" name="name" class="form-input" placeholder="Nhập tên của bạn nè..." required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Bạn sẽ đến chung vui cùng Tú chứ?</label>
+                <div class="radio-options-row">
+                  <label class="radio-card is-selected">
+                    <input type="radio" name="attending" value="yes" checked>
+                    <span class="radio-card-content">
+                      <span class="radio-emoji">💖</span>
+                      <span class="radio-text">Sẽ đến nhaa!</span>
+                    </span>
+                  </label>
+                  <label class="radio-card">
+                    <input type="radio" name="attending" value="no">
+                    <span class="radio-card-content">
+                      <span class="radio-emoji">🥺</span>
+                      <span class="radio-text">Tiếc quá, bận rồi</span>
+                    </span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="guestMsgInput">Lời chúc hoặc nhắn gửi cho Tú:</label>
+                <textarea id="guestMsgInput" name="message" class="form-textarea" rows="3" placeholder="Gửi lời thương thương đến Ngọc Tú nha..."></textarea>
+              </div>
+
+              <div class="form-submit-wrap">
+                <button type="submit" class="btn-submit-rsvp" id="btnSubmitRsvp">
+                  <span>Gửi xác nhận cho Tú 💌</span>
+                </button>
+              </div>
+
+              <div class="rsvp-status-msg" id="rsvpStatusMsg" hidden></div>
+            </form>
+          </div>
+
+          <!-- NÚT ĐIỀU HƯỚNG TRANG 5 -->
+          <div class="page-action-row dual-action">
+            <button type="button" class="btn-flip-page btn-prev" data-flip-target="4" aria-label="Quay lại trang chi tiết">
+              <span class="flip-btn-icon" aria-hidden="true">◀</span>
+              <span class="flip-btn-text">Trang trước</span>
+            </button>
+            <button type="button" class="btn-flip-page btn-next" data-flip-target="6" aria-label="Lật sang trang lời chúc">
+              <span class="flip-btn-text">Trang tiếp theo</span>
+              <span class="flip-btn-icon" aria-hidden="true">➔</span>
+            </button>
+          </div>
+
+        </div>
+      </article>
+
+      <!-- ================= TRANG 6: SECTION 06 - HẸN GẶP NGƯỜI THƯƠNG & SỔ LƯU BÚT ================= -->
+      <article class="book-page page-6" id="page6" aria-label="Trang 6 - Hẹn gặp người thương & Sổ lưu bút">
+        <div class="page-card-dashed">
+          
+          <header class="farewell-header">
+            <div class="farewell-badge">
+              <span>🌸 DẤU MỐC THANH XUÂN</span>
+            </div>
+            <h2 class="farewell-main-title">Hẹn gặp người thương</h2>
+            <p class="farewell-date">28/11/2026</p>
+            <p class="farewell-sub-text">
+              Cảm ơn bạn đã luôn là một phần thật đẹp trong thanh xuân của Tú ♡
+            </p>
+          </header>
+
+          <!-- KHUNG LƯU GIỮ LỜI CHÚC CỦA MỌI NGƯỜI (WISHES GUESTBOOK) -->
+          <div class="wishes-board-card">
+            <div class="wishes-board-header">
+              <span class="wishes-icon">💌</span>
+              <span class="wishes-title">Lời chúc từ những người thương</span>
+            </div>
+            <div class="wishes-list" id="wishesList">
+              <!-- Render động từ JavaScript -->
+            </div>
+          </div>
+
+          <!-- NÚT ĐIỀU HƯỚNG TRANG 6 -->
+          <div class="page-action-row dual-action">
+            <button type="button" class="btn-flip-page btn-prev" data-flip-target="5" aria-label="Quay lại trang xác nhận">
+              <span class="flip-btn-icon" aria-hidden="true">◀</span>
+              <span class="flip-btn-text">Trang trước</span>
+            </button>
+            <button type="button" class="btn-flip-page btn-next" data-flip-target="1" aria-label="Quay về trang bìa">
+              <span class="flip-btn-text">Về trang bìa</span>
+              <span class="flip-btn-icon" aria-hidden="true">🌸 ➔</span>
+            </button>
+          </div>
+
+        </div>
+      </article>
+
+    </div>
+
+  </main>
+
+  <!-- Script xử lý lật trang sách và tương tác mobile -->
+  <script src="./script.js"></script>
+</body>
+</html>
+'''
+
+with open("index.html", "w", encoding="utf-8") as f:
+    f.write(full_html.strip())
+
+print("Built clean index.html v6 successfully! Total photos interleaved:", len(interleaved))
