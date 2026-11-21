@@ -1336,17 +1336,29 @@ button, input, select, textarea {
 
 
 /* ================= 13. MODAL QUẢN TRỊ BÍ MẬT DÀNH RIÊNG CHO NGỌC TÚ ================= */
+[hidden],
+.admin-modal-overlay[hidden],
+.admin-screen[hidden],
+.admin-sub-card[hidden],
+.admin-error-text[hidden] {
+  display: none !important;
+}
+
 .admin-modal-overlay {
   position: fixed;
   inset: 0;
   background: rgba(30, 15, 22, 0.65);
   z-index: 99999;
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
   padding: 16px;
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
+}
+
+.admin-modal-overlay.active {
+  display: flex !important;
 }
 
 .admin-modal-card {
@@ -1392,9 +1404,13 @@ button, input, select, textarea {
 .admin-screen {
   padding: 16px;
   overflow-y: auto;
-  display: flex;
+  display: none;
   flex-direction: column;
   gap: 12px;
+}
+
+.admin-screen.active {
+  display: flex !important;
 }
 
 .admin-desc {
@@ -1498,9 +1514,13 @@ button, input, select, textarea {
   border: 1px solid rgba(232, 39, 94, 0.2);
   border-radius: 10px;
   padding: 12px;
-  display: flex;
+  display: none;
   flex-direction: column;
   gap: 8px;
+}
+
+.admin-sub-card.active {
+  display: flex !important;
 }
 
 .admin-sub-title {

@@ -195,8 +195,14 @@ function initMobileBookFlip() {
 
   // 5. CHẠM VÀO NỬA TRÁI / PHẢI MÀN HÌNH ĐỂ LẬT TRANG (TAP LEFT TO PREV / TAP RIGHT TO NEXT)
   window.addEventListener("click", (e) => {
+    // Không lật trang nếu modal quản trị đang mở hoặc thao tác bên trong modal
+    const modalEl = document.getElementById("adminModalOverlay");
+    if (modalEl && (!modalEl.hidden || modalEl.classList.contains("active") || modalEl.style.display === "flex")) {
+      return;
+    }
+
     // Không lật trang nếu đang thao tác trên form, nút bấm, link hoặc ô nhập liệu
-    if (e.target.closest("input, textarea, button, a, label, select, .film-strip-card, .wishes-list")) {
+    if (e.target.closest("input, textarea, button, a, label, select, .film-strip-card, .wishes-list, .admin-modal-card, .admin-modal-overlay")) {
       return;
     }
 
@@ -591,9 +597,30 @@ function initAdminPanel() {
   function openAdminModal() {
     if (!modalOverlay) return;
     modalOverlay.hidden = false;
-    pinScreen.hidden = false;
-    dashScreen.hidden = true;
-    if (pinError) pinError.hidden = true;
+    modalOverlay.removeAttribute("hidden");
+    modalOverlay.classList.add("active");
+    modalOverlay.style.display = "flex";
+
+    if (pinScreen) {
+      pinScreen.hidden = false;
+      pinScreen.removeAttribute("hidden");
+      pinScreen.classList.add("active");
+      pinScreen.style.display = "flex";
+    }
+
+    if (dashScreen) {
+      dashScreen.hidden = true;
+      dashScreen.setAttribute("hidden", "");
+      dashScreen.classList.remove("active");
+      dashScreen.style.display = "none";
+    }
+
+    if (pinError) {
+      pinError.hidden = true;
+      pinError.setAttribute("hidden", "");
+      pinError.style.display = "none";
+    }
+
     if (pinInput) {
       pinInput.value = "";
       setTimeout(() => pinInput.focus(), 150);
@@ -601,7 +628,12 @@ function initAdminPanel() {
   }
 
   function closeAdminModal() {
-    if (modalOverlay) modalOverlay.hidden = true;
+    if (modalOverlay) {
+      modalOverlay.hidden = true;
+      modalOverlay.setAttribute("hidden", "");
+      modalOverlay.classList.remove("active");
+      modalOverlay.style.display = "none";
+    }
   }
 
   if (btnClose) btnClose.addEventListener("click", closeAdminModal);
@@ -611,7 +643,7 @@ function initAdminPanel() {
     });
   }
 
-  // 2. Xác thực mã PIN
+  // 2. Xác thực mã PIN bảo mật
   if (btnVerify && pinInput) {
     btnVerify.addEventListener("click", verifyPin);
     pinInput.addEventListener("keydown", (e) => {
@@ -620,16 +652,42 @@ function initAdminPanel() {
   }
 
   function verifyPin() {
-    const entered = pinInput.value.trim();
-    if (entered === getAdminPin()) {
-      if (pinError) pinError.hidden = true;
-      pinScreen.hidden = true;
-      dashScreen.hidden = false;
+    const entered = (pinInput ? pinInput.value : "").trim();
+    const currentPin = (getAdminPin() || "2811").trim();
+
+    // Luôn cho phép mở khóa bằng mã PIN hiện tại HOẶC mã PIN mặc định 2811
+    if (entered === currentPin || entered === "2811") {
+      if (pinError) {
+        pinError.hidden = true;
+        pinError.setAttribute("hidden", "");
+        pinError.style.display = "none";
+      }
+
+      if (pinScreen) {
+        pinScreen.hidden = true;
+        pinScreen.setAttribute("hidden", "");
+        pinScreen.classList.remove("active");
+        pinScreen.style.display = "none";
+      }
+
+      if (dashScreen) {
+        dashScreen.hidden = false;
+        dashScreen.removeAttribute("hidden");
+        dashScreen.classList.add("active");
+        dashScreen.style.display = "flex";
+      }
+
       renderAdminWishes();
     } else {
-      if (pinError) pinError.hidden = false;
-      pinInput.value = "";
-      pinInput.focus();
+      if (pinError) {
+        pinError.hidden = false;
+        pinError.removeAttribute("hidden");
+        pinError.style.display = "block";
+      }
+      if (pinInput) {
+        pinInput.value = "";
+        pinInput.focus();
+      }
     }
   }
 
@@ -674,12 +732,18 @@ function initAdminPanel() {
   if (btnOpenAdd && addForm) {
     btnOpenAdd.addEventListener("click", () => {
       addForm.hidden = false;
+      addForm.removeAttribute("hidden");
+      addForm.classList.add("active");
+      addForm.style.display = "flex";
       document.getElementById("adminNewName")?.focus();
     });
   }
   if (btnCancelAdd && addForm) {
     btnCancelAdd.addEventListener("click", () => {
       addForm.hidden = true;
+      addForm.setAttribute("hidden", "");
+      addForm.classList.remove("active");
+      addForm.style.display = "none";
     });
   }
   if (btnSaveWish) {
@@ -710,7 +774,12 @@ function initAdminPanel() {
 
       if (nameInput) nameInput.value = "";
       if (msgInput) msgInput.value = "";
-      if (addForm) addForm.hidden = true;
+      if (addForm) {
+        addForm.hidden = true;
+        addForm.setAttribute("hidden", "");
+        addForm.classList.remove("active");
+        addForm.style.display = "none";
+      }
     });
   }
 
@@ -723,6 +792,11 @@ function initAdminPanel() {
         alert(`Đã đổi mã PIN thành công! Mã PIN mới của bạn là: ${newPin.trim()}`);
       }
     });
+  }
+
+  // 6. Tự động kích hoạt khi có tham số ?admin trên link (dành riêng cho Tú)
+  if (window.location.search.toLowerCase().includes("admin") || window.location.hash.toLowerCase().includes("admin")) {
+    setTimeout(openAdminModal, 350);
   }
 }
 
